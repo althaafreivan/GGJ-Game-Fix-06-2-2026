@@ -1,0 +1,128 @@
+using UnityEditor;
+using UnityEngine;
+using EvanUIKits.Dialogue;
+
+[CustomEditor(typeof(DialogueDatabase))]
+public class E_DialogueDatabase : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        serializedObject.Update();
+        SerializedProperty list = serializedObject.FindProperty("dialogues");
+
+        EditorGUILayout.Space(10);
+        EditorGUILayout.LabelField("DIALOGUE DATABASE", EditorStyles.whiteLargeLabel);
+        EditorGUILayout.HelpBox("Manage all game dialogues here. Use the 'Key' to trigger them from the DialogueManager.", MessageType.Info);
+        EditorGUILayout.Space(10);
+
+        for (int i = 0; i < list.arraySize; i++)
+        {
+            SerializedProperty element = list.GetArrayElementAtIndex(i);
+            SerializedProperty key = element.FindPropertyRelative("key");
+            SerializedProperty charName = element.FindPropertyRelative("characterName");
+            SerializedProperty portrait = element.FindPropertyRelative("portrait");
+            SerializedProperty sentences = element.FindPropertyRelative("sentences");
+
+            // --- Main Entry Container ---
+            EditorGUILayout.BeginVertical("helpbox");
+
+            // Header Row
+            EditorGUILayout.BeginHorizontal();
+            GUI.color = Color.cyan;
+            EditorGUILayout.LabelField($"ID: {(string.IsNullOrEmpty(key.stringValue) ? "UNTITLED" : key.stringValue)}", EditorStyles.boldLabel);
+            GUI.color = Color.white;
+
+            GUILayout.FlexibleSpace();
+
+            GUI.backgroundColor = new Color(1f, 0.4f, 0.4f);
+            if (GUILayout.Button("Delete Entry", GUILayout.Width(100)))
+            {
+                list.DeleteArrayElementAtIndex(i);
+                serializedObject.ApplyModifiedProperties();
+                return;
+            }
+            GUI.backgroundColor = Color.white;
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.Space(5);
+
+            // Identity Section (Portrait + Info)
+            EditorGUILayout.BeginHorizontal();
+
+            // Portrait Slot
+            EditorGUILayout.BeginVertical(GUILayout.Width(70));
+            EditorGUILayout.LabelField("Avatar", EditorStyles.miniLabel);
+            EditorGUILayout.PropertyField(portrait, GUIContent.none, GUILayout.Width(64), GUILayout.Height(64));
+            EditorGUILayout.EndVertical();
+
+            // Name and Key Slot
+            EditorGUILayout.BeginVertical();
+            EditorGUILayout.PropertyField(key, new GUIContent("Unique Key (ID)"));
+            EditorGUILayout.PropertyField(charName, new GUIContent("Display Name"));
+            EditorGUILayout.EndVertical();
+
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.Space(10);
+
+            // --- Sentences Section ---
+            EditorGUILayout.LabelField($"Sentences List ({sentences.arraySize})", EditorStyles.boldLabel);
+
+            for (int j = 0; j < sentences.arraySize; j++)
+            {
+                SerializedProperty sentenceElement = sentences.GetArrayElementAtIndex(j);
+                SerializedProperty text = sentenceElement.FindPropertyRelative("text");
+                SerializedProperty startEv = sentenceElement.FindPropertyRelative("OnSentenceStart");
+                SerializedProperty endEv = sentenceElement.FindPropertyRelative("OnSentenceEnd");
+
+                EditorGUILayout.BeginVertical("box");
+
+                // Line Header
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField($"Line {j + 1}", EditorStyles.miniBoldLabel);
+                GUILayout.FlexibleSpace();
+                if (GUILayout.Button("-", GUILayout.Width(20)))
+                {
+                    sentences.DeleteArrayElementAtIndex(j);
+                    break;
+                }
+                EditorGUILayout.EndHorizontal();
+
+                // Text Area
+                EditorGUILayout.PropertyField(text, GUIContent.none);
+
+                // Events Foldout
+                sentenceElement.isExpanded = EditorGUILayout.Foldout(sentenceElement.isExpanded, "Line Events (Optional)", true);
+                if (sentenceElement.isExpanded)
+                {
+                    EditorGUI.indentLevel++;
+                    EditorGUILayout.PropertyField(startEv);
+                    EditorGUILayout.PropertyField(endEv);
+                    EditorGUI.indentLevel--;
+                }
+
+                EditorGUILayout.EndVertical();
+            }
+
+            // Add Sentence Button
+            if (GUILayout.Button("+ Add Sentence Line", EditorStyles.miniButton))
+            {
+                sentences.arraySize++;
+            }
+
+            EditorGUILayout.EndVertical();
+            EditorGUILayout.Space(20);
+        }
+
+        // --- Bottom Global Actions ---
+        EditorGUILayout.Space(10);
+        GUI.backgroundColor = Color.green;
+        if (GUILayout.Button("CREATE NEW DIALOGUE ENTRY", GUILayout.Height(40)))
+        {
+            list.arraySize++;
+        }
+        GUI.backgroundColor = Color.white;
+
+        serializedObject.ApplyModifiedProperties();
+    }
+}
