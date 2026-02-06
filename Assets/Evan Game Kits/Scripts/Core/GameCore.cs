@@ -21,6 +21,7 @@ namespace EvanGameKits.Core
         private void OnEnable()
         {
             if(instance == null) instance = this;
+            DontDestroyOnLoad(instance);
             onSceneLoaded.Invoke();
             deathCount = 0;
         }
@@ -64,8 +65,12 @@ namespace EvanGameKits.Core
 
         public void EndGame()
         {
-            Debug.Log("Game Over");
             onExit?.Invoke();
+        }
+
+        public void loadScene(string sceneName)
+        {
+            SceneManager.LoadScene(sceneName);
         }
     }
 
