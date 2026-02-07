@@ -19,6 +19,7 @@ namespace EvanGameKits.Mechanic
         private void Start()
         {
             cCam.Target.TrackingTarget = Player.ActivePlayer.transform;
+            cCam.Target.LookAtTarget = Player.ActivePlayer.transform;
         }
         private void Awake()
         {
