@@ -67,10 +67,18 @@ namespace EvanGameKits.Entity
 
         protected virtual void OnEnable()
         {
-            if (ActivePlayer != this)
+            if (ActivePlayer == null || ActivePlayer == this)
             {
                 ActivePlayer = this;
                 Player.onPlayerChange?.Invoke(this);
+            }
+        }
+
+        protected virtual void OnDisable()
+        {
+            if (ActivePlayer == this)
+            {
+                ActivePlayer = null;
             }
         }
 

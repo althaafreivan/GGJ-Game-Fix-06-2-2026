@@ -9,19 +9,30 @@ namespace EvanGameKits.Entity.Module
         public static M_FrustumDetect instance;
         public bool isReverse = false;
 
-        private void Awake()
-        {
-            Player player = GetComponent<Player>();
-         
-            if (Player.ActivePlayer == player) 
-            {
-                instance = this; 
-            }
-        }
-
         private void OnEnable()
         {
-            if(instance != this) instance = this;
+            Player.onPlayerChange += HandlePlayerChange;
+            UpdateInstance();
+        }
+
+        private void OnDisable()
+        {
+            Player.onPlayerChange -= HandlePlayerChange;
+            if (instance == this) instance = null;
+        }
+
+        private void HandlePlayerChange(Player newPlayer)
+        {
+            UpdateInstance();
+        }
+
+        private void UpdateInstance()
+        {
+            Player player = GetComponent<Player>();
+            if (player != null && Player.ActivePlayer == player)
+            {
+                instance = this;
+            }
         }
 
         public void CheckVisibility(Collider target, UnityAction<bool> onResult)

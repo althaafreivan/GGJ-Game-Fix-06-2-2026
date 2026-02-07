@@ -634,7 +634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4480449092767224140, guid: d978456eeac33f346a54df630bd5071d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.2099995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4480449092767224140, guid: d978456eeac33f346a54df630bd5071d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1865,7 +1865,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4480449092767224140, guid: d978456eeac33f346a54df630bd5071d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.20999998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4480449092767224140, guid: d978456eeac33f346a54df630bd5071d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2103,7 +2103,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1670878595305140749, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4677407053848838286, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -6522,7 +6522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4480449092767224140, guid: d978456eeac33f346a54df630bd5071d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.20999855
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4480449092767224140, guid: d978456eeac33f346a54df630bd5071d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7450,15 +7450,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1768283667904303561, guid: 9973a4b8930bdc34d9ae90a8a7e5d8c4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1768283667904303561, guid: 9973a4b8930bdc34d9ae90a8a7e5d8c4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.226
+      value: 0.5002423
       objectReference: {fileID: 0}
     - target: {fileID: 1768283667904303561, guid: 9973a4b8930bdc34d9ae90a8a7e5d8c4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.997043
+      value: -4.9970427
       objectReference: {fileID: 0}
     - target: {fileID: 1768283667904303561, guid: 9973a4b8930bdc34d9ae90a8a7e5d8c4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7539,15 +7539,15 @@ PrefabInstance:
       objectReference: {fileID: 343107696}
     - target: {fileID: 3324695322431754132, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 67.44475
+      value: 69.44475
       objectReference: {fileID: 0}
     - target: {fileID: 3324695322431754132, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.381246
+      value: 8.655488
       objectReference: {fileID: 0}
     - target: {fileID: 3324695322431754132, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.606094
+      value: -5.6060944
       objectReference: {fileID: 0}
     - target: {fileID: 4262288136817234635, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7591,15 +7591,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4345253572955775058, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 67.44475
+      value: 69.44475
       objectReference: {fileID: 0}
     - target: {fileID: 4345253572955775058, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.381246
+      value: 8.655488
       objectReference: {fileID: 0}
     - target: {fileID: 4345253572955775058, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.606094
+      value: -5.6060944
       objectReference: {fileID: 0}
     - target: {fileID: 5305449413455577355, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_CullingMask.m_Bits
