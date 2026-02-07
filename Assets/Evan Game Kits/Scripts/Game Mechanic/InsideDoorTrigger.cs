@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using EvanGameKits.Entity.Module;
 using EvanGameKits.Core;
+using EvanGameKits.Mechanic;
 
 namespace EvanGameKits.GameMechanic
 {
