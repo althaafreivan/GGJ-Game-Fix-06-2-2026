@@ -51,10 +51,20 @@ namespace EvanGameKits.Mechanic
 
         public void ShowNotification(string message)
         {
-            ShowNotification(message, defaultDuration);
+            ShowNotification(message, defaultDuration, Color.white);
         }
 
         public void ShowNotification(string message, float duration)
+        {
+            ShowNotification(message, duration, Color.white);
+        }
+
+        public void ShowNotification(string message, Color color)
+        {
+            ShowNotification(message, defaultDuration, color);
+        }
+
+        public void ShowNotification(string message, float duration, Color color)
         {
             if (notificationText == null || canvasGroup == null)
             {
@@ -63,6 +73,7 @@ namespace EvanGameKits.Mechanic
             }
 
             notificationText.text = message;
+            notificationText.color = color;
             notificationText.gameObject.SetActive(true);
 
             if (hideCoroutine != null)
