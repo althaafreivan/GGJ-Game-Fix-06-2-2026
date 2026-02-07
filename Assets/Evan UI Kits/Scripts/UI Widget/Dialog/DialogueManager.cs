@@ -26,6 +26,7 @@ namespace EvanUIKits.Dialogue
 
         private Queue<SentenceData> sentenceQueue = new Queue<SentenceData>();
         private SentenceData currentSentenceData;
+        private DialogueEntry currentEntry;
         private bool isTyping = false;
         private Action onCompleteCallback;
         private RectTransform containerRect;
@@ -37,8 +38,8 @@ namespace EvanUIKits.Dialogue
             if (instance == null) instance = this;
             else Destroy(gameObject);
 
-            if (visualContainer != null) containerRect = visualContainer.GetComponent<RectTransform>();
-            visualContainer.SetActive(false);
+            if (visualContainer != null) containerRect = visualContainer.GetComponent<RectTransform>();   
+            if (visualContainer != null) visualContainer.SetActive(false);
         }
 
         private void OnEnable()
@@ -52,16 +53,9 @@ namespace EvanUIKits.Dialogue
 
         public void StartDialogue(DialogueEntry entry, Action callback = null)
         {
+            currentEntry = entry;
             onCompleteCallback = callback;
-            visualContainer.SetActive(true);
-
-            nameText.text = entry.characterName;
-
-            if (portraitImage != null)
-            {
-                portraitImage.sprite = entry.portrait;
-                portraitImage.gameObject.SetActive(entry.portrait != null);
-            }
+            if (visualContainer != null) visualContainer.SetActive(true);
 
             sentenceQueue.Clear();
             foreach (var data in entry.sentences)
@@ -89,18 +83,45 @@ namespace EvanUIKits.Dialogue
             }
 
             currentSentenceData = sentenceQueue.Dequeue();
-            currentSentenceData.OnSentenceStart?.Invoke();
+            
+            UpdateCharacterUI();
 
+            currentSentenceData.OnSentenceStart?.Invoke();
             StartCoroutine(TypeSentence(currentSentenceData.text));
         }
+
+        private void UpdateCharacterUI()
+        {
+            if (currentEntry == null || currentSentenceData == null) return;
+
+            if (currentSentenceData.useCharacter2)
+            {
+                if (nameText != null) nameText.text = currentEntry.characterName2;
+                if (portraitImage != null)
+                {
+                    portraitImage.sprite = currentEntry.portrait2;
+                    portraitImage.gameObject.SetActive(currentEntry.portrait2 != null);
+                }
+            }
+            else
+            {
+                if (nameText != null) nameText.text = currentEntry.characterName;
+                if (portraitImage != null)
+                {
+                    portraitImage.sprite = currentEntry.portrait;
+                    portraitImage.gameObject.SetActive(currentEntry.portrait != null);
+                }
+            }
+        }
+
         private IEnumerator TypeSentence(string sentence)
         {
             isTyping = true;
-            dialogueText.text = "";
+            if (dialogueText != null) dialogueText.text = "";
 
             foreach (char letter in sentence.ToCharArray())
             {
-                dialogueText.text += letter;
+                if (dialogueText != null) dialogueText.text += letter;
                 yield return new WaitForSeconds(typingSpeed);
             }
 
@@ -110,25 +131,26 @@ namespace EvanUIKits.Dialogue
         private void CompleteSentenceInstantly()
         {
             StopAllCoroutines();
-            dialogueText.text = currentSentenceData.text;
+            if (dialogueText != null && currentSentenceData != null) dialogueText.text = currentSentenceData.text;
             isTyping = false;
         }
 
         private void EndDialogue()
         {
-            visualContainer.SetActive(false);
+            if (visualContainer != null) visualContainer.SetActive(false);
             onCompleteCallback?.Invoke();
             currentSentenceData = null;
+            currentEntry = null;
         }
 
-        public void OnPointerDown(PointerEventData eventData) 
+        public void OnPointerDown(PointerEventData eventData)
         {
-            if (containerRect != null) AnimateButton.OnButtonDown(containerRect, type: animationType);
+            if (containerRect != null) AnimateButton.OnButtonDown(containerRect, type: animationType);    
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (containerRect != null) 
+            if (containerRect != null)
             {
                 AnimateButton.OnButtonUp(containerRect, type: animationType, onComplete: () => {
                     DisplayNextSentence();

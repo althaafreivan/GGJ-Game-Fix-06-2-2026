@@ -20,6 +20,9 @@ namespace EvanGameKits.Entity.Module
         [SerializeField] private float stamina;
         private bool continuousConsumeActive;
 
+        [Header("Events")]
+        public UnityEvent<float> onStaminaChange;
+
         private void Start()
         {
             stamina = maxStamina;
@@ -40,6 +43,7 @@ namespace EvanGameKits.Entity.Module
             Regenerate();
             HandleContinuousConsumption();
             UpdateComponentStates();
+            onStaminaChange?.Invoke(stamina);
         }
 
         private void ConsumeOnce()

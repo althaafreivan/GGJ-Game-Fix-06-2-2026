@@ -9,6 +9,7 @@ namespace EvanUIKits.Dialogue
     public class SentenceData
     {
         [TextArea(3, 5)] public string text;
+        public bool useCharacter2;
         public UnityEvent OnSentenceStart;
         public UnityEvent OnSentenceEnd;
     }
@@ -19,6 +20,8 @@ namespace EvanUIKits.Dialogue
         public string key;
         public string characterName;
         public Sprite portrait;
+        public string characterName2;
+        public Sprite portrait2;
         public List<SentenceData> sentences = new List<SentenceData>();
     }
 

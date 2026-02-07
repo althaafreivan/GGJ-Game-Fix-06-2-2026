@@ -14,6 +14,7 @@ namespace EvanGameKits.Mechanic
 
         private Material wallMaterial;
         private Tween currentTween;
+        private Collider col;
         private bool isHidden = false;
         private float lastHideTime;
 
@@ -21,6 +22,7 @@ namespace EvanGameKits.Mechanic
         {
             if (wallRenderer == null) wallRenderer = GetComponent<Renderer>();
             if (wallRenderer != null) wallMaterial = wallRenderer.material;
+            col = GetComponent<Collider>();
         }
 
         public void RequestHide()
@@ -50,7 +52,15 @@ namespace EvanGameKits.Mechanic
             
             Color targetColor = wallMaterial.GetColor(colorPropertyName);
             targetColor.a = targetAlpha;
-            currentTween = wallMaterial.DOColor(targetColor, colorPropertyName, transitionDuration);
+            currentTween = wallMaterial.DOColor(targetColor, colorPropertyName, transitionDuration)
+                .OnUpdate(() =>
+                {
+                    if (col != null)
+                    {
+                        float currentAlpha = wallMaterial.GetColor(colorPropertyName).a;
+                        col.isTrigger = currentAlpha < 1f;
+                    }
+                });
         }
 
         private void OnDestroy()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -10,10 +11,19 @@ namespace EvanGameKits.UniqueMechanic
 {
     public class USBFileFinder : MonoBehaviour
     {
+        [Header("File Detection Settings")]
         public string targetFileName = "myFile.txt";
         public bool _isFileFound;
         [SerializeField] private float timeTreshold = 10f;
         private float timeElapsedAfterFound = 0f;
+
+        [Header("USB Events")]
+        public UnityEvent OnUSBConnected;
+        public UnityEvent OnUSBDetached;
+
+        [Header("File Events")]
+        public UnityEvent OnFileFound;
+        public UnityEvent OnFileLost;
 
         private const int WM_DEVICECHANGE = 0x0219;
         private const int DBT_DEVICEARRIVAL = 0x8000;
@@ -64,6 +74,7 @@ namespace EvanGameKits.UniqueMechanic
 
             if (changedVariable)
             {
+                OnFileFound?.Invoke();
                 _timerTween = DOVirtual.Float(timeTreshold, 0, timeTreshold, val =>
                 {
                     timeElapsedAfterFound = val;
@@ -75,6 +86,7 @@ namespace EvanGameKits.UniqueMechanic
             }
             else
             {
+                OnFileLost?.Invoke();
                 timeElapsedAfterFound = 0;
                 Debug.Log("File Lost: Timer Reset");
             }
@@ -85,8 +97,14 @@ namespace EvanGameKits.UniqueMechanic
             if (msg == WM_DEVICECHANGE)
             {
                 int eventType = wParam.ToInt32();
-                if (eventType == DBT_DEVICEARRIVAL || eventType == DBT_DEVICEREMOVECOMPLETE)
+                if (eventType == DBT_DEVICEARRIVAL)
                 {
+                    OnUSBConnected?.Invoke();
+                    RunScan();
+                }
+                else if (eventType == DBT_DEVICEREMOVECOMPLETE)
+                {
+                    OnUSBDetached?.Invoke();
                     RunScan();
                 }
             }

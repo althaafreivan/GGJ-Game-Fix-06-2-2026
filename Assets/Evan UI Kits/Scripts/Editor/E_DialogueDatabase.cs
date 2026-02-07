@@ -21,6 +21,8 @@ public class E_DialogueDatabase : Editor
             SerializedProperty key = element.FindPropertyRelative("key");
             SerializedProperty charName = element.FindPropertyRelative("characterName");
             SerializedProperty portrait = element.FindPropertyRelative("portrait");
+            SerializedProperty charName2 = element.FindPropertyRelative("characterName2");
+            SerializedProperty portrait2 = element.FindPropertyRelative("portrait2");
             SerializedProperty sentences = element.FindPropertyRelative("sentences");
 
             // --- Main Entry Container ---
@@ -45,20 +47,35 @@ public class E_DialogueDatabase : Editor
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.Space(5);
+            
+            EditorGUILayout.PropertyField(key, new GUIContent("Unique Key (ID)"));
+            EditorGUILayout.Space(5);
 
-            // Identity Section (Portrait + Info)
+            // --- Characters Section ---
             EditorGUILayout.BeginHorizontal();
-
-            // Portrait Slot
-            EditorGUILayout.BeginVertical(GUILayout.Width(70));
-            EditorGUILayout.LabelField("Avatar", EditorStyles.miniLabel);
+            
+            // Character 1
+            EditorGUILayout.BeginVertical("box");
+            EditorGUILayout.LabelField("Character 1 (Default)", EditorStyles.boldLabel);
+            EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(portrait, GUIContent.none, GUILayout.Width(64), GUILayout.Height(64));
+            EditorGUILayout.BeginVertical();
+            EditorGUILayout.LabelField("Name", EditorStyles.miniLabel);
+            EditorGUILayout.PropertyField(charName, GUIContent.none);
+            EditorGUILayout.EndVertical();
+            EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
 
-            // Name and Key Slot
+            // Character 2
+            EditorGUILayout.BeginVertical("box");
+            EditorGUILayout.LabelField("Character 2", EditorStyles.boldLabel);
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PropertyField(portrait2, GUIContent.none, GUILayout.Width(64), GUILayout.Height(64));
             EditorGUILayout.BeginVertical();
-            EditorGUILayout.PropertyField(key, new GUIContent("Unique Key (ID)"));
-            EditorGUILayout.PropertyField(charName, new GUIContent("Display Name"));
+            EditorGUILayout.LabelField("Name", EditorStyles.miniLabel);
+            EditorGUILayout.PropertyField(charName2, GUIContent.none);
+            EditorGUILayout.EndVertical();
+            EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.EndHorizontal();
@@ -72,7 +89,8 @@ public class E_DialogueDatabase : Editor
             {
                 SerializedProperty sentenceElement = sentences.GetArrayElementAtIndex(j);
                 SerializedProperty text = sentenceElement.FindPropertyRelative("text");
-                SerializedProperty startEv = sentenceElement.FindPropertyRelative("OnSentenceStart");
+                SerializedProperty useChar2 = sentenceElement.FindPropertyRelative("useCharacter2");
+                SerializedProperty startEv = sentenceElement.FindPropertyRelative("OnSentenceStart");     
                 SerializedProperty endEv = sentenceElement.FindPropertyRelative("OnSentenceEnd");
 
                 EditorGUILayout.BeginVertical("box");
@@ -80,7 +98,17 @@ public class E_DialogueDatabase : Editor
                 // Line Header
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField($"Line {j + 1}", EditorStyles.miniBoldLabel);
+                
                 GUILayout.FlexibleSpace();
+                
+                // Toggle Speaker
+                GUI.color = useChar2.boolValue ? Color.yellow : Color.white;
+                if (GUILayout.Button(useChar2.boolValue ? "Speaker: Char 2" : "Speaker: Char 1", EditorStyles.miniButton, GUILayout.Width(100)))
+                {
+                    useChar2.boolValue = !useChar2.boolValue;
+                }
+                GUI.color = Color.white;
+
                 if (GUILayout.Button("-", GUILayout.Width(20)))
                 {
                     sentences.DeleteArrayElementAtIndex(j);

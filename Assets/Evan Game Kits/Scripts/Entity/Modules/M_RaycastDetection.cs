@@ -18,11 +18,22 @@ namespace EvanGameKits.Entity.Module
             player = GetComponent<Player>();
         }
 
-        public override bool isGrounded(){
-            bool onCollide = Physics.CheckSphere(transform.position + offset, detectionRadius, groundLayer);
-            if(onCollide) OnCollide?.Invoke(player);
-            return onCollide;
+        public override bool isGrounded()
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position + offset, detectionRadius, groundLayer);
+            
+            foreach (var col in colliders)
+            {
+                // If the collider is not part of this player's hierarchy, we found valid ground
+                if (!col.transform.IsChildOf(transform))
+                {
+                    OnCollide?.Invoke(player);
+                    return true;
+                }
             }
+
+            return false;
+        }
 
         private void OnDrawGizmos()
         {
