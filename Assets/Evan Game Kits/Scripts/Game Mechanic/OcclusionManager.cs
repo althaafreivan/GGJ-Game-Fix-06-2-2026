@@ -18,13 +18,18 @@ namespace EvanGameKits.Mechanic
         [SerializeField] private float neighborDistance = 2.0f;
         private void Start()
         {
-            cCam.Target.TrackingTarget = Player.ActivePlayer.transform;
-            cCam.Target.LookAtTarget = Player.ActivePlayer.transform;
+            if (Player.ActivePlayer!= null)
+                cCam.Target.TrackingTarget = Player.ActivePlayer.transform;
+            if (Player.ActivePlayer!= null)
+                cCam.Target.LookAtTarget = Player.ActivePlayer.transform;
+
         }
         private void Awake()
         {
-            cCam.Target.TrackingTarget = Player.ActivePlayer.transform;
-            cCam.Target.LookAtTarget = Player.ActivePlayer.transform;
+            if (Player.ActivePlayer!= null)
+                cCam.Target.TrackingTarget = Player.ActivePlayer.transform;
+            if (Player.ActivePlayer!= null)
+                cCam.Target.LookAtTarget = Player.ActivePlayer.transform;
         }
 
         private void OnEnable()

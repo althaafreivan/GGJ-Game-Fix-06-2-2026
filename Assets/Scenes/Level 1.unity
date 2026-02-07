@@ -840,6 +840,7 @@ GameObject:
   - component: {fileID: 239094448}
   - component: {fileID: 239094447}
   - component: {fileID: 239094446}
+  - component: {fileID: 239094451}
   m_Layer: 0
   m_Name: Trigger (3)
   m_TagString: Untagged
@@ -961,6 +962,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1694905572}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &239094451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239094445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b72c679815090e4dbeed444e584453d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.M_InteractionTriggerVisibilityTrigger
 --- !u!1 &240892947
 GameObject:
   m_ObjectHideFlags: 0
@@ -1400,6 +1413,7 @@ GameObject:
   - component: {fileID: 389524851}
   - component: {fileID: 389524850}
   - component: {fileID: 389524849}
+  - component: {fileID: 389524854}
   m_Layer: 0
   m_Name: Trigger (5)
   m_TagString: Untagged
@@ -1521,6 +1535,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 119415382}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &389524854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389524848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b72c679815090e4dbeed444e584453d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.M_InteractionTriggerVisibilityTrigger
 --- !u!1001 &391481751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3233,6 +3259,7 @@ GameObject:
   - component: {fileID: 826797755}
   - component: {fileID: 826797754}
   - component: {fileID: 826797753}
+  - component: {fileID: 826797758}
   m_Layer: 0
   m_Name: Trigger (7)
   m_TagString: Untagged
@@ -3354,6 +3381,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 934140629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &826797758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826797752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b72c679815090e4dbeed444e584453d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.M_InteractionTriggerVisibilityTrigger
 --- !u!1 &934140625 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6861751118046809828, guid: 6407ae91a6a791c4490e78d03c5217ed, type: 3}
@@ -3543,6 +3582,7 @@ GameObject:
   - component: {fileID: 1009666412}
   - component: {fileID: 1009666411}
   - component: {fileID: 1009666410}
+  - component: {fileID: 1009666415}
   m_Layer: 0
   m_Name: Trigger (9)
   m_TagString: Untagged
@@ -3664,6 +3704,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1728272514}
   m_LocalEulerAnglesHint: {x: -109.022, y: 0, z: 0}
+--- !u!114 &1009666415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009666409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b72c679815090e4dbeed444e584453d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.M_InteractionTriggerVisibilityTrigger
 --- !u!1 &1010148385
 GameObject:
   m_ObjectHideFlags: 0
@@ -3862,6 +3914,7 @@ GameObject:
   - component: {fileID: 1064851971}
   - component: {fileID: 1064851970}
   - component: {fileID: 1064851969}
+  - component: {fileID: 1064851974}
   m_Layer: 0
   m_Name: Trigger (6)
   m_TagString: Untagged
@@ -3983,6 +4036,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1063040008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1064851974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064851968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b72c679815090e4dbeed444e584453d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.M_InteractionTriggerVisibilityTrigger
 --- !u!1001 &1077674893
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4082,7 +4147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1088049024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5176,6 +5241,7 @@ GameObject:
   - component: {fileID: 1430240481}
   - component: {fileID: 1430240480}
   - component: {fileID: 1430240479}
+  - component: {fileID: 1430240484}
   m_Layer: 0
   m_Name: Trigger (1)
   m_TagString: Untagged
@@ -5297,6 +5363,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1059078356}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1430240484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430240478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b72c679815090e4dbeed444e584453d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.M_InteractionTriggerVisibilityTrigger
 --- !u!1001 &1432292005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5655,6 +5733,7 @@ GameObject:
   - component: {fileID: 1512117694}
   - component: {fileID: 1512117693}
   - component: {fileID: 1512117692}
+  - component: {fileID: 1512117697}
   m_Layer: 0
   m_Name: Trigger (8)
   m_TagString: Untagged
@@ -5776,6 +5855,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2040437088}
   m_LocalEulerAnglesHint: {x: -109.022, y: 0, z: 0}
+--- !u!114 &1512117697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512117691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b72c679815090e4dbeed444e584453d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.M_InteractionTriggerVisibilityTrigger
 --- !u!224 &1515605554 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 287491887403141164, guid: 9fb0425b4f497344cab3cc74c57e3237, type: 3}
@@ -6339,6 +6430,7 @@ GameObject:
   - component: {fileID: 1784877259}
   - component: {fileID: 1784877258}
   - component: {fileID: 1784877257}
+  - component: {fileID: 1784877262}
   m_Layer: 0
   m_Name: Trigger (4)
   m_TagString: Untagged
@@ -6460,6 +6552,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1008995051}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1784877262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784877256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b72c679815090e4dbeed444e584453d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.M_InteractionTriggerVisibilityTrigger
 --- !u!1001 &1799066915
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7344,6 +7448,7 @@ GameObject:
   - component: {fileID: 2135544429}
   - component: {fileID: 2135544428}
   - component: {fileID: 2135544427}
+  - component: {fileID: 2135544432}
   m_Layer: 0
   m_Name: Trigger (2)
   m_TagString: Untagged
@@ -7465,6 +7570,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1437970734}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2135544432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135544426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b72c679815090e4dbeed444e584453d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.M_InteractionTriggerVisibilityTrigger
 --- !u!1001 &138287865018786002
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7808,15 +7925,15 @@ PrefabInstance:
       objectReference: {fileID: 425853897}
     - target: {fileID: 6159428954727065587, guid: aad0ca966b1bbc2458b9ce29d4fdabde, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6159428954727065587, guid: aad0ca966b1bbc2458b9ce29d4fdabde, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6159428954727065587, guid: aad0ca966b1bbc2458b9ce29d4fdabde, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6165058850824083801, guid: aad0ca966b1bbc2458b9ce29d4fdabde, type: 3}
       propertyPath: m_Pivot.x
@@ -8176,7 +8293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7481716086714401840, guid: 3e55a79ebf7a4974eb6e59166525075c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 7481716086714401840, guid: 3e55a79ebf7a4974eb6e59166525075c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8366,7 +8483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1610829673552994484, guid: a9f73ebaed2195f4db9bfd0469e59fbc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.908
+      value: 1.696
       objectReference: {fileID: 0}
     - target: {fileID: 1610829673552994484, guid: a9f73ebaed2195f4db9bfd0469e59fbc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8536,6 +8653,7 @@ GameObject:
   - component: {fileID: 8963529112509351255}
   - component: {fileID: 945025952261545918}
   - component: {fileID: 400773079480019368}
+  - component: {fileID: 8963529112509351256}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -8561,7 +8679,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1768283667904303561, guid: 9973a4b8930bdc34d9ae90a8a7e5d8c4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 1768283667904303561, guid: 9973a4b8930bdc34d9ae90a8a7e5d8c4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8669,7 +8787,7 @@ PrefabInstance:
       objectReference: {fileID: 343107696}
     - target: {fileID: 3324695322431754132, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 62.444748
+      value: 63.444748
       objectReference: {fileID: 0}
     - target: {fileID: 3324695322431754132, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8717,7 +8835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4345253572955775058, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 62.444748
+      value: 63.444748
       objectReference: {fileID: 0}
     - target: {fileID: 4345253572955775058, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8789,6 +8907,18 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8963529112509351256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7450121794026054786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b72c679815090e4dbeed444e584453d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.M_InteractionTriggerVisibilityTrigger
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

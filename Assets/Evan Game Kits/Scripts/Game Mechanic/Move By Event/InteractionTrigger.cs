@@ -24,6 +24,7 @@ namespace EvanGameKits.Mechanic
         private int objectsOnTrigger = 0;
         private MaterialPropertyBlock propBlock;
         private bool isActive = false;
+        private bool isFrozen = false;
 
         private void Start()
         {
@@ -34,8 +35,28 @@ namespace EvanGameKits.Mechanic
             UpdateVisuals(false);
         }
 
+        public void SetFrozen(bool state)
+        {
+            isFrozen = state;
+            if (isFrozen)
+            {
+                // Optionally hide visuals or set to a "disabled" state if needed
+                if (buttonRenderer != null)
+                {
+                    buttonRenderer.GetPropertyBlock(propBlock);
+                    propBlock.SetColor("_EmissionColor", offColor);
+                    buttonRenderer.SetPropertyBlock(propBlock);
+                }
+            }
+            else
+            {
+                UpdateVisuals(isActive);
+            }
+        }
+
         private void UpdateVisuals(bool isOn)
         {
+            if (isFrozen) return;
             if (triggerType != TriggerType.Weight && triggerType != TriggerType.Collider3D) return;
 
             isActive = isOn;
@@ -49,6 +70,7 @@ namespace EvanGameKits.Mechanic
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (isFrozen) return;
             if (!triggerType.Equals(TriggerType.UIButton) || TargetObject == null) return;
             TargetObject.ToggleState();
             UpdateVisuals(!isActive);
@@ -56,6 +78,7 @@ namespace EvanGameKits.Mechanic
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (isFrozen) return;
             if (!triggerType.Equals(TriggerType.UIButton) || TargetObject == null) return;
             if (state.Equals(TriggerState.Hold))
             {
@@ -66,7 +89,7 @@ namespace EvanGameKits.Mechanic
 
         private void OnTriggerEnter(Collider other)
         {
-            if (TargetObject == null) return;
+            if (isFrozen || TargetObject == null) return;
 
             if (triggerType == TriggerType.Weight)
             {
@@ -101,7 +124,7 @@ namespace EvanGameKits.Mechanic
 
         private void OnTriggerExit(Collider other)
         {
-            if (TargetObject == null) return;
+            if (isFrozen || TargetObject == null) return;
 
             if (triggerType == TriggerType.Weight)
             {
@@ -133,7 +156,7 @@ namespace EvanGameKits.Mechanic
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (TargetObject == null) return;
+            if (isFrozen || TargetObject == null) return;
 
             if (triggerType == TriggerType.Weight)
             {
@@ -168,7 +191,7 @@ namespace EvanGameKits.Mechanic
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (TargetObject == null) return;
+            if (isFrozen || TargetObject == null) return;
 
             if (triggerType == TriggerType.Weight)
             {
