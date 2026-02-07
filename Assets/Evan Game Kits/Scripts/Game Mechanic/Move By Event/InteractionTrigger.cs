@@ -1,6 +1,9 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using EvanGameKits.Mechanic;
+using EvanGameKits.GameMechanic;
+using EvanGameKits.Entity.Module;
 
 namespace EvanGameKits.Mechanic
 {
@@ -87,9 +90,22 @@ namespace EvanGameKits.Mechanic
             }
         }
 
+        private bool IsWhiteCat(GameObject obj)
+        {
+            var identity = obj.GetComponent<Entity.Module.M_CatIdentity>();
+            if (identity == null) identity = obj.GetComponentInParent<Entity.Module.M_CatIdentity>();
+            return identity != null && identity.catType == Entity.Module.CatType.White;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (isFrozen || TargetObject == null) return;
+
+            if (other.CompareTag("Player") && IsWhiteCat(other.gameObject))
+            {
+                NotificationController.instance?.ShowNotification("White freeze time, trigger doesn't feel like working");
+                return;
+            }
 
             if (triggerType == TriggerType.Weight)
             {
@@ -157,6 +173,12 @@ namespace EvanGameKits.Mechanic
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (isFrozen || TargetObject == null) return;
+
+            if (other.CompareTag("Player") && IsWhiteCat(other.gameObject))
+            {
+                NotificationController.instance?.ShowNotification("White freeze time, trigger doesn't feel like working");
+                return;
+            }
 
             if (triggerType == TriggerType.Weight)
             {

@@ -2,6 +2,8 @@ using UnityEngine;
 using DG.Tweening;
 using EvanGameKits.Entity;
 using System.Collections.Generic;
+using EvanGameKits.Entity.Module;
+using EvanGameKits.GameMechanic;
 
 namespace EvanGameKits.Mechanic
 {
@@ -53,8 +55,20 @@ namespace EvanGameKits.Mechanic
 
             if (isPlayerInRange && Input.GetKeyDown(interactionKey))
             {
+                if (IsWhiteCatActive())
+                {
+                    NotificationController.instance?.ShowNotification("White freeze time, door feel's like jammed");
+                    return;
+                }
                 ToggleState();
             }
+        }
+
+        private bool IsWhiteCatActive()
+        {
+            if (Player.ActivePlayer == null) return false;
+            var identity = Player.ActivePlayer.GetComponent<M_CatIdentity>();
+            return identity != null && identity.catType == CatType.White;
         }
 
         public void ToggleState()

@@ -55,7 +55,7 @@ public class EnteringAnimation : MonoBehaviour
                 Vector2 center = lensDistortion.center.value;
                 center.x = x;
                 lensDistortion.center.value = center;
-            }, -1f, 2f).From(0.5f).SetEase(Ease.InExpo));
+            }, 1.5f, 2f).From(0.5f).SetEase(Ease.InExpo));
         }
 
         // Finalize

@@ -29,7 +29,6 @@ namespace EvanGameKits.Core
         private void OnEnable()
         {
             if(instance == null) instance = this;
-            DontDestroyOnLoad(instance);
             onSceneLoaded.Invoke();
             currentHearts = maxHearts;
         }

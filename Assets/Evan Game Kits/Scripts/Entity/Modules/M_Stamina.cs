@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using EvanGameKits.Mechanic;
 
 namespace EvanGameKits.Entity.Module
 {
@@ -19,9 +20,15 @@ namespace EvanGameKits.Entity.Module
 
         [SerializeField] private float stamina;
         private bool continuousConsumeActive;
+        private Base entity;
 
         [Header("Events")]
         public UnityEvent<float> onStaminaChange;
+
+        private void Awake()
+        {
+            entity = GetComponent<Base>();
+        }
 
         private void Start()
         {
@@ -36,6 +43,51 @@ namespace EvanGameKits.Entity.Module
 
             if (boost != null)
                 boost.onBoost.AddListener((bool val) => { continuousConsumeActive = val; });
+        }
+
+        private void OnEnable()
+        {
+            if (entity != null)
+            {
+                entity.IsJumpPressed += OnJumpAttempt;
+                entity.IsRunPressed += OnRunAttempt;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (entity != null)
+            {
+                entity.IsJumpPressed -= OnJumpAttempt;
+                entity.IsRunPressed -= OnRunAttempt;
+            }
+        }
+
+        private void OnJumpAttempt(bool isPressed)
+        {
+            if (isPressed && stamina < singleConsume)
+            {
+                ShowLowStaminaNotification(singleConsume);
+            }
+        }
+
+        private void OnRunAttempt(bool isPressed)
+        {
+            if (isPressed && stamina <= 0)
+            {
+                // To start boosting, we at least need some stamina
+                ShowLowStaminaNotification(multipleConsume * Time.fixedDeltaTime * 5f); // Arbitrary small amount (e.g. 5 frames worth)
+            }
+        }
+
+        private void ShowLowStaminaNotification(float requiredStamina)
+        {
+            float needed = requiredStamina - stamina;
+            if (needed <= 0) return;
+
+            float timeToRegen = needed / regenRate;
+            string formattedTime = timeToRegen.ToString("F1");
+            NotificationController.instance?.ShowNotification($"Stamina is too low, regen for {formattedTime}s to do your action");
         }
 
         private void FixedUpdate()
