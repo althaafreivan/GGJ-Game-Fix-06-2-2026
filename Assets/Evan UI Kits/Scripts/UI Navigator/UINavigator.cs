@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
@@ -31,7 +31,7 @@ namespace EvanUIKits.PanelController
             {
                 for (int i = 0; i < panels.Count; i++)
                 {
-                    if (panels[i] != null) panels[i].gameObject.SetActive(false);
+                    if (panels[i] != null) panels[i].gameObject.SetActive(false);        
                 }
 
                 PushPanel(panels[0].name);
@@ -51,10 +51,10 @@ namespace EvanUIKits.PanelController
             if (history.Count > 0)
             {
                 if (history.Peek() == panel) return;
-                history.Peek().gameObject.SetActive(false);
+                history.Peek().Hide();
             }
 
-            panel.gameObject.SetActive(true);
+            panel.Show();
             history.Push(panel);
 
             UpdateBreadcrumbs();
@@ -65,17 +65,17 @@ namespace EvanUIKits.PanelController
             if (history.Count <= 1) return;
 
             UIPanel current = history.Pop();
-            current.gameObject.SetActive(false);
+            current.Hide();
 
             UIPanel previous = history.Peek();
-            previous.gameObject.SetActive(true);
+            previous.Show();
 
             UpdateBreadcrumbs();
         }
 
         private void UpdateBreadcrumbs()
         {
-            Breadcrumb = string.Join(" > ", history.Select(p => p.name).Reverse());
+            Breadcrumb = string.Join(" > ", history.Select(p => p.name).Reverse());      
         }
     }
 }

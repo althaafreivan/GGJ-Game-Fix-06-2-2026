@@ -13,6 +13,7 @@ public class A_Blast : MonoBehaviour
     [Header("Star Settings")]
     [SerializeField] private float starMaximalSize = 40f;
     [SerializeField] private float starDuration = .5f;
+    [SerializeField] private bool automaticStarAlignment = true;
 
     [Header("Finish Settings")]
     [SerializeField] private float finishDuration = 0.5f;
@@ -60,7 +61,7 @@ public class A_Blast : MonoBehaviour
 
         Star.gameObject.SetActive(true);
         Star.localScale = Vector3.zero;
-        Star.localRotation = Camera.main.transform.localRotation;
+        if(automaticStarAlignment) Star.localRotation = Camera.main.transform.localRotation;
         Star.DOScale(starMaximalSize, starDuration).SetEase(primaryEase).OnComplete(() =>
         {
             Star.DOScale(Vector3.zero, starDuration).SetEase(primaryEase).OnComplete(() =>
