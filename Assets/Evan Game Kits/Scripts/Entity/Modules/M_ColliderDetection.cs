@@ -19,7 +19,7 @@ namespace EvanGameKits.Entity.Module
             player = GetComponent<Player>();
         }
 
-        private void OnCollisionStay(Collision collision)
+        private void OnCollisionEnter(Collision collision)
         {
             if (((1 << collision.gameObject.layer) & groundLayer) != 0)
             {
@@ -33,13 +33,23 @@ namespace EvanGameKits.Entity.Module
             }
         }
 
+        private void OnCollisionStay(Collision collision)
+        {
+            if (((1 << collision.gameObject.layer) & groundLayer) != 0)
+            {
+                privGrounded = true;
+                // Don't invoke OnCollide every frame, or do if needed by other systems
+                // OnCollide?.Invoke(player); 
+            }
+        }
+
         private void OnCollisionExit(Collision collision)
         {
             if (((1 << collision.gameObject.layer) & groundLayer) != 0)
             {
                 privGrounded = false;
                 
-                if (collision.gameObject.CompareTag("Bridge"))
+                if (collision.gameObject.CompareTag("Bridge") && transform.parent == collision.transform)
                 {
                     transform.SetParent(null);
                 }

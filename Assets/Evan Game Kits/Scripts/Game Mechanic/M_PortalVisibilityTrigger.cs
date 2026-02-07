@@ -50,11 +50,8 @@ namespace EvanGameKits.Mechanic
         {
             if (portal != null)
             {
-                // If it is visible in the camera (or isReverse logic is applied in M_FrustumDetect), 
-                // and we want it to work only when looking at it, then it should NOT be frozen when visible.
-                // If the player "freezes" things by looking away, then:
-                // isVisible = true -> isFrozen = false
-                // isVisible = false -> isFrozen = true
+                // M_FrustumDetect already accounts for isReverse (White cat looking = false).
+                // So if isVisible is false, it means it should be frozen.
                 portal.SetFrozen(!isVisible);
             }
         }

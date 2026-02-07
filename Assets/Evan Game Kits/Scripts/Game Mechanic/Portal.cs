@@ -27,6 +27,7 @@ namespace EvanGameKits.Mechanic
         [Header("Cooldown")]
         public float teleportCooldown = 2.0f;
         private static float lastTeleportTime;
+        private static bool isAnyPortalTeleporting = false;
 
         private List<Material> portalMaterials = new List<Material>();
         private HashSet<GameObject> objectsInTrigger = new HashSet<GameObject>();
@@ -63,16 +64,33 @@ namespace EvanGameKits.Mechanic
             }
         }
 
+        private string GetCatName(GameObject obj)
+        {
+            var identity = obj.GetComponent<Entity.Module.M_CatIdentity>();
+            if (identity == null) identity = obj.GetComponentInParent<Entity.Module.M_CatIdentity>();
+            if (identity == null) return "Unknown";
+            return identity.catType == Entity.Module.CatType.White ? "Expected" : "Nothing";
+        }
+
         private void OnTriggerEnter(Collider other)
         {
-            if (isFrozen || (targetPortal != null && targetPortal.isFrozen)) return;
-            if (Time.time < lastTeleportTime + teleportCooldown) return;
-            
             GameObject playerRoot = FindPlayerRoot(other.gameObject);
             if (playerRoot == null) return;
 
             if (((1 << playerRoot.layer) & allowedLayer) == 0) return;
             if (!playerRoot.CompareTag(playerTag)) return;
+
+            if (isAnyPortalTeleporting)
+            {
+                NotificationController.instance?.ShowNotification("Portal is currently busy...", 1f);
+                return;
+            }
+
+            if (Time.time < lastTeleportTime + teleportCooldown)
+            {
+                NotificationController.instance?.ShowNotification("Portal is recharging...", 1f);
+                return;
+            }
 
             if (objectsInTrigger.Add(playerRoot))
             {
@@ -100,10 +118,25 @@ namespace EvanGameKits.Mechanic
 
         private IEnumerator TeleportCountdown(GameObject playerObj)
         {
+            isAnyPortalTeleporting = true;
+            string catName = GetCatName(playerObj);
             AnimateDissolve(1f, 0f);
             if (isFrozen) currentTween.Pause();
             
             yield return currentTween.WaitForCompletion();
+
+            // Notify why it's waiting
+            if (isFrozen || (targetPortal != null && targetPortal.isFrozen))
+            {
+                if (catName == "Expected")
+                {
+                    NotificationController.instance?.ShowNotification("Expected can't teleport while looking at the portal! Move your window away and check from map.", 3f);
+                }
+                else
+                {
+                    NotificationController.instance?.ShowNotification("Nothing can only teleport while looking at the portal!", 2f);
+                }
+            }
 
             while (isFrozen || (targetPortal != null && targetPortal.isFrozen))
             {
@@ -116,7 +149,7 @@ namespace EvanGameKits.Mechanic
 
                 targetPortal.AnimateDissolve(1f, 0f);
                 if (targetPortal.isFrozen) targetPortal.CurrentTween.Pause();
-                yield return targetPortal.CurrentTween.WaitForCompletion();
+                yield return targetPortal.CurrentPortalTweenWait();
 
                 Transform destination = targetPortal.spawnPoint != null ? targetPortal.spawnPoint : targetPortal.transform;
                 playerObj.transform.position = destination.position;
@@ -134,11 +167,18 @@ namespace EvanGameKits.Mechanic
             }
             else
             {
+                NotificationController.instance?.ShowNotification($"{catName} left the portal area.", 1.5f);
                 AnimateDissolve(0f, 1f);
                 if (isFrozen) currentTween.Pause();
                 yield return currentTween.WaitForCompletion();
                 objectsInTrigger.Remove(playerObj);
             }
+            isAnyPortalTeleporting = false;
+        }
+
+        private IEnumerator CurrentPortalTweenWait()
+        {
+            if (currentTween != null) yield return currentTween.WaitForCompletion();
         }
 
         public Tween AnimateDissolve(float start, float end)

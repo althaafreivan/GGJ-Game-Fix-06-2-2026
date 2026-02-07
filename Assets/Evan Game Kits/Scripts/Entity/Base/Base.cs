@@ -14,6 +14,10 @@ namespace EvanGameKits.Entity
         protected virtual void Awake()
         {
            rb = GetComponent<Rigidbody>();
+           if (rb != null)
+           {
+               rb.interpolation = RigidbodyInterpolation.Interpolate;
+           }
         }
     }
 
