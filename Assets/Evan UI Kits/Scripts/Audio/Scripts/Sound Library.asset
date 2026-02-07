@@ -16,7 +16,7 @@ MonoBehaviour:
   - Name: Button
     Clip: {fileID: 8300000, guid: f4b800b0a937a9646a5b42ae9112a197, type: 3}
   - Name: Tick
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: 591b9f72b29b93447acd06c8317d4abf, type: 3}
   musicLibraries:
   - Name: bgm
     Clip: {fileID: 8300000, guid: 4d5ce379982070044a830d86d911f566, type: 3}
