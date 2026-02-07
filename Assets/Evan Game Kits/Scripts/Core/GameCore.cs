@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using EvanGameKits.Mechanic;
+using EvanUIKits.Audio;
 
 namespace EvanGameKits.Core
 {
@@ -114,6 +115,10 @@ namespace EvanGameKits.Core
 
         public void Dead(EvanGameKits.Entity.Player player)
         {
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.PlaySFX("Death");
+            }
             TakeDamage(player);
         }
 

@@ -17,10 +17,9 @@ namespace EvanUIKits.Audio
 
         private void Awake()
         {
-            if (instance == null)
+            if (instance == null || instance != this)
             {
                 instance = this;
-                DontDestroyOnLoad(gameObject);
             }
             else
             {
@@ -35,10 +34,20 @@ namespace EvanUIKits.Audio
             music = gameObject.AddComponent<AudioSource>();
             music.outputAudioMixerGroup = mixer.FindMatchingGroups("music")[0];
             music.playOnAwake = false;
-            music.loop = true;
 
             AdjustVolume(VolumeType.SFX, PlayerPrefs.GetFloat("sfxVolume", 0.75f));
             AdjustVolume(VolumeType.Music, PlayerPrefs.GetFloat("musicVolume", 0.75f));
+        }
+
+        private void Start()
+        {
+            var entry = soundLibrary.musicLibraries.Find(s => s.Name == "music");
+            if (entry != null && entry.Clip != null)
+            {
+                music.loop = true;
+                music.clip = entry.Clip;
+                music.Play();
+            }
         }
 
         public void AdjustVolume(VolumeType type, float level)

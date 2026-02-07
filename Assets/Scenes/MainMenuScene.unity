@@ -1676,7 +1676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5875711629727166702, guid: 4d4e9852059e3e14197d6a22ac866dbb, type: 3}
       propertyPath: m_text
-      value: Nothing & Expectation
+      value: No Cat Works as Expectation
       objectReference: {fileID: 0}
     - target: {fileID: 5875711629727166702, guid: 4d4e9852059e3e14197d6a22ac866dbb, type: 3}
       propertyPath: m_margin.z

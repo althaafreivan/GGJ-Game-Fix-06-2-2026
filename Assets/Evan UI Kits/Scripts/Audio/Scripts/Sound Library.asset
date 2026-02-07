@@ -21,6 +21,14 @@ MonoBehaviour:
     Clip: {fileID: 8300000, guid: 7ff77699086d8ca4594e66ba6afdc82b, type: 3}
   - Name: onBlast
     Clip: {fileID: 8300000, guid: 798c9824c953ea441a574a474c715fc5, type: 3}
+  - Name: Jump
+    Clip: {fileID: 8300000, guid: 9c170a517423954499b631e26843135b, type: 3}
+  - Name: swap
+    Clip: {fileID: 8300000, guid: d0e94a50a7fb7f042ab9244164b9bf28, type: 3}
+  - Name: Typing
+    Clip: {fileID: 8300000, guid: 5ef16dcda8cfbcb49ad404d5e81714e8, type: 3}
+  - Name: Death
+    Clip: {fileID: 8300000, guid: 0308e84433c061e47992d39d09afd305, type: 3}
   musicLibraries:
-  - Name: bgm
+  - Name: music
     Clip: {fileID: 8300000, guid: 4d5ce379982070044a830d86d911f566, type: 3}

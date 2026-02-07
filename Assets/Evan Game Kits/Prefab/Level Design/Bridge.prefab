@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 1bd30756641719f4bae9f4603a7cf7c9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -18.000004
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1bd30756641719f4bae9f4603a7cf7c9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.0000012
+      value: 0.17743076
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1bd30756641719f4bae9f4603a7cf7c9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.9999478
+      value: -9.116429
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1bd30756641719f4bae9f4603a7cf7c9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1bd30756641719f4bae9f4603a7cf7c9, type: 3}
       propertyPath: m_TagString
-      value: Ground
+      value: Bridge
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

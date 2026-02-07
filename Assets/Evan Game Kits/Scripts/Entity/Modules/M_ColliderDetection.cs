@@ -25,6 +25,11 @@ namespace EvanGameKits.Entity.Module
             {
                 privGrounded = true;
                 OnCollide?.Invoke(player);
+
+                if (collision.gameObject.CompareTag("Bridge"))
+                {
+                    transform.SetParent(collision.transform);
+                }
             }
         }
 
@@ -33,6 +38,11 @@ namespace EvanGameKits.Entity.Module
             if (((1 << collision.gameObject.layer) & groundLayer) != 0)
             {
                 privGrounded = false;
+                
+                if (collision.gameObject.CompareTag("Bridge"))
+                {
+                    transform.SetParent(null);
+                }
             }
         }
     }

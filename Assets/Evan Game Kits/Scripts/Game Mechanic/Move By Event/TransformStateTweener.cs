@@ -19,7 +19,7 @@ namespace EvanGameKits.Mechanic
         public DG.Tweening.Ease ease = Ease.InOutCubic;
         public UnityEvent invokeTrigger, revokeTrigger;
 
-        private bool isTriggered = false;
+        public bool isTriggered = false;
         private bool isFrozen = false;
         private Sequence currentSequence;
 

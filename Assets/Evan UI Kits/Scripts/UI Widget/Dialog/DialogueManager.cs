@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -6,10 +6,11 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.EventSystems;
 using EvanUIKits.Tweening;
+using EvanUIKits.Audio;
 
 namespace EvanUIKits.Dialogue
 {
-    public class DialogueManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+    public class DialogueManager : MonoBehaviour, IPointerDownHandler, IPointerUpHandler 
     {
         public static DialogueManager instance;
 
@@ -44,7 +45,7 @@ namespace EvanUIKits.Dialogue
                 containerRect = visualContainer.GetComponent<RectTransform>();
                 canvasGroup = visualContainer.GetComponent<CanvasGroup>();
                 if (canvasGroup == null) canvasGroup = visualContainer.AddComponent<CanvasGroup>();
-                
+
                 visualContainer.SetActive(true);
                 ToggleUI(false);
             }
@@ -62,7 +63,7 @@ namespace EvanUIKits.Dialogue
 
         private void OnEnable()
         {
-            if (DialogueDatabase.Instance != null && !string.IsNullOrEmpty(dialogueKey))
+            if (DialogueDatabase.Instance != null && !string.IsNullOrEmpty(dialogueKey)) 
             {
                 var entry = DialogueDatabase.Instance.GetDialogue(dialogueKey);
                 if (entry != null) StartDialogue(entry);
@@ -72,7 +73,7 @@ namespace EvanUIKits.Dialogue
         public void StartDialogue(DialogueEntry entry, Action callback = null)
         {
             if (entry.isOneTime && entry.hasBeenPlayed) return;
-            
+
             Time.timeScale = 0;
             entry.hasBeenPlayed = true;
             currentEntry = entry;
@@ -118,7 +119,7 @@ namespace EvanUIKits.Dialogue
             }
 
             currentSentenceData = sentenceQueue.Dequeue();
-            
+
             UpdateCharacterUI();
 
             currentSentenceData.OnSentenceStart?.Invoke();
@@ -131,20 +132,20 @@ namespace EvanUIKits.Dialogue
 
             if (currentSentenceData.useCharacter2)
             {
-                if (nameText != null) nameText.text = currentEntry.characterName2;
+                if (nameText != null) nameText.text = currentEntry.characterName2;       
                 if (portraitImage != null)
                 {
                     portraitImage.sprite = currentEntry.portrait2;
-                    portraitImage.gameObject.SetActive(currentEntry.portrait2 != null);
+                    portraitImage.gameObject.SetActive(currentEntry.portrait2 != null);  
                 }
             }
             else
             {
-                if (nameText != null) nameText.text = currentEntry.characterName;
+                if (nameText != null) nameText.text = currentEntry.characterName;        
                 if (portraitImage != null)
                 {
                     portraitImage.sprite = currentEntry.portrait;
-                    portraitImage.gameObject.SetActive(currentEntry.portrait != null);
+                    portraitImage.gameObject.SetActive(currentEntry.portrait != null);   
                 }
             }
         }
@@ -157,6 +158,12 @@ namespace EvanUIKits.Dialogue
             foreach (char letter in sentence.ToCharArray())
             {
                 if (dialogueText != null) dialogueText.text += letter;
+                
+                if (AudioManager.instance != null && !char.IsWhiteSpace(letter))
+                {
+                    AudioManager.instance.PlaySFX("Typing");
+                }
+                
                 yield return new WaitForSecondsRealtime(typingSpeed);
             }
 
@@ -181,11 +188,16 @@ namespace EvanUIKits.Dialogue
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (containerRect != null) AnimateButton.OnButtonDown(containerRect, type: animationType, ignoreTimeScale: true);    
+            if (containerRect != null) AnimateButton.OnButtonDown(containerRect, type: animationType, ignoreTimeScale: true);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.PlaySFX("Button");
+            }
+
             if (containerRect != null)
             {
                 AnimateButton.OnButtonUp(containerRect, type: animationType, ignoreTimeScale: true, onComplete: () => {

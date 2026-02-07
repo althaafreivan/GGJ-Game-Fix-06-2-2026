@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 using EvanGameKits.Mechanic;
 using EvanGameKits.GameMechanic;
 using EvanGameKits.Entity.Module;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EvanGameKits.Mechanic
 {
@@ -24,15 +26,18 @@ namespace EvanGameKits.Mechanic
         [ColorUsage(true, true)] public Color onColor = Color.green;
         [ColorUsage(true, true)] public Color offColor = Color.black;
 
-        private int objectsOnTrigger = 0;
         private MaterialPropertyBlock propBlock;
         private bool isActive = false;
         private bool isFrozen = false;
 
+        // Use HashSet to prevent double counting
+        private HashSet<Collider> trackedColliders = new HashSet<Collider>();
+        private HashSet<Collider2D> trackedColliders2D = new HashSet<Collider2D>();
+
         private void Start()
         {
-            if ((triggerType.Equals(TriggerType.Collider3D)) && (Camera.main.GetComponent<PhysicsRaycaster>() == null)) Camera.main.AddComponent<PhysicsRaycaster>();
-            if ((triggerType.Equals(TriggerType.Collider2D)) && (Camera.main.GetComponent<Physics2DRaycaster>() == null)) Camera.main.AddComponent<Physics2DRaycaster>();
+            if ((triggerType.Equals(TriggerType.Collider3D)) && (Camera.main != null && Camera.main.GetComponent<PhysicsRaycaster>() == null)) Camera.main.AddComponent<PhysicsRaycaster>();
+            if ((triggerType.Equals(TriggerType.Collider2D)) && (Camera.main != null && Camera.main.GetComponent<Physics2DRaycaster>() == null)) Camera.main.AddComponent<Physics2DRaycaster>();
             
             propBlock = new MaterialPropertyBlock();
             UpdateVisuals(false);
@@ -40,29 +45,46 @@ namespace EvanGameKits.Mechanic
 
         public void SetFrozen(bool state)
         {
+            if (isFrozen == state) return;
             isFrozen = state;
-            if (isFrozen)
+
+            // When frozen, we do NOT change the color to offColor.
+            // We want it to stay exactly as it was (Frozen in time).
+            if (!isFrozen)
             {
-                // Optionally hide visuals or set to a "disabled" state if needed
-                if (buttonRenderer != null)
-                {
-                    buttonRenderer.GetPropertyBlock(propBlock);
-                    propBlock.SetColor("_EmissionColor", offColor);
-                    buttonRenderer.SetPropertyBlock(propBlock);
-                }
+                RefreshTriggerState();
+            }
+        }
+
+        private void RefreshTriggerState()
+        {
+            if (isFrozen || TargetObject == null) return;
+
+            // Cleanup null or destroyed objects.
+            trackedColliders.RemoveWhere(c => c == null || !c.gameObject.activeInHierarchy);
+            trackedColliders2D.RemoveWhere(c => c == null || !c.gameObject.activeInHierarchy);
+
+            int totalCount = trackedColliders.Count + trackedColliders2D.Count;
+
+            if (state == TriggerState.Hold)
+            {
+                bool shouldBeActive = totalCount > 0;
+                TargetObject.SetState(shouldBeActive);
+                UpdateVisuals(shouldBeActive);
             }
             else
             {
+                isActive = TargetObject.isTriggered;
                 UpdateVisuals(isActive);
             }
         }
 
         private void UpdateVisuals(bool isOn)
         {
+            isActive = isOn;
             if (isFrozen) return;
             if (triggerType != TriggerType.Weight && triggerType != TriggerType.Collider3D) return;
 
-            isActive = isOn;
             if (buttonRenderer != null)
             {
                 buttonRenderer.GetPropertyBlock(propBlock);
@@ -99,20 +121,23 @@ namespace EvanGameKits.Mechanic
 
         private void OnTriggerEnter(Collider other)
         {
-            if (isFrozen || TargetObject == null) return;
+            if (TargetObject == null) return;
 
-            if (other.CompareTag("Player") && IsWhiteCat(other.gameObject))
-            {
-                NotificationController.instance?.ShowNotification("White freeze time, trigger doesn't feel like working");
-                return;
-            }
-
+            bool isRelevant = false;
             if (triggerType == TriggerType.Weight)
             {
-                if (((1 << other.gameObject.layer) & weightLayers) != 0)
+                if (((1 << other.gameObject.layer) & weightLayers) != 0) isRelevant = true;
+            }
+            else if (triggerType == TriggerType.Collider3D && other.CompareTag("Player"))
+            {
+                isRelevant = true;
+            }
+
+            if (isRelevant)
+            {
+                if (trackedColliders.Add(other))
                 {
-                    objectsOnTrigger++;
-                    if (objectsOnTrigger == 1)
+                    if (!isFrozen)
                     {
                         if (state == TriggerState.Hold)
                         {
@@ -121,71 +146,50 @@ namespace EvanGameKits.Mechanic
                         }
                         else
                         {
-                            TargetObject.ToggleState();
-                            UpdateVisuals(!isActive);
+                            int totalCount = trackedColliders.Count + trackedColliders2D.Count;
+                            if (totalCount == 1)
+                            {
+                                TargetObject.ToggleState();
+                                UpdateVisuals(!isActive);
+                            }
                         }
                     }
                 }
-                return;
-            }
-
-            if (!triggerType.Equals(TriggerType.Collider3D)) return;
-            if (other.CompareTag("Player"))
-            {
-                TargetObject.ToggleState();
-                if (state == TriggerState.Hold) UpdateVisuals(true);
-                else UpdateVisuals(!isActive);
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (isFrozen || TargetObject == null) return;
+            if (TargetObject == null) return;
 
-            if (triggerType == TriggerType.Weight)
+            if (trackedColliders.Remove(other))
             {
-                if (((1 << other.gameObject.layer) & weightLayers) != 0)
+                if (!isFrozen)
                 {
-                    objectsOnTrigger = Mathf.Max(0, objectsOnTrigger - 1);
-                    if (objectsOnTrigger == 0)
-                    {
-                        if (state == TriggerState.Hold)
-                        {
-                            TargetObject.SetState(false);
-                            UpdateVisuals(false);
-                        }
-                    }
-                }
-                return;
-            }
-
-            if (!triggerType.Equals(TriggerType.Collider3D)) return;
-            if (other.CompareTag("Player"))
-            {
-                if (state.Equals(TriggerState.Hold))
-                {
-                    TargetObject.ToggleState();
-                    UpdateVisuals(false);
+                    RefreshTriggerState();
                 }
             }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (isFrozen || TargetObject == null) return;
+            if (TargetObject == null) return;
 
-            if (other.CompareTag("Player") && IsWhiteCat(other.gameObject))
-            {
-                NotificationController.instance?.ShowNotification("White freeze time, trigger doesn't feel like working");
-                return;
-            }
-
+            bool isRelevant = false;
             if (triggerType == TriggerType.Weight)
             {
-                if (((1 << other.gameObject.layer) & weightLayers) != 0)
+                if (((1 << other.gameObject.layer) & weightLayers) != 0) isRelevant = true;
+            }
+            else if (triggerType == TriggerType.Collider2D && other.CompareTag("Player"))
+            {
+                isRelevant = true;
+            }
+
+            if (isRelevant)
+            {
+                if (trackedColliders2D.Add(other))
                 {
-                    objectsOnTrigger++;
-                    if (objectsOnTrigger == 1)
+                    if (!isFrozen)
                     {
                         if (state == TriggerState.Hold)
                         {
@@ -194,51 +198,27 @@ namespace EvanGameKits.Mechanic
                         }
                         else
                         {
-                            TargetObject.ToggleState();
-                            UpdateVisuals(!isActive);
+                            int totalCount = trackedColliders.Count + trackedColliders2D.Count;
+                            if (totalCount == 1)
+                            {
+                                TargetObject.ToggleState();
+                                UpdateVisuals(!isActive);
+                            }
                         }
                     }
                 }
-                return;
-            }
-
-            if (!triggerType.Equals(TriggerType.Collider2D)) return;
-            if (other.CompareTag("Player"))
-            {
-                TargetObject.ToggleState();
-                if (state == TriggerState.Hold) UpdateVisuals(true);
-                else UpdateVisuals(!isActive);
             }
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (isFrozen || TargetObject == null) return;
+            if (TargetObject == null) return;
 
-            if (triggerType == TriggerType.Weight)
+            if (trackedColliders2D.Remove(other))
             {
-                if (((1 << other.gameObject.layer) & weightLayers) != 0)
+                if (!isFrozen)
                 {
-                    objectsOnTrigger = Mathf.Max(0, objectsOnTrigger - 1);
-                    if (objectsOnTrigger == 0)
-                    {
-                        if (state == TriggerState.Hold)
-                        {
-                            TargetObject.SetState(false);
-                            UpdateVisuals(false);
-                        }
-                    }
-                }
-                return;
-            }
-
-            if (!triggerType.Equals(TriggerType.Collider2D)) return;
-            if (other.CompareTag("Player"))
-            {
-                if (state == TriggerState.Hold)
-                {
-                    TargetObject.ToggleState();
-                    UpdateVisuals(false);
+                    RefreshTriggerState();
                 }
             }
         }
