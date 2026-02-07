@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using EvanGameKits.Mechanic;
 
 namespace EvanGameKits.Core
 {
@@ -28,7 +29,7 @@ namespace EvanGameKits.Core
 
         private void OnEnable()
         {
-            if(instance == null) instance = this;
+            if(instance == null || instance != this) instance = this;
             onSceneLoaded.Invoke();
             currentHearts = maxHearts;
         }
@@ -90,7 +91,24 @@ namespace EvanGameKits.Core
             }
             else
             {
-                EndGame();
+                currentHearts = maxHearts;
+                onHeartsChanged?.Invoke(currentHearts);
+                if (NotificationController.instance != null)
+                {
+                    NotificationController.instance.ShowNotification("Heart is just a joke lol, I know you want to continue... MWEHEHEH");
+                }
+
+                if (respawnAllOnDamage)
+                {
+                    foreach (var p in EvanGameKits.Entity.Player.AllPlayers)
+                    {
+                        if (p != null) p.Respawn();
+                    }
+                }
+                else if (player != null)
+                {
+                    player.Respawn();
+                }
             }
         }
 

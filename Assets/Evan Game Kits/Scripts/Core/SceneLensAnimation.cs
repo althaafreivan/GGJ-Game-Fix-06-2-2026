@@ -16,7 +16,7 @@ namespace EvanGameKits.Mechanic
         
         [Header("Scene Settings")]
         [SerializeField] private string sceneToLoad;
-        [SerializeField] private float startDelay = 2.0f;
+        [SerializeField] private float startDelay = 1.0f;
         [SerializeField] private float explosionDuration = 6.0f;
         [SerializeField] private float loadDelayAfterExplosion = 1.5f;
 
