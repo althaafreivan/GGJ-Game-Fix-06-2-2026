@@ -14,6 +14,15 @@ public class CharacterSwitchListener : MonoBehaviour
     private void Start()
     {
         Player.onPlayerChange += changed;
+        if (Player.ActivePlayer != null)
+        {
+            changed(Player.ActivePlayer);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        Player.onPlayerChange -= changed;
     }
 
     private void changed(Player player)

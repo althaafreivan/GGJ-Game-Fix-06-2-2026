@@ -16,16 +16,22 @@ namespace EvanGameKits.Mechanic
         [Tooltip("Number of extra walls to the left and right of the hit point to hide.")]
         [SerializeField] private int neighborSpread = 4;
         [SerializeField] private float neighborDistance = 2.0f;
-
+        private void Start()
+        {
+            cCam.Target.TrackingTarget = Player.ActivePlayer.transform;
+        }
         private void Awake()
         {
-            Player.onPlayerChange += HandlePlayerChange;
+            cCam.Target.TrackingTarget = Player.ActivePlayer.transform;
+            cCam.Target.LookAtTarget = Player.ActivePlayer.transform;
         }
+
         private void OnEnable()
         {
             Player.onPlayerChange += HandlePlayerChange;
-            if (Player.ActivePlayer != null) playerTransform = Player.ActivePlayer.transform;
-            
+            if (Player.ActivePlayer != null) HandlePlayerChange(Player.ActivePlayer);
+            cCam.Target.TrackingTarget = Player.ActivePlayer.transform;
+            cCam.Target.LookAtTarget = Player.ActivePlayer.transform;
         }
 
         private void OnDisable()
@@ -36,7 +42,9 @@ namespace EvanGameKits.Mechanic
         private void HandlePlayerChange(Player newPlayer)
         {
             if (newPlayer != null) playerTransform = newPlayer.transform;
-            cCam.Target.LookAtTarget = playerTransform;
+            if (cCam != null) cCam.Target.LookAtTarget = playerTransform;
+            cCam.Target.TrackingTarget = playerTransform;
+            Debug.Log(playerTransform.name);
         }
 
         private void Update()

@@ -732,7 +732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9133307657769031104, guid: 692959e182c68a14f96f8810ebbc74b4, type: 3}
       propertyPath: starDuration
-      value: 0.1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 9133307657769031104, guid: 692959e182c68a14f96f8810ebbc74b4, type: 3}
       propertyPath: secondaryEase
@@ -740,7 +740,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9133307657769031104, guid: 692959e182c68a14f96f8810ebbc74b4, type: 3}
       propertyPath: starMaximalSize
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9133307657769031104, guid: 692959e182c68a14f96f8810ebbc74b4, type: 3}
       propertyPath: secondaryDuration

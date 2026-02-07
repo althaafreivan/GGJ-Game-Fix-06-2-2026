@@ -24,13 +24,14 @@ namespace EvanGameKits.Entity.Module
         private void OnEnable()
         {
             Player.onPlayerChange += OnPlayerChange;
+            if (Player.ActivePlayer != null) OnPlayerChange(Player.ActivePlayer);
         }
 
         private void OnDisable()
         {
             Player.onPlayerChange -= OnPlayerChange;
         }
-        
+
         private void OnPlayerChange(Player newPlayer)
         {
             if(player != null && player == newPlayer)
@@ -59,7 +60,7 @@ namespace EvanGameKits.Entity.Module
             locomotion = GetComponent<Locomotion>();
             upforce = GetComponent<Upforce>();
             aiBehaviourModule = GetComponents<AIBehaviourModule>().ToList();
-            tweener = GetComponent<EvanGameKits.Mechanic.TransformStateTweener>();
+            tweener = GetComponent<EvanGameKits.Mechanic.TransformStateTweener>();       
         }
 
         private void OnBecameVisible()
