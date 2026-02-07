@@ -32,6 +32,10 @@ namespace EvanGameKits.Core
             DontDestroyOnLoad(instance);
             onSceneLoaded.Invoke();
             currentHearts = maxHearts;
+        }
+
+        private void Start()
+        {
             onHeartsChanged?.Invoke(currentHearts);
         }
 
@@ -60,6 +64,9 @@ namespace EvanGameKits.Core
         {
             onWin?.Invoke();
         }
+
+        [Header("Scene Management")]
+        [SerializeField] private string mainMenuScene = "MainMenu";
 
         public void TakeDamage(EvanGameKits.Entity.Player player)
         {
@@ -96,6 +103,10 @@ namespace EvanGameKits.Core
         public void EndGame()
         {
             onExit?.Invoke();
+            if (!string.IsNullOrEmpty(mainMenuScene))
+            {
+                SceneManager.LoadScene(mainMenuScene);
+            }
         }
 
         public void loadScene(string sceneName)
