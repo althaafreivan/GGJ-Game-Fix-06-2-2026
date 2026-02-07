@@ -60,7 +60,7 @@ namespace EvanGameKits.Entity.Module
             locomotion = GetComponent<Locomotion>();
             upforce = GetComponent<Upforce>();
             aiBehaviourModule = GetComponents<AIBehaviourModule>().ToList();
-            tweener = GetComponent<EvanGameKits.Mechanic.TransformStateTweener>();       
+            tweener = GetComponent<EvanGameKits.Mechanic.TransformStateTweener>();
         }
 
         private void OnBecameVisible()
@@ -99,6 +99,10 @@ namespace EvanGameKits.Entity.Module
                 }
             }
             if (tweener != null) tweener.SetFrozen(!isVisible);
+
+            // Toggle collider to force OnTriggerExit when frozen, and OnTriggerEnter when thawed.
+            // This ensures pressure plates (InteractionTrigger) reset correctly when the object is culled.
+            if (targetCollider != null) targetCollider.enabled = isVisible;
         }
     }
 }
