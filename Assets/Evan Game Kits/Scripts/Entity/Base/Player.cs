@@ -71,7 +71,6 @@ namespace EvanGameKits.Entity
             {
                 ActivePlayer = this;
                 Player.onPlayerChange?.Invoke(this);
-                Debug.Log("OnPlayerChange Invoked");
             }
         }
 

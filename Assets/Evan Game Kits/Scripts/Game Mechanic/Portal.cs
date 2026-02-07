@@ -35,6 +35,11 @@ namespace EvanGameKits.Mechanic
 
         public Tween CurrentTween => currentTween;
 
+        private void Awake()
+        {
+            isAnyPortalTeleporting = false;
+        }
+
         private void Start()
         {
             Renderer[] renderers = GetComponentsInChildren<Renderer>(true);

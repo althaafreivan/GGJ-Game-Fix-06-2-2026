@@ -103,6 +103,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -240,6 +241,7 @@ MonoBehaviour:
   portraitImage: {fileID: 4166033078799755005}
   visualContainer: {fileID: 1670878595305140749}
   typingSpeed: 0.05
+  animationType: 0
   selectedKeyIndex: 0
 --- !u!1 &2397304898777746229
 GameObject:
@@ -275,8 +277,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000024796, y: 4.6}
-  m_SizeDelta: {x: 242.7319, y: 50}
+  m_AnchoredPosition: {x: 0.7894985, y: 4.6}
+  m_SizeDelta: {x: 244.3109, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4302575088510590815
 CanvasRenderer:
@@ -306,7 +308,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press Any Key
+  m_text: Press Here to Continue
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a4c1fd426c189bb45a2f3e6da1e6a0e8, type: 2}
   m_sharedMaterial: {fileID: 223084524804699777, guid: a4c1fd426c189bb45a2f3e6da1e6a0e8, type: 2}
@@ -344,6 +346,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -783,6 +786,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
