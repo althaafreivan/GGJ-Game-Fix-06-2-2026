@@ -21,7 +21,8 @@ namespace EvanUIKits.Tweening
             Material mat = null,
             string matProperty = "_ShineIntensity",
             float effectScale = 0.9f,
-            float duration = 0.1f)
+            float duration = 0.1f,
+            bool ignoreTimeScale = false)
         {
             button.DOKill();
             if (shadow != null) shadow.DOKill();
@@ -29,26 +30,26 @@ namespace EvanUIKits.Tweening
             switch (type)
             {
                 case AnimationType.Scale:
-                    button.DOScale(effectScale, duration).SetEase(Ease.OutQuad);
-                    if (shadow != null) shadow.DOScale(effectScale, duration * 2f).SetEase(Ease.OutQuad);
+                    button.DOScale(effectScale, duration).SetEase(Ease.OutQuad).SetUpdate(ignoreTimeScale);
+                    if (shadow != null) shadow.DOScale(effectScale, duration * 2f).SetEase(Ease.OutQuad).SetUpdate(ignoreTimeScale);
                     break;
 
                 case AnimationType.Punch:
-                    button.DOPunchScale(new Vector3(-0.1f, -0.1f, 0f), duration, 1, 0.5f);
+                    button.DOPunchScale(new Vector3(-0.1f, -0.1f, 0f), duration, 1, 0.5f).SetUpdate(ignoreTimeScale);
                     break;
 
                 case AnimationType.Tilt:
-                    button.DORotate(new Vector3(0, 0, -3f), duration).SetEase(Ease.OutQuad);
-                    button.DOScale(effectScale, duration).SetEase(Ease.OutQuad);
+                    button.DORotate(new Vector3(0, 0, -3f), duration).SetEase(Ease.OutQuad).SetUpdate(ignoreTimeScale);
+                    button.DOScale(effectScale, duration).SetEase(Ease.OutQuad).SetUpdate(ignoreTimeScale);
                     break;
 
                 case AnimationType.MaterialOnly:
-                    HandleMaterial(mat, matProperty, 1f, duration);
+                    HandleMaterial(mat, matProperty, 1f, duration, ignoreTimeScale);
                     break;
 
                 case AnimationType.Combined:
-                    button.DOScale(effectScale, duration).SetEase(Ease.OutQuad);
-                    HandleMaterial(mat, matProperty, 1f, duration);
+                    button.DOScale(effectScale, duration).SetEase(Ease.OutQuad).SetUpdate(ignoreTimeScale);
+                    HandleMaterial(mat, matProperty, 1f, duration, ignoreTimeScale);
                     break;
             }
         }
@@ -61,7 +62,8 @@ namespace EvanUIKits.Tweening
             string matProperty = "_ShineIntensity",
             float targetScale = 1f,
             float duration = 0.1f,
-            System.Action onComplete = null)
+            System.Action onComplete = null,
+            bool ignoreTimeScale = false)
         {
             button.DOKill();
             if (shadow != null) shadow.DOKill();
@@ -71,26 +73,26 @@ namespace EvanUIKits.Tweening
             switch (type)
             {
                 case AnimationType.Scale:
-                    if (shadow != null) shadow.DOScale(targetScale, duration * 2f).SetEase(Ease.OutElastic);
-                    mainTween = button.DOScale(targetScale, duration).SetEase(Ease.OutElastic);
+                    if (shadow != null) shadow.DOScale(targetScale, duration * 2f).SetEase(Ease.OutElastic).SetUpdate(ignoreTimeScale);
+                    mainTween = button.DOScale(targetScale, duration).SetEase(Ease.OutElastic).SetUpdate(ignoreTimeScale);
                     break;
 
                 case AnimationType.Punch:
-                    mainTween = button.DOScale(targetScale, duration).SetEase(Ease.OutQuad);
+                    mainTween = button.DOScale(targetScale, duration).SetEase(Ease.OutQuad).SetUpdate(ignoreTimeScale);
                     break;
 
                 case AnimationType.Tilt:
-                    button.DORotate(Vector3.zero, duration).SetEase(Ease.OutElastic);
-                    mainTween = button.DOScale(targetScale, duration).SetEase(Ease.OutElastic);
+                    button.DORotate(Vector3.zero, duration).SetEase(Ease.OutElastic).SetUpdate(ignoreTimeScale);
+                    mainTween = button.DOScale(targetScale, duration).SetEase(Ease.OutElastic).SetUpdate(ignoreTimeScale);
                     break;
 
                 case AnimationType.MaterialOnly:
-                    mainTween = HandleMaterial(mat, matProperty, 0f, duration);
+                    mainTween = HandleMaterial(mat, matProperty, 0f, duration, ignoreTimeScale);
                     break;
 
                 case AnimationType.Combined:
-                    HandleMaterial(mat, matProperty, 0f, duration);
-                    mainTween = button.DOScale(targetScale, duration).SetEase(Ease.OutElastic);
+                    HandleMaterial(mat, matProperty, 0f, duration, ignoreTimeScale);
+                    mainTween = button.DOScale(targetScale, duration).SetEase(Ease.OutElastic).SetUpdate(ignoreTimeScale);
                     break;
             }
 
@@ -104,13 +106,13 @@ namespace EvanUIKits.Tweening
             }
         }
 
-        private static Tween HandleMaterial(Material mat, string property, float target, float duration)
+        private static Tween HandleMaterial(Material mat, string property, float target, float duration, bool ignoreTimeScale = false)
         {
             if (mat == null || string.IsNullOrEmpty(property)) return null;
 
             int propertyId = Shader.PropertyToID(property);
             float value = Mathf.Clamp01(target);
-            return mat.DOFloat(value, propertyId, duration);
+            return mat.DOFloat(value, propertyId, duration).SetUpdate(ignoreTimeScale);
         }
     }
 }

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using EvanGameKits.Core;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,6 +50,10 @@ namespace EvanGameKits.Entity
             }
             transform.position = spawnPosition;
             transform.rotation = spawnRotation;
+            transform.localScale = Vector3.one;
+            
+            // Kill any scaling/rotation tweens that might be running
+            transform.DOKill();
         }
 
         public void MuteInput(bool value)

@@ -1597,6 +1597,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2115114181183926939, guid: ba28c178facfd154d8637087b915fb2d, type: 3}
   m_PrefabInstance: {fileID: 1301778543}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &425198476 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1670878595305140749, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+  m_PrefabInstance: {fileID: 545726930}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &425853897 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1009202075464433243, guid: aad0ca966b1bbc2458b9ce29d4fdabde, type: 3}
@@ -2008,7 +2013,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1670878595305140749, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4677407053848838286, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2120,18 +2125,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
       propertyPath: dialogues.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
       propertyPath: dialogues.Array.data[0].key
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].key
+      value: trampolineGlitch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
       propertyPath: dialogues.Array.data[0].portrait
       value: 
       objectReference: {fileID: 21300000, guid: 0503dc21d3ffa39428d67889ece47326, type: 3}
     - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].portrait
+      value: 
+      objectReference: {fileID: 21300000, guid: 0503dc21d3ffa39428d67889ece47326, type: 3}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[0].isOneTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
       propertyPath: dialogues.Array.data[0].portrait2
+      value: 
+      objectReference: {fileID: 21300000, guid: 137942fd55a830749bdf3a1b16bcde0d, type: 3}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].isOneTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].portrait2
       value: 
       objectReference: {fileID: 21300000, guid: 137942fd55a830749bdf3a1b16bcde0d, type: 3}
     - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
@@ -2139,12 +2164,24 @@ PrefabInstance:
       value: Nothings
       objectReference: {fileID: 0}
     - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].characterName
+      value: Nothings
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
       propertyPath: dialogues.Array.data[0].characterName2
+      value: Expected
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].characterName2
       value: Expected
       objectReference: {fileID: 0}
     - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
       propertyPath: dialogues.Array.data[0].sentences.Array.size
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].sentences.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
       propertyPath: dialogues.Array.data[0].sentences.Array.data[0].text
@@ -2175,6 +2212,31 @@ PrefabInstance:
       value: Alright, Lemme try anyway...
       objectReference: {fileID: 0}
     - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].sentences.Array.data[0].text
+      value: Whoa whoa, what happen to me?
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].sentences.Array.data[1].text
+      value: Idk dude, sometime the administrator just did weird stuff to make us
+        trapped inside. Just die to go back to your normal form.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].sentences.Array.data[2].text
+      value: Alright, Lemme try anyway...
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].sentences.Array.data[3].text
+      value: Alright, Lemme try anyway...
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].sentences.Array.data[4].text
+      value: Alright, Lemme try anyway...
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].sentences.Array.data[5].text
+      value: Alright, Lemme try anyway...
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
       propertyPath: dialogues.Array.data[0].sentences.Array.data[0].useCharacter2
       value: 0
       objectReference: {fileID: 0}
@@ -2194,9 +2256,25 @@ PrefabInstance:
       propertyPath: dialogues.Array.data[0].sentences.Array.data[4].useCharacter2
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].sentences.Array.data[1].useCharacter2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].sentences.Array.data[2].useCharacter2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121155114029762607, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: dialogues.Array.data[1].sentences.Array.data[3].useCharacter2
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7337971685623869354, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
       propertyPath: dialogueKey
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7337971685623869354, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      propertyPath: typingSpeed
+      value: 0.025
       objectReference: {fileID: 0}
     - target: {fileID: 7763443569705806256, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
       propertyPath: m_Layer
@@ -2205,13 +2283,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1670878595305140749, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 545726935}
   m_SourcePrefab: {fileID: 100100000, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
 --- !u!224 &545726931 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6575956130895495491, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
   m_PrefabInstance: {fileID: 545726930}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &545726932 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7337971685623869354, guid: 6e8dd7e2743090d46ba2579ad6883622, type: 3}
+  m_PrefabInstance: {fileID: 545726930}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425198476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a07a32e017d10664797fddad27bdbd2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!225 &545726935
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425198476}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!4 &547209312 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 605350143515947234, guid: 41be5d4bec639114eb92edc6a121f117, type: 3}
@@ -5117,6 +5221,54 @@ PrefabInstance:
       propertyPath: bounceForce
       value: 7.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
+      propertyPath: squishAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
+      propertyPath: squishDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
+      propertyPath: permanentStretchChance
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
+      propertyPath: OnGlitch.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
+      propertyPath: OnGlitch.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
+      propertyPath: OnGlitch.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 545726932}
+    - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
+      propertyPath: OnGlitch.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
+      propertyPath: OnGlitch.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayDialogue
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
+      propertyPath: OnGlitch.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EvanUIKits.Dialogue.DialogueManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
+      propertyPath: OnGlitch.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
+      propertyPath: OnGlitch.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: trampolineGlitch
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
+      propertyPath: OnGlitch.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2435478588228763784, guid: dd1b1567403865142b77c51c91456716, type: 3}
       propertyPath: m_Name
       value: Trampoline Pad
@@ -6739,7 +6891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5910598966753548430, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5910598966753548430, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: hideTitleBar
@@ -6756,6 +6908,10 @@ PrefabInstance:
     - target: {fileID: 8728346058497586933, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8728346058497586933, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
+      propertyPath: CameraDistance
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

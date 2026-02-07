@@ -18,6 +18,8 @@ namespace EvanUIKits.Dialogue
     public class DialogueEntry
     {
         public string key;
+        public bool isOneTime;
+        [HideInInspector] public bool hasBeenPlayed;
         public string characterName;
         public Sprite portrait;
         public string characterName2;

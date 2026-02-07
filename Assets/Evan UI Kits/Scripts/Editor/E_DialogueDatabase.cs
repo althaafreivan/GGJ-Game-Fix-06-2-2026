@@ -19,6 +19,7 @@ public class E_DialogueDatabase : Editor
         {
             SerializedProperty element = list.GetArrayElementAtIndex(i);
             SerializedProperty key = element.FindPropertyRelative("key");
+            SerializedProperty isOneTime = element.FindPropertyRelative("isOneTime");
             SerializedProperty charName = element.FindPropertyRelative("characterName");
             SerializedProperty portrait = element.FindPropertyRelative("portrait");
             SerializedProperty charName2 = element.FindPropertyRelative("characterName2");
@@ -35,6 +36,9 @@ public class E_DialogueDatabase : Editor
             GUI.color = Color.white;
 
             GUILayout.FlexibleSpace();
+
+            // One Time Toggle
+            isOneTime.boolValue = EditorGUILayout.ToggleLeft("One-Time Show", isOneTime.boolValue, GUILayout.Width(110));
 
             GUI.backgroundColor = new Color(1f, 0.4f, 0.4f);
             if (GUILayout.Button("Delete Entry", GUILayout.Width(100)))

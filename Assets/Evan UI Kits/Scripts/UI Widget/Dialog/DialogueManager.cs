@@ -19,6 +19,7 @@ namespace EvanUIKits.Dialogue
         public TextMeshProUGUI dialogueText;
         public Image portraitImage;
         public GameObject visualContainer;
+        private CanvasGroup canvasGroup;
 
         [Header("Settings")]
         public float typingSpeed = 0.05f;
@@ -38,8 +39,25 @@ namespace EvanUIKits.Dialogue
             if (instance == null) instance = this;
             else Destroy(gameObject);
 
-            if (visualContainer != null) containerRect = visualContainer.GetComponent<RectTransform>();   
-            if (visualContainer != null) visualContainer.SetActive(false);
+            if (visualContainer != null)
+            {
+                containerRect = visualContainer.GetComponent<RectTransform>();
+                canvasGroup = visualContainer.GetComponent<CanvasGroup>();
+                if (canvasGroup == null) canvasGroup = visualContainer.AddComponent<CanvasGroup>();
+                
+                visualContainer.SetActive(true);
+                ToggleUI(false);
+            }
+        }
+
+        private void ToggleUI(bool show)
+        {
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = show ? 1 : 0;
+                canvasGroup.interactable = show;
+                canvasGroup.blocksRaycasts = show;
+            }
         }
 
         private void OnEnable()
@@ -53,9 +71,13 @@ namespace EvanUIKits.Dialogue
 
         public void StartDialogue(DialogueEntry entry, Action callback = null)
         {
+            if (entry.isOneTime && entry.hasBeenPlayed) return;
+            
+            Time.timeScale = 0;
+            entry.hasBeenPlayed = true;
             currentEntry = entry;
             onCompleteCallback = callback;
-            if (visualContainer != null) visualContainer.SetActive(true);
+            ToggleUI(true);
 
             sentenceQueue.Clear();
             foreach (var data in entry.sentences)
@@ -64,6 +86,19 @@ namespace EvanUIKits.Dialogue
             }
 
             DisplayNextSentence();
+        }
+
+        public void PlayDialogue(string key)
+        {
+            if (DialogueDatabase.Instance != null && !string.IsNullOrEmpty(key))
+            {
+                var entry = DialogueDatabase.Instance.GetDialogue(key);
+                if (entry != null)
+                {
+                    if (entry.isOneTime && entry.hasBeenPlayed) return;
+                    StartDialogue(entry);
+                }
+            }
         }
 
         public void DisplayNextSentence()
@@ -122,7 +157,7 @@ namespace EvanUIKits.Dialogue
             foreach (char letter in sentence.ToCharArray())
             {
                 if (dialogueText != null) dialogueText.text += letter;
-                yield return new WaitForSeconds(typingSpeed);
+                yield return new WaitForSecondsRealtime(typingSpeed);
             }
 
             isTyping = false;
@@ -137,7 +172,8 @@ namespace EvanUIKits.Dialogue
 
         private void EndDialogue()
         {
-            if (visualContainer != null) visualContainer.SetActive(false);
+            Time.timeScale = 1;
+            ToggleUI(false);
             onCompleteCallback?.Invoke();
             currentSentenceData = null;
             currentEntry = null;
@@ -145,14 +181,14 @@ namespace EvanUIKits.Dialogue
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (containerRect != null) AnimateButton.OnButtonDown(containerRect, type: animationType);    
+            if (containerRect != null) AnimateButton.OnButtonDown(containerRect, type: animationType, ignoreTimeScale: true);    
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
             if (containerRect != null)
             {
-                AnimateButton.OnButtonUp(containerRect, type: animationType, onComplete: () => {
+                AnimateButton.OnButtonUp(containerRect, type: animationType, ignoreTimeScale: true, onComplete: () => {
                     DisplayNextSentence();
                 });
             }
