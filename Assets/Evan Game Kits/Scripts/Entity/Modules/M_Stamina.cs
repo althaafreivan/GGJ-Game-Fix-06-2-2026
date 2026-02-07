@@ -11,7 +11,7 @@ namespace EvanGameKits.Entity.Module
         [SerializeField] private float singleConsume = 10f;
         [SerializeField] private float multipleConsume = 20f;
         [SerializeField] private float regenRate = 5f;
-        [SerializeField] private float maxStamina = 100f;
+        [SerializeField] public float maxStamina = 100f;
 
         private M_LocomotionBoost boost;
         private M_BasicJump upforce;

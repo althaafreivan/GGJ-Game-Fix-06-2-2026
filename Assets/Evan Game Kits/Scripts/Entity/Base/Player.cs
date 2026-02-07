@@ -10,23 +10,34 @@ namespace EvanGameKits.Entity
     public class Player : Base, IState
     {
         public static Player ActivePlayer { get; set; }
+        public static List<Player> AllPlayers = new List<Player>();
         public static UnityAction<Player> onPlayerChange;
         private List<IState> states = new List<IState>();
 
-        private Vector3 startPosition;
-        private Quaternion startRotation;
+        [Header("Spawn Settings")]
+        public Vector3 spawnPosition;
+        public Quaternion spawnRotation;
 
         protected override void Awake()
         {
             base.Awake();
-            
+            if (!AllPlayers.Contains(this)) AllPlayers.Add(this);
             states.AddRange(GetComponents<IState>());
+        }
+
+        private void OnDestroy()
+        {
+            if (AllPlayers.Contains(this)) AllPlayers.Remove(this);
         }
 
         private void Start()
         {
-            startPosition = transform.position;
-            startRotation = transform.rotation;
+            // If spawnPosition hasn't been set (is zero), use current transform as default
+            if (spawnPosition == Vector3.zero)
+            {
+                spawnPosition = transform.position;
+                spawnRotation = transform.rotation;
+            }
         }
 
         public void Respawn()
@@ -36,8 +47,8 @@ namespace EvanGameKits.Entity
                 rb.linearVelocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
             }
-            transform.position = startPosition;
-            transform.rotation = startRotation;
+            transform.position = spawnPosition;
+            transform.rotation = spawnRotation;
         }
 
         public void MuteInput(bool value)

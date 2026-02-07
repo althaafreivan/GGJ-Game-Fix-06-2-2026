@@ -15,15 +15,24 @@ namespace EvanGameKits.Core
         [SerializeField] public UnityEvent onWin;
 
         [Header("Game Settings")]
-        [SerializeField] private int allowedDeaths = 3;
-        private int deathCount = 0;
+        public int maxHearts = 3;
+        private int currentHearts;
+
+        [Header("Danger Configuration")]
+        public string dangerTag = "Danger";
+        public LayerMask dangerLayer;
+        public bool respawnAllOnDamage = true;
+
+        [Header("Game Events")]
+        [SerializeField] public UnityEvent<int> onHeartsChanged;
 
         private void OnEnable()
         {
             if(instance == null) instance = this;
             DontDestroyOnLoad(instance);
             onSceneLoaded.Invoke();
-            deathCount = 0;
+            currentHearts = maxHearts;
+            onHeartsChanged?.Invoke(currentHearts);
         }
 
         public void Pause()
@@ -42,6 +51,8 @@ namespace EvanGameKits.Core
         {
             Time.timeScale = 1f;
             onRestart?.Invoke();
+            currentHearts = maxHearts;
+            onHeartsChanged?.Invoke(currentHearts);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
@@ -50,17 +61,36 @@ namespace EvanGameKits.Core
             onWin?.Invoke();
         }
 
-        public void Dead(EvanGameKits.Entity.Player player)
+        public void TakeDamage(EvanGameKits.Entity.Player player)
         {
-            deathCount++;
-            if (deathCount <= allowedDeaths)
+            if (currentHearts <= 0) return;
+
+            currentHearts--;
+            onHeartsChanged?.Invoke(currentHearts);
+
+            if (currentHearts > 0)
             {
-                player.Respawn();
+                if (respawnAllOnDamage)
+                {
+                    foreach (var p in EvanGameKits.Entity.Player.AllPlayers)
+                    {
+                        if (p != null) p.Respawn();
+                    }
+                }
+                else if (player != null)
+                {
+                    player.Respawn();
+                }
             }
             else
             {
                 EndGame();
             }
+        }
+
+        public void Dead(EvanGameKits.Entity.Player player)
+        {
+            TakeDamage(player);
         }
 
         public void EndGame()
