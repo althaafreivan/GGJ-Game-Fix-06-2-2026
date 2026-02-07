@@ -5244,7 +5244,16 @@ MonoBehaviour:
   onWin:
     m_PersistentCalls:
       m_Calls: []
-  allowedDeaths: 3
+  maxHearts: 3
+  dangerTag: Danger
+  dangerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  respawnAllOnDamage: 1
+  onHeartsChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  mainMenuScene: MainMenu
 --- !u!1001 &1417398053
 PrefabInstance:
   m_ObjectHideFlags: 0

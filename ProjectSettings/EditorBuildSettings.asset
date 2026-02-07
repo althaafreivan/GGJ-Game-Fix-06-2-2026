@@ -12,16 +12,16 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenuScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Evan Game Kits/Sample Scene/Tutorial.unity
+    path: Assets/Scenes/Tutorial.unity
     guid: 132bb25d8d6592848afd5049bc10da42
   - enabled: 1
-    path: Assets/Evan Game Kits/Sample Scene/GameplaySample.unity
+    path: Assets/Scenes/GameplaySample.unity
     guid: 7b3472f79d7cff34db8f8d93300ea283
   - enabled: 1
-    path: Assets/Evan Game Kits/Sample Scene/GameplaySample 1.unity
+    path: Assets/Scenes/GameplaySample 1.unity
     guid: a68a81107d596c64c84b900f6ef3fd02
   - enabled: 1
-    path: Assets/Evan Game Kits/Sample Scene/Gameplay2.unity
+    path: Assets/Scenes/Gameplay2.unity
     guid: c35463d20f9d0c44f9f5f68987daa7f8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

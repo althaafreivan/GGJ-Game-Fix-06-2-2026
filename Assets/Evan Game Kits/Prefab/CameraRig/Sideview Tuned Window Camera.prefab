@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 1855901316560931632}
   - component: {fileID: 6617668421441759094}
   - component: {fileID: 2263947885256405645}
+  - component: {fileID: 8254417365595352106}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -62,7 +63,7 @@ Transform:
   m_GameObject: {fileID: 2538409366670189148}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 67.44208, y: 8.381246, z: -3.6229792}
+  m_LocalPosition: {x: 69.44475, y: 8.655488, z: -12.606095}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -107,7 +108,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3063
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -203,6 +204,25 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!114 &8254417365595352106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2538409366670189148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a51b9524ebda6b41882f00f8ad8b02a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.OcclusionManager
+  playerTransform: {fileID: 0}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  rayRadius: 0.5
+  neighborSpread: 2
+  neighborDistance: 2
 --- !u!1 &4395094165219336869
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +235,7 @@ GameObject:
   - component: {fileID: 1680448404611015150}
   - component: {fileID: 8728346058497586933}
   - component: {fileID: 5910598966753548430}
+  - component: {fileID: 6146746826108176156}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -231,7 +252,7 @@ Transform:
   m_GameObject: {fileID: 4395094165219336869}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 67.44208, y: 8.342403, z: -3.6229792}
+  m_LocalPosition: {x: 69.44475, y: 8.655488, z: -12.606095}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -318,7 +339,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4395094165219336869}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80717a5fae6073445845953ccd6e0384, type: 3}
   m_Name: 
@@ -326,3 +347,20 @@ MonoBehaviour:
   sensitivity: 0.005
   hideTitleBar: 0
   maxDragSpeed: 5000
+--- !u!114 &6146746826108176156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4395094165219336869}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBasicMultiChannelPerlin
+  NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  PivotOffset: {x: 1, y: 1, z: 1}
+  AmplitudeGain: 4
+  FrequencyGain: 6
+  m_NoiseOffsets: {x: 0, y: 0, z: 0}

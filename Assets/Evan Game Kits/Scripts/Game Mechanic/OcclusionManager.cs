@@ -1,5 +1,6 @@
 using UnityEngine;
 using EvanGameKits.Entity;
+using Unity.Cinemachine;
 
 namespace EvanGameKits.Mechanic
 {
@@ -7,6 +8,7 @@ namespace EvanGameKits.Mechanic
     {
         [Header("Targeting")]
         [SerializeField] private Transform playerTransform;
+        [SerializeField] private CinemachineCamera cCam;
         [SerializeField] private LayerMask wallLayer;
 
         [Header("Ray Settings")]
@@ -15,10 +17,15 @@ namespace EvanGameKits.Mechanic
         [SerializeField] private int neighborSpread = 4;
         [SerializeField] private float neighborDistance = 2.0f;
 
+        private void Awake()
+        {
+            Player.onPlayerChange += HandlePlayerChange;
+        }
         private void OnEnable()
         {
             Player.onPlayerChange += HandlePlayerChange;
             if (Player.ActivePlayer != null) playerTransform = Player.ActivePlayer.transform;
+            
         }
 
         private void OnDisable()
@@ -29,12 +36,12 @@ namespace EvanGameKits.Mechanic
         private void HandlePlayerChange(Player newPlayer)
         {
             if (newPlayer != null) playerTransform = newPlayer.transform;
+            cCam.Target.LookAtTarget = playerTransform;
         }
 
         private void Update()
         {
             if (playerTransform == null) return;
-
             PerformOcclusionCheck();
         }
 
