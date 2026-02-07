@@ -4,6 +4,7 @@ namespace EvanGameKits.Entity.Module
 {
     public class M_AI_Sight : AIBehaviourModule
     {
+        public string targetTag = "Player";
         public Transform target;
         [Range(0, 360)] public float maxViewAngle = 90f;
         public float viewDistance = 10f;
@@ -17,11 +18,25 @@ namespace EvanGameKits.Entity.Module
 
         public bool CanSeeTarget()
         {
-            if (target == null) return false;
+            GameObject[] potentialTargets = GameObject.FindGameObjectsWithTag(targetTag);
+            
+            foreach (GameObject obj in potentialTargets)
+            {
+                if (CheckVisibility(obj.transform))
+                {
+                    target = obj.transform;
+                    return true;
+                }
+            }
 
+            return false;
+        }
+
+        private bool CheckVisibility(Transform t)
+        {
             Vector3 eyePos = transform.position + detectionOffset;
-            Vector3 dirToTarget = (target.position - eyePos).normalized;
-            float distToTarget = Vector3.Distance(eyePos, target.position);
+            Vector3 dirToTarget = (t.position - eyePos).normalized;
+            float distToTarget = Vector3.Distance(eyePos, t.position);
 
             if (distToTarget <= viewDistance)
             {

@@ -25,6 +25,11 @@ namespace EvanGameKits.Entity.Module
 
             bool canSee = sight.CanSeeTarget();
 
+            if (canSee)
+            {
+                target = sight.target;
+            }
+
             if (canSee != isCurrentlyChasing)
             {
                 isCurrentlyChasing = canSee;

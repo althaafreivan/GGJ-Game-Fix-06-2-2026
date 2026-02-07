@@ -80,7 +80,6 @@ namespace EvanGameKits.Mechanic
             switch (glitchType)
             {
                 case 0: // Delayed "Struggle" Launch
-                    if (meshTransform != null) meshTransform.DOShakePosition(0.5f, 0.1f);
                     DOVirtual.DelayedCall(0.5f, () => ApplyBounce(rb, 1.5f, Vector3.zero));
                     break;
                 case 1: // Weak "Fart" Bounce
