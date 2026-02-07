@@ -2,9 +2,14 @@ using DG.Tweening;
 using Unity.Cinemachine;
 using UnityEngine;
 using System.Collections.Generic;
+using EvanUIKits.Audio;
 
 public class A_Blast : MonoBehaviour
 {
+    [Header("SFX")]
+    [SerializeField] private string starSfxKey;
+    [SerializeField] private string blastSfxKey;
+
     [Header("Timing")]
     [SerializeField] private float mainDuration = 2.5f;
     [SerializeField] private float secondaryDuration = 0.5f;
@@ -55,6 +60,9 @@ public class A_Blast : MonoBehaviour
     {
         if (shakeTimer != null) shakeTimer.Kill();
 
+        if (AudioManager.instance != null && !string.IsNullOrEmpty(starSfxKey))
+            AudioManager.instance.PlaySFX(starSfxKey);
+
         DOTween.Kill(Star);
         foreach (var part in fullScaleParts) { part.gameObject.SetActive(false); DOTween.Kill(part); }
         foreach (var part in xyScaleParts) { part.gameObject.SetActive(false); DOTween.Kill(part); }
@@ -67,6 +75,9 @@ public class A_Blast : MonoBehaviour
             Star.DOScale(Vector3.zero, starDuration).SetEase(primaryEase).OnComplete(() =>
             {
                 Star.gameObject.SetActive(false);
+
+                if (AudioManager.instance != null && !string.IsNullOrEmpty(blastSfxKey))
+                    AudioManager.instance.PlaySFX(blastSfxKey);
 
                 float totalEffectDuration = mainDuration + secondaryDuration + finishDuration;
                 StartShake(totalEffectDuration);

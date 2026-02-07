@@ -14,9 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sfxLibraries:
   - Name: Button
-    Clip: {fileID: 8300000, guid: f4b800b0a937a9646a5b42ae9112a197, type: 3}
+    Clip: {fileID: 8300000, guid: 8710cf0ffa21fac4cb72eb5a8fe86318, type: 3}
   - Name: Tick
-    Clip: {fileID: 8300000, guid: 591b9f72b29b93447acd06c8317d4abf, type: 3}
+    Clip: {fileID: 8300000, guid: 5ef16dcda8cfbcb49ad404d5e81714e8, type: 3}
+  - Name: onStar
+    Clip: {fileID: 8300000, guid: 7ff77699086d8ca4594e66ba6afdc82b, type: 3}
+  - Name: onBlast
+    Clip: {fileID: 8300000, guid: 798c9824c953ea441a574a474c715fc5, type: 3}
   musicLibraries:
   - Name: bgm
     Clip: {fileID: 8300000, guid: 4d5ce379982070044a830d86d911f566, type: 3}
