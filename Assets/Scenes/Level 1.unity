@@ -3068,6 +3068,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
+      propertyPath: bounceForce
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
+      propertyPath: randomTorque
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
       propertyPath: permanentStretchChance
       value: 0
       objectReference: {fileID: 0}
@@ -5562,6 +5570,42 @@ PrefabInstance:
       propertyPath: m_Alpha
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[0].image
+      value: 
+      objectReference: {fileID: 21300000, guid: 5a7af526271a70840a0c41a37f904f27, type: 3}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[1].image
+      value: 
+      objectReference: {fileID: 21300000, guid: 41f2641c650023443b779270c9ea1258, type: 3}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[2].image
+      value: 
+      objectReference: {fileID: 21300000, guid: c4f51c6586faae74d87fe6d1ffae5bb0, type: 3}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[3].image
+      value: 
+      objectReference: {fileID: 21300000, guid: 60edf7c7e9a4ecd47bf4dfe6b9015c29, type: 3}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[0].description
+      value: Move slowly through bush, don't let the blocky thing catch you.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[1].description
+      value: Try to move into another bush in right timing.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[2].description
+      value: Jump with the trampoline to achieve high jump.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[3].description
+      value: Go into the door of calamity.
+      objectReference: {fileID: 0}
     - target: {fileID: 2983766465385208908, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: dialogues.Array.data[0].sentences.Array.size
       value: 4
@@ -5714,6 +5758,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1489447464}
+    - target: {fileID: 5747276075468611665, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6668489818630399598, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_IsActive
       value: 1
