@@ -25,12 +25,13 @@ namespace EvanGameKits.Mechanic
         public bool isFrozen = false;       
 
         [Header("Cooldown")]
-        public float teleportCooldown = 2.0f;
+        public float teleportCooldown = 0f;
         private static float lastTeleportTime;
         private static bool isAnyPortalTeleporting = false;
 
         private List<Material> portalMaterials = new List<Material>();
         private HashSet<GameObject> objectsInTrigger = new HashSet<GameObject>();
+        private HashSet<GameObject> activeTeleporters = new HashSet<GameObject>();
         private Tween currentTween;
 
         public Tween CurrentTween => currentTween;
@@ -79,25 +80,25 @@ namespace EvanGameKits.Mechanic
 
         private void OnTriggerEnter(Collider other)
         {
+            HandleTrigger(other);
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            HandleTrigger(other);
+        }
+
+        private void HandleTrigger(Collider other)
+        {
             GameObject playerRoot = FindPlayerRoot(other.gameObject);
             if (playerRoot == null) return;
 
             if (((1 << playerRoot.layer) & allowedLayer) == 0) return;
             if (!playerRoot.CompareTag(playerTag)) return;
 
-            if (isAnyPortalTeleporting)
-            {
-                NotificationController.instance?.ShowNotification("Portal is currently busy...", 1f);
-                return;
-            }
+            objectsInTrigger.Add(playerRoot);
 
-            if (Time.time < lastTeleportTime + teleportCooldown)
-            {
-                NotificationController.instance?.ShowNotification("Portal is recharging...", 1f);
-                return;
-            }
-
-            if (objectsInTrigger.Add(playerRoot))
+            if (!activeTeleporters.Contains(playerRoot))
             {
                 StartCoroutine(TeleportCountdown(playerRoot));
             }
@@ -123,65 +124,74 @@ namespace EvanGameKits.Mechanic
 
         private IEnumerator TeleportCountdown(GameObject playerObj)
         {
-            isAnyPortalTeleporting = true;
+            activeTeleporters.Add(playerObj);
             string catName = GetCatName(playerObj);
-            AnimateDissolve(1f, 0f);
-            if (isFrozen) currentTween.Pause();
-            
-            yield return currentTween.WaitForCompletion();
+            bool notifiedWaiting = false;
 
-            // Notify why it's waiting
-            if (isFrozen || (targetPortal != null && targetPortal.isFrozen))
+            while (objectsInTrigger.Contains(playerObj))
             {
-                if (catName == "Expected")
+                // Wait for unfreeze if either this portal or target is frozen
+                if (isFrozen || (targetPortal != null && targetPortal.isFrozen))
                 {
-                    NotificationController.instance?.ShowNotification("Expected can't teleport while looking at the portal! Move your window away and check from map.", 3f);
+                    if (!notifiedWaiting)
+                    {
+                        if (catName == "Expected")
+                            NotificationController.instance?.ShowNotification("Expected can't teleport while looking at the portal! Move your window away and check from map.", 3f);
+                        else if (catName == "Nothing")
+                            NotificationController.instance?.ShowNotification("Nothing can only teleport while looking at the portal!", 2f);
+                        notifiedWaiting = true;
+                    }
+                    yield return null;
+                    continue;
                 }
-                else
+
+                // Wait for global busy state or cooldown
+                if (isAnyPortalTeleporting || (teleportCooldown > 0 && Time.time < lastTeleportTime + teleportCooldown))
                 {
-                    NotificationController.instance?.ShowNotification("Nothing can only teleport while looking at the portal!", 2f);
+                    yield return null;
+                    continue;
                 }
-            }
 
-            while (isFrozen || (targetPortal != null && targetPortal.isFrozen))
-            {
-                yield return null;
-            }
-
-            if (objectsInTrigger.Contains(playerObj))
-            {
+                // Teleport
+                isAnyPortalTeleporting = true;
                 lastTeleportTime = Time.time;
 
-                targetPortal.AnimateDissolve(1f, 0f);
-                if (targetPortal.isFrozen) targetPortal.CurrentTween.Pause();
-                yield return targetPortal.CurrentPortalTweenWait();
-
-                Transform destination = targetPortal.spawnPoint != null ? targetPortal.spawnPoint : targetPortal.transform;
-                playerObj.transform.position = destination.position;
-                playerObj.transform.rotation = destination.rotation;
-
-                AnimateDissolve(0f, 1f);
-                if (isFrozen) currentTween.Pause();
+                // Visuals - start them but don't wait for "instant" feel
+                AnimateDissolve(1f, 0f);
+                if (isFrozen) currentTween?.Pause();
                 
-                targetPortal.AnimateDissolve(0f, 1f);
-                if (targetPortal.isFrozen) targetPortal.CurrentTween.Pause();
+                if (targetPortal != null)
+                {
+                    targetPortal.AnimateDissolve(1f, 0f);
+                    if (targetPortal.isFrozen) targetPortal.CurrentTween?.Pause();
 
-                yield return currentTween.WaitForCompletion();
-                
-                objectsInTrigger.Remove(playerObj);
-            }
-            else
-            {
-                NotificationController.instance?.ShowNotification($"{catName} left the portal area.", 1.5f);
+                    Transform destination = targetPortal.spawnPoint != null ? targetPortal.spawnPoint : targetPortal.transform;
+                    playerObj.transform.position = destination.position;
+                    playerObj.transform.rotation = destination.rotation;
+                }
+
+                // Brief lock to prevent physics double-teleport issues, then release busy state
+                yield return new WaitForFixedUpdate();
+                isAnyPortalTeleporting = false;
+
+                // Visuals - return to normal
                 AnimateDissolve(0f, 1f);
-                if (isFrozen) currentTween.Pause();
-                yield return currentTween.WaitForCompletion();
-                objectsInTrigger.Remove(playerObj);
+                if (isFrozen) currentTween?.Pause();
+                
+                if (targetPortal != null)
+                {
+                    targetPortal.AnimateDissolve(0f, 1f);
+                    if (targetPortal.isFrozen) targetPortal.CurrentTween?.Pause();
+                }
+
+                break;
             }
-            isAnyPortalTeleporting = false;
+
+            activeTeleporters.Remove(playerObj);
+            objectsInTrigger.Remove(playerObj);
         }
 
-        private IEnumerator CurrentPortalTweenWait()
+        public IEnumerator CurrentPortalTweenWait()
         {
             if (currentTween != null) yield return currentTween.WaitForCompletion();
         }
