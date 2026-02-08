@@ -74,7 +74,8 @@ namespace EvanGameKits.Entity.Module
             if (player == null || player != Player.ActivePlayer)
             {
                 isCurrentlyChecking = false;
-                HandleVisibilityUpdate(false);
+                bool isReverse = M_FrustumDetect.instance != null && M_FrustumDetect.instance.isReverse;
+                HandleVisibilityUpdate(isReverse);
             }
         }
 

@@ -29,6 +29,8 @@ namespace EvanGameKits.Mechanic
         private MaterialPropertyBlock propBlock;
         private bool isActive = false;
         private bool isFrozen = false;
+        private bool wasOccupied = false;
+        private float lastCheckTime = 0f;
 
         // Use HashSet to prevent double counting
         private HashSet<Collider> trackedColliders = new HashSet<Collider>();
@@ -41,6 +43,19 @@ namespace EvanGameKits.Mechanic
             
             propBlock = new MaterialPropertyBlock();
             UpdateVisuals(false);
+        }
+
+        private void Update()
+        {
+            if (isFrozen) return;
+
+            if (Time.time - lastCheckTime >= 1.0f)
+            {
+                lastCheckTime = Time.time;
+                RefreshTriggerState();
+                trackedColliders.Clear();
+                trackedColliders2D.Clear();
+            }
         }
 
         public void SetFrozen(bool state)
@@ -65,18 +80,23 @@ namespace EvanGameKits.Mechanic
             trackedColliders2D.RemoveWhere(c => c == null || !c.gameObject.activeInHierarchy);
 
             int totalCount = trackedColliders.Count + trackedColliders2D.Count;
+            bool isOccupied = totalCount > 0;
 
             if (state == TriggerState.Hold)
             {
-                bool shouldBeActive = totalCount > 0;
-                TargetObject.SetState(shouldBeActive);
-                UpdateVisuals(shouldBeActive);
+                TargetObject.SetState(isOccupied);
+                UpdateVisuals(isOccupied);
             }
-            else
+            else // Switch
             {
+                if (isOccupied && !wasOccupied)
+                {
+                    TargetObject.ToggleState();
+                }
                 isActive = TargetObject.isTriggered;
                 UpdateVisuals(isActive);
             }
+            wasOccupied = isOccupied;
         }
 
         private void UpdateVisuals(bool isOn)
@@ -119,40 +139,31 @@ namespace EvanGameKits.Mechanic
             return identity != null && identity.catType == Entity.Module.CatType.White;
         }
 
+        private bool IsRelevant3D(Collider other)
+        {
+            if (triggerType == TriggerType.Weight)
+                return ((1 << other.gameObject.layer) & weightLayers) != 0;
+            return triggerType == TriggerType.Collider3D && other.CompareTag("Player");
+        }
+
+        private bool IsRelevant2D(Collider2D other)
+        {
+            if (triggerType == TriggerType.Weight)
+                return ((1 << other.gameObject.layer) & weightLayers) != 0;
+            return triggerType == TriggerType.Collider2D && other.CompareTag("Player");
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (TargetObject == null) return;
 
-            bool isRelevant = false;
-            if (triggerType == TriggerType.Weight)
-            {
-                if (((1 << other.gameObject.layer) & weightLayers) != 0) isRelevant = true;
-            }
-            else if (triggerType == TriggerType.Collider3D && other.CompareTag("Player"))
-            {
-                isRelevant = true;
-            }
-
-            if (isRelevant)
+            if (IsRelevant3D(other))
             {
                 if (trackedColliders.Add(other))
                 {
                     if (!isFrozen)
                     {
-                        if (state == TriggerState.Hold)
-                        {
-                            TargetObject.SetState(true);
-                            UpdateVisuals(true);
-                        }
-                        else
-                        {
-                            int totalCount = trackedColliders.Count + trackedColliders2D.Count;
-                            if (totalCount == 1)
-                            {
-                                TargetObject.ToggleState();
-                                UpdateVisuals(!isActive);
-                            }
-                        }
+                        RefreshTriggerState();
                     }
                 }
             }
@@ -171,40 +182,27 @@ namespace EvanGameKits.Mechanic
             }
         }
 
+        private void OnTriggerStay(Collider other)
+        {
+            if (TargetObject == null) return;
+
+            if (IsRelevant3D(other))
+            {
+                trackedColliders.Add(other);
+            }
+        }
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (TargetObject == null) return;
 
-            bool isRelevant = false;
-            if (triggerType == TriggerType.Weight)
-            {
-                if (((1 << other.gameObject.layer) & weightLayers) != 0) isRelevant = true;
-            }
-            else if (triggerType == TriggerType.Collider2D && other.CompareTag("Player"))
-            {
-                isRelevant = true;
-            }
-
-            if (isRelevant)
+            if (IsRelevant2D(other))
             {
                 if (trackedColliders2D.Add(other))
                 {
                     if (!isFrozen)
                     {
-                        if (state == TriggerState.Hold)
-                        {
-                            TargetObject.SetState(true);
-                            UpdateVisuals(true);
-                        }
-                        else
-                        {
-                            int totalCount = trackedColliders.Count + trackedColliders2D.Count;
-                            if (totalCount == 1)
-                            {
-                                TargetObject.ToggleState();
-                                UpdateVisuals(!isActive);
-                            }
-                        }
+                        RefreshTriggerState();
                     }
                 }
             }
@@ -220,6 +218,16 @@ namespace EvanGameKits.Mechanic
                 {
                     RefreshTriggerState();
                 }
+            }
+        }
+
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            if (TargetObject == null) return;
+
+            if (IsRelevant2D(other))
+            {
+                trackedColliders2D.Add(other);
             }
         }
     }

@@ -7274,6 +7274,10 @@ PrefabInstance:
       propertyPath: playerB
       value: 
       objectReference: {fileID: 1366455628}
+    - target: {fileID: 506065487434325032, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2488050247332937664, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_Alpha
       value: 1
@@ -7533,6 +7537,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1489447464}
+    - target: {fileID: 5353802956361093942, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: automaticStarAlignment
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5747276075468611665, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_Alpha
       value: 0
@@ -7594,7 +7602,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 74355254985407572, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1223121271829910816, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       insertIndex: -1
@@ -7704,6 +7713,10 @@ PrefabInstance:
     - target: {fileID: 5305449413455577355, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 3063
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910598966753548430, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
+      propertyPath: hideTitleBar
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8254417365595352106, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: cCam

@@ -4520,7 +4520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2724768381231175665, guid: d89b7ce5ba1780e459d2465fd2981e08, type: 3}
       propertyPath: triggerType
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2724768381231175665, guid: d89b7ce5ba1780e459d2465fd2981e08, type: 3}
       propertyPath: TargetObject
@@ -5566,45 +5566,77 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1815681800316617835, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: sceneToLoad
+      value: Level 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2488050247332937664, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_Alpha
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: steps.Array.size
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: steps.Array.data[0].image
       value: 
-      objectReference: {fileID: 21300000, guid: 5a7af526271a70840a0c41a37f904f27, type: 3}
+      objectReference: {fileID: 21300000, guid: d122b0827a2187e459e2eef105a505b5, type: 3}
     - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: steps.Array.data[1].image
       value: 
-      objectReference: {fileID: 21300000, guid: 41f2641c650023443b779270c9ea1258, type: 3}
+      objectReference: {fileID: 21300000, guid: 95193308eea7d7444a3dbe4400884044, type: 3}
     - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: steps.Array.data[2].image
       value: 
-      objectReference: {fileID: 21300000, guid: c4f51c6586faae74d87fe6d1ffae5bb0, type: 3}
+      objectReference: {fileID: 21300000, guid: 26e5caf2089b5124a8b2364978c5af9f, type: 3}
     - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: steps.Array.data[3].image
       value: 
-      objectReference: {fileID: 21300000, guid: 60edf7c7e9a4ecd47bf4dfe6b9015c29, type: 3}
+      objectReference: {fileID: 21300000, guid: 724f95ad3fbde9c4282d8282a27ec18f, type: 3}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[4].image
+      value: 
+      objectReference: {fileID: 21300000, guid: 554922665ef5a4d458221fa8ae11e703, type: 3}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[5].image
+      value: 
+      objectReference: {fileID: 21300000, guid: 7ef5e29daded1c44b8622f40c4416271, type: 3}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[6].image
+      value: 
+      objectReference: {fileID: 21300000, guid: fc1b0b9b963f48f48a1708e4e4a5ac79, type: 3}
     - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: steps.Array.data[0].description
-      value: Move slowly through bush, don't let the blocky thing catch you.
+      value: Take Nothing to the platform using trampoline.
       objectReference: {fileID: 0}
     - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: steps.Array.data[1].description
-      value: Try to move into another bush in right timing.
+      value: Go to the switch with Expected, sure it won't go straight green because
+        of the Expected's freeze effect.
       objectReference: {fileID: 0}
     - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: steps.Array.data[2].description
-      value: Jump with the trampoline to achieve high jump.
+      value: Switch to Nothing and back to Expected really fast, so the switch became
+        green and the platform doesn't move too high.
       objectReference: {fileID: 0}
     - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: steps.Array.data[3].description
+      value: Take Expected to the same platform as Nothing. Keep the platform visible
+        so it doesn't move.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[4].description
+      value: Switch to Nothing, so the platform begin to lift by the turned switch
+        earlier.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[5].description
       value: Go into the door of calamity.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[6].description
+      value: Sneak peek of the skill so you can remember.
       objectReference: {fileID: 0}
     - target: {fileID: 2983766465385208908, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: dialogues.Array.data[0].sentences.Array.size
@@ -5758,6 +5790,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1489447464}
+    - target: {fileID: 5353802956361093942, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: automaticStarAlignment
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5747276075468611665, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_Alpha
       value: 0
@@ -5823,7 +5859,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 74355254985407572, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1223121271829910816, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       insertIndex: 6
@@ -5927,6 +5964,10 @@ PrefabInstance:
     - target: {fileID: 5305449413455577355, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 3063
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910598966753548430, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
+      propertyPath: hideTitleBar
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8254417365595352106, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: cCam
