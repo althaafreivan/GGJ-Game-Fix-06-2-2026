@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using System.Collections.Generic;
 
 namespace EvanUIKits.Audio
 {
@@ -7,11 +8,19 @@ namespace EvanUIKits.Audio
     {
         public static AudioManager instance;
 
+        [System.Serializable]
+        public struct SoundData
+        {
+            public string key;
+            public AudioClip clip;
+        }
+
         [SerializeField] private AudioMixer mixer;
-        [SerializeField] private SoundLibrary soundLibrary;
+        [SerializeField] private List<SoundData> soundEffects;
+        [SerializeField] private AudioClip startupMusic;
         [SerializeField, Range(0.1f, 2f)] private float pitchVariation = 0.1f;
 
-        private AudioSource sfx, music;
+        public AudioSource sfx, music;
 
         public enum VolumeType { Music, SFX }
 
@@ -27,25 +36,20 @@ namespace EvanUIKits.Audio
                 return;
             }
 
-            sfx = gameObject.AddComponent<AudioSource>();
-            sfx.outputAudioMixerGroup = mixer.FindMatchingGroups("sfx")[0];
-            sfx.playOnAwake = false;
+            AdjustVolume(VolumeType.Music, 1f); AdjustVolume(VolumeType.SFX, 1f);
+            PlayerPrefs.SetFloat("music", 1f); PlayerPrefs.SetFloat("sfx", 1f);
 
             music = gameObject.AddComponent<AudioSource>();
             music.outputAudioMixerGroup = mixer.FindMatchingGroups("music")[0];
             music.playOnAwake = false;
-
-            AdjustVolume(VolumeType.SFX, PlayerPrefs.GetFloat("sfxVolume", 0.75f));
-            AdjustVolume(VolumeType.Music, PlayerPrefs.GetFloat("musicVolume", 0.75f));
         }
 
         private void Start()
         {
-            var entry = soundLibrary.musicLibraries.Find(s => s.Name == "music");
-            if (entry != null && entry.Clip != null)
+            if (startupMusic != null)
             {
                 music.loop = true;
-                music.clip = entry.Clip;
+                music.clip = startupMusic;
                 music.Play();
             }
         }
@@ -59,11 +63,11 @@ namespace EvanUIKits.Audio
 
         public void PlaySFX(string name)
         {
-            var entry = soundLibrary.sfxLibraries.Find(s => s.Name == name);
-            if (entry != null && entry.Clip != null)
+            var entry = soundEffects.Find(s => s.key == name);
+            if (entry.clip != null)
             {
                 sfx.pitch = 1f + Random.Range(-pitchVariation, pitchVariation);
-                sfx.PlayOneShot(entry.Clip);
+                sfx.PlayOneShot(entry.clip);
             }
         }
 
@@ -75,4 +79,3 @@ namespace EvanUIKits.Audio
         }
     }
 }
-
