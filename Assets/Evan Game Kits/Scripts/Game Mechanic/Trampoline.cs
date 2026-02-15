@@ -30,7 +30,17 @@ namespace EvanGameKits.Mechanic
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.isTrigger) return; 
+            HandleTrigger(other);
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            HandleTrigger(other);
+        }
+
+        private void HandleTrigger(Collider other)
+        {
+            if (other.isTrigger) return;
             if (((1 << other.gameObject.layer) & affectLayer) == 0) return;
             ProcessBounce(other.gameObject);
         }
@@ -39,10 +49,14 @@ namespace EvanGameKits.Mechanic
         {
             if (((1 << collision.gameObject.layer) & affectLayer) == 0) return;
             
+            // Simplified check: if anything hits the trampoline from any angle, try to bounce it
+            // but we usually want to ensure it's hitting the 'top'
+            Vector3 upDir = useWorldUp ? Vector3.up : transform.up;
             foreach (ContactPoint contact in collision.contacts)
             {
-                Vector3 upDir = useWorldUp ? Vector3.up : transform.up;
-                if (Vector3.Dot(contact.normal, upDir) < -0.5f) 
+                // If the contact normal is pointing down-ish relative to trampoline up, 
+                // it means something landed ON it.
+                if (Vector3.Dot(contact.normal, upDir) < -0.3f) 
                 {
                     ProcessBounce(collision.gameObject);
                     break;
@@ -60,14 +74,9 @@ namespace EvanGameKits.Mechanic
             
             if (rb != null)
             {
-                if (Random.value < glitchChance)
-                {
-                    HandleGlitch(rb);
-                }
-                else
-                {
-                    ApplyBounce(rb, 1f, Vector3.zero);
-                }
+                // Check if the object is actually moving towards or resting on the trampoline
+                // to avoid bouncing objects that are just passing by or below it
+                ApplyBounce(rb, 1f, Vector3.zero);
             }
         }
 
