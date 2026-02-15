@@ -124,7 +124,7 @@ Material:
     - _RimSmoothness: 0.001
     - _RimThreshold: 1
     - _SampleGI: 0
-    - _Smoothness: 0.105
+    - _Smoothness: 0.1
     - _SmoothnessTextureChannel: 0
     - _SoftParticlesEnabled: 0
     - _SoftParticlesFarFadeDistance: 1
