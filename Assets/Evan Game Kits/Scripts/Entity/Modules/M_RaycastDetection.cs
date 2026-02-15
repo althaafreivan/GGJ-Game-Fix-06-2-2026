@@ -12,39 +12,29 @@ namespace EvanGameKits.Entity.Module
         public LayerMask groundLayer;
         public UnityEvent<Player> OnCollide;
         private Player player;
+        private Rigidbody lastGroundRigidbody;
 
         private void Start()
         {
             player = GetComponent<Player>();
         }
 
+        public override Rigidbody GetGroundRigidbody() => lastGroundRigidbody;
+
         public override bool isGrounded()
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position + offset, detectionRadius, groundLayer);
             
-            bool foundBridge = false;
+            lastGroundRigidbody = null;
             foreach (var col in colliders)
             {
                 // If the collider is not part of this player's hierarchy, we found valid ground
                 if (!col.transform.IsChildOf(transform))
                 {
                     OnCollide?.Invoke(player);
-                    
-                    if (col.CompareTag("Bridge"))
-                    {
-                        transform.SetParent(col.transform);
-                        foundBridge = true;
-                    }
-                    
-                    if (!foundBridge) transform.SetParent(null);
-
+                    lastGroundRigidbody = col.attachedRigidbody;
                     return true;
                 }
-            }
-
-            if (!foundBridge && transform.parent != null && transform.parent.CompareTag("Bridge"))
-            {
-                transform.SetParent(null);
             }
 
             return false;

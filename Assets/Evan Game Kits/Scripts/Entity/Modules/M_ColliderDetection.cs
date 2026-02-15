@@ -11,8 +11,10 @@ namespace EvanGameKits.Entity.Module
         public LayerMask groundLayer;
         private bool privGrounded;
         private Player player;
+        private Rigidbody lastGroundRigidbody;
         public UnityEvent<Player> OnCollide;
         public override bool isGrounded() => privGrounded;
+        public override Rigidbody GetGroundRigidbody() => lastGroundRigidbody;
 
         private void Start()
         {
@@ -24,12 +26,8 @@ namespace EvanGameKits.Entity.Module
             if (((1 << collision.gameObject.layer) & groundLayer) != 0)
             {
                 privGrounded = true;
+                lastGroundRigidbody = collision.rigidbody;
                 OnCollide?.Invoke(player);
-
-                if (collision.gameObject.CompareTag("Bridge"))
-                {
-                    transform.SetParent(collision.transform);
-                }
             }
         }
 
@@ -38,8 +36,7 @@ namespace EvanGameKits.Entity.Module
             if (((1 << collision.gameObject.layer) & groundLayer) != 0)
             {
                 privGrounded = true;
-                // Don't invoke OnCollide every frame, or do if needed by other systems
-                // OnCollide?.Invoke(player); 
+                lastGroundRigidbody = collision.rigidbody;
             }
         }
 
@@ -48,11 +45,7 @@ namespace EvanGameKits.Entity.Module
             if (((1 << collision.gameObject.layer) & groundLayer) != 0)
             {
                 privGrounded = false;
-                
-                if (collision.gameObject.CompareTag("Bridge") && transform.parent == collision.transform)
-                {
-                    transform.SetParent(null);
-                }
+                lastGroundRigidbody = null;
             }
         }
     }

@@ -22,11 +22,23 @@ namespace EvanGameKits.Mechanic
         public bool isTriggered = false;
         private bool isFrozen = false;
         private Sequence currentSequence;
+        private Rigidbody targetRigidbody;
+
+        private void Awake()
+        {
+            m_Target = transform;
+            targetRigidbody = m_Target.GetComponent<Rigidbody>();
+            if (targetRigidbody != null)
+            {
+                targetRigidbody.isKinematic = true;
+                targetRigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+            }
+        }
 
         private void Start()
         {
-            m_Target = transform;
-
+            if (m_Target == null) m_Target = transform;
+            
             if (useCurrentPosition)
             {
                 startPosition = m_Target.position;
@@ -63,16 +75,60 @@ namespace EvanGameKits.Mechanic
 
             if (isTriggered)
             {
-                if (startPosition != endPosition) currentSequence.Join(m_Target.DOMove(endPosition, invokeDuration).SetEase(ease));
-                if (startRotation != endRotation) currentSequence.Join(m_Target.DORotate(endRotation, invokeDuration).SetEase(ease));
+                if (startPosition != endPosition)
+                {
+                    if (targetRigidbody != null)
+                    {
+                        currentSequence.Join(targetRigidbody.DOMove(endPosition, invokeDuration).SetEase(ease).SetUpdate(UpdateType.Fixed)
+                            .OnUpdate(() => {
+                                // DOTween doesn't automatically set Rigidbody.linearVelocity when using DOMove on a kinematic Rigidbody.
+                                // We manually calculate and set it so characters using velocity-based movement can detect it.
+                                if (invokeDuration > 0)
+                                    targetRigidbody.linearVelocity = (endPosition - startPosition) / invokeDuration; 
+                            })
+                            .OnComplete(() => targetRigidbody.linearVelocity = Vector3.zero));
+                    }
+                    else
+                        currentSequence.Join(m_Target.DOMove(endPosition, invokeDuration).SetEase(ease));
+                }
+
+                if (startRotation != endRotation)
+                {
+                    if (targetRigidbody != null)
+                        currentSequence.Join(targetRigidbody.DORotate(endRotation, invokeDuration).SetEase(ease).SetUpdate(UpdateType.Fixed));
+                    else
+                        currentSequence.Join(m_Target.DORotate(endRotation, invokeDuration).SetEase(ease));
+                }
+
                 if (startScale != endScale) currentSequence.Join(m_Target.DOScale(endScale, invokeDuration).SetEase(ease));
                 
                 invokeTrigger?.Invoke();
             }
             else
             {
-                if (startPosition != endPosition) currentSequence.Join(m_Target.DOMove(startPosition, revokeDuration).SetEase(ease));
-                if (startRotation != endRotation) currentSequence.Join(m_Target.DORotate(startRotation, revokeDuration).SetEase(ease));
+                if (startPosition != endPosition)
+                {
+                    if (targetRigidbody != null)
+                    {
+                        currentSequence.Join(targetRigidbody.DOMove(startPosition, revokeDuration).SetEase(ease).SetUpdate(UpdateType.Fixed)
+                            .OnUpdate(() => {
+                                if (revokeDuration > 0)
+                                    targetRigidbody.linearVelocity = (startPosition - endPosition) / revokeDuration;
+                            })
+                            .OnComplete(() => targetRigidbody.linearVelocity = Vector3.zero));
+                    }
+                    else
+                        currentSequence.Join(m_Target.DOMove(startPosition, revokeDuration).SetEase(ease));
+                }
+
+                if (startRotation != endRotation)
+                {
+                    if (targetRigidbody != null)
+                        currentSequence.Join(targetRigidbody.DORotate(startRotation, revokeDuration).SetEase(ease).SetUpdate(UpdateType.Fixed));
+                    else
+                        currentSequence.Join(m_Target.DORotate(startRotation, revokeDuration).SetEase(ease));
+                }
+
                 if (startScale != endScale) currentSequence.Join(m_Target.DOScale(startScale, revokeDuration).SetEase(ease));
 
                 revokeTrigger?.Invoke();

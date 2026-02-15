@@ -53,8 +53,6 @@ namespace EvanGameKits.Mechanic
             {
                 lastCheckTime = Time.time;
                 RefreshTriggerState();
-                trackedColliders.Clear();
-                trackedColliders2D.Clear();
             }
         }
 

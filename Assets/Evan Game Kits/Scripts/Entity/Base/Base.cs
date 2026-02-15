@@ -17,6 +17,7 @@ namespace EvanGameKits.Entity
            if (rb != null)
            {
                rb.interpolation = RigidbodyInterpolation.Interpolate;
+               rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
            }
         }
     }

@@ -25,17 +25,36 @@ namespace EvanGameKits.Entity.Module
         private float smoothInput;
         private Vector3 currentVelocity;
         private Camera cam;
+        private GroundDetector groundDetector;
 
         protected override void Start()
         {
             base.Start();
             cam = Camera.main;
+            groundDetector = GetComponent<GroundDetector>();
         }
 
         public override void ProcessMovement()
         {
-            Vector3 direction = Quaternion.Euler(0, cam.transform.eulerAngles.y, 0) * new Vector3((xDirection ? (entity.MoveInput.x * movementSpeed) : 0), entity.rb.linearVelocity.y, (yDirection ? (entity.MoveInput.y * movementSpeed) : 0));
-            entity.rb.linearVelocity = Vector3.SmoothDamp(entity.rb.linearVelocity, direction, ref currentVelocity, speedInterpolation);
+            Vector3 targetLinearVelocity = Quaternion.Euler(0, cam.transform.eulerAngles.y, 0) * new Vector3((xDirection ? (entity.MoveInput.x * movementSpeed) : 0), 0, (yDirection ? (entity.MoveInput.y * movementSpeed) : 0));
+            
+            // Get platform velocity if grounded
+            Vector3 platformVelocity = Vector3.zero;
+            if (groundDetector != null && groundDetector.isGrounded())
+            {
+                Rigidbody platformRb = groundDetector.GetGroundRigidbody();
+                if (platformRb != null)
+                {
+                    platformVelocity = platformRb.linearVelocity;
+                }
+            }
+
+            // Combine desired movement with platform movement, preserving vertical velocity for jumping/falling
+            Vector3 finalVelocity = targetLinearVelocity + platformVelocity;
+            finalVelocity.y = entity.rb.linearVelocity.y;
+
+            // Apply smooth damp to the combined velocity
+            entity.rb.linearVelocity = Vector3.SmoothDamp(entity.rb.linearVelocity, finalVelocity, ref currentVelocity, speedInterpolation);
 
             float vel = entity.MoveInput.magnitude;
             if (vel>0 || vel<0)
@@ -49,7 +68,7 @@ namespace EvanGameKits.Entity.Module
             smoothInput = Mathf.MoveTowards(smoothInput, vel, 1f * Time.fixedDeltaTime);
             onVelocity.Invoke((smoothInput < .01f) ? 0f: smoothInput);
 
-            Vector3 horizontalDirection = new Vector3(direction.x, 0, direction.z);
+            Vector3 horizontalDirection = new Vector3(targetLinearVelocity.x, 0, targetLinearVelocity.z);
 
             if (horizontalDirection.sqrMagnitude > .01f && isRotationControlled)
             {
