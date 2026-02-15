@@ -173,6 +173,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f220b4c60316a6048a0f10ae2859a8d5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2724768381231175665}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f220b4c60316a6048a0f10ae2859a8d5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1803799202789661179}
   m_SourcePrefab: {fileID: 100100000, guid: f220b4c60316a6048a0f10ae2859a8d5, type: 3}
 --- !u!1 &5132873060984265435 stripped
 GameObject:
@@ -221,6 +224,18 @@ MonoBehaviour:
   buttonRenderer: {fileID: 6646007563073370894}
   onColor: {r: 0, g: 1, b: 0, a: 1}
   offColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &1803799202789661179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5132873060984265435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b72c679815090e4dbeed444e584453d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.M_InteractionTriggerVisibilityTrigger
 --- !u!4 &5508025996643909729 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f220b4c60316a6048a0f10ae2859a8d5, type: 3}

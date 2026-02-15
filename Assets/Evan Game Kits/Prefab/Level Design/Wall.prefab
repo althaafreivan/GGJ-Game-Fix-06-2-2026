@@ -281,9 +281,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d788c348c4c198649aa16ffaa06e2c0c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9187787629951797025}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d788c348c4c198649aa16ffaa06e2c0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9021109026822210002}
   m_SourcePrefab: {fileID: 100100000, guid: d788c348c4c198649aa16ffaa06e2c0c, type: 3}
 --- !u!1 &1590251742084966433 stripped
 GameObject:
@@ -311,23 +308,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.012, y: 0.010000001, z: 0.0067999996}
   m_Center: {x: -0.006000003, y: 0.0049999882, z: 0.0033999993}
---- !u!114 &9021109026822210002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1590251742084966433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 725b2131f84680c4b8b1d80133456d4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.WallDissolveController
-  wallRenderer: {fileID: 0}
-  colorPropertyName: _BaseColor
-  hideAlpha: 0
-  showAlpha: 1
-  transitionDuration: 0.5
 --- !u!4 &2115114181183926939 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d788c348c4c198649aa16ffaa06e2c0c, type: 3}
