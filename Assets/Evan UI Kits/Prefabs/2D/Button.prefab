@@ -253,6 +253,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -379,7 +380,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96dbf7439b2cd914485b52391ddf09ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonType: 0
   animationType: 0
+  targetPanelName: 
+  selectedPanelIndex: 0
+  isUsingCustomEvent: 0
   OnButtonDown:
     m_PersistentCalls:
       m_Calls: []

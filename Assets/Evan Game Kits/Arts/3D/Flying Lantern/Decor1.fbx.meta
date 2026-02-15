@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ed6d0067cda6c2a4c98f8697b71324b9
+guid: 72f54c0e8b920514aaadb024de08085c
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,18 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Leaves
-    second: {fileID: 2100000, guid: 2998ebfb2fca09847aff3cd48e183ec0, type: 2}
+      name: Lantern Light
+    second: {fileID: 2100000, guid: 9dea8cc84e78ad14d8a7c02036b6c6b6, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Pot
-    second: {fileID: 2100000, guid: 1e2817c57c3b89c46b6c167f246ba0a4, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Wood1
-    second: {fileID: 2100000, guid: 75ed202d0b36c974ca7994034eeeeff2, type: 2}
+      name: Material.015
+    second: {fileID: 2100000, guid: c257371644b8ab64aaeda3bdf7012b63, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -86,12 +81,12 @@ ModelImporter:
     useFileScale: 1
     strictVertexDataChecks: 0
   tangentSpace:
-    normalSmoothAngle: 60
+    normalSmoothAngle: 121
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
-    blendShapeNormalImportMode: 1
+    blendShapeNormalImportMode: 0
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1

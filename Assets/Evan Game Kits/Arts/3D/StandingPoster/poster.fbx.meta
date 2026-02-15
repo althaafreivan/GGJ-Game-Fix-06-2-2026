@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ed6d0067cda6c2a4c98f8697b71324b9
+guid: a9ba2b3f1ef77814e8bfceb6b0dfcb9f
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,18 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Leaves
-    second: {fileID: 2100000, guid: 2998ebfb2fca09847aff3cd48e183ec0, type: 2}
+      name: ArtBoard.001
+    second: {fileID: 2100000, guid: a0c75d6c356089c4b8a2f7926369a0f0, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Pot
-    second: {fileID: 2100000, guid: 1e2817c57c3b89c46b6c167f246ba0a4, type: 2}
+      name: ArtBody
+    second: {fileID: 2100000, guid: 75a8252e713fccf4a9e14160f6416814, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Wood1
-    second: {fileID: 2100000, guid: 75ed202d0b36c974ca7994034eeeeff2, type: 2}
+      name: Cube.053_Baked.002
+    second: {fileID: 2100000, guid: 847c2e9f80069924a99f514e8c96f40d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

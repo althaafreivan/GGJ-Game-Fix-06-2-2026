@@ -1,24 +1,9 @@
 fileFormatVersion: 2
-guid: ed6d0067cda6c2a4c98f8697b71324b9
+guid: b59019586cf2556408649ff9d7dab5b3
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Leaves
-    second: {fileID: 2100000, guid: 2998ebfb2fca09847aff3cd48e183ec0, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Pot
-    second: {fileID: 2100000, guid: 1e2817c57c3b89c46b6c167f246ba0a4, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Wood1
-    second: {fileID: 2100000, guid: 75ed202d0b36c974ca7994034eeeeff2, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
