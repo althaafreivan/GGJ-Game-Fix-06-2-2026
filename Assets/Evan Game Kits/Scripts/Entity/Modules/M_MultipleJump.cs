@@ -22,13 +22,26 @@ namespace EvanGameKits.Entity.Module
 
         public override void ProcessJump(bool isPressed)
         {
-            if (groundDetector == null && isPressed) jump();
-            if (groundDetector != null && groundDetector.isActiveAndEnabled && groundDetector.isGrounded() && isPressed) { _jumpAmount = jumpAmount-1; onJump?.Invoke(); jump(); }
-            else if(groundDetector != null && groundDetector.isActiveAndEnabled && !groundDetector.isGrounded() && isPressed && _jumpAmount>0)
+            if (isPressed)
             {
-                _jumpAmount--;
-                onJump?.Invoke();
-                jump();
+                bool tryingToJump = false;
+                if (groundDetector == null) tryingToJump = true;
+                else if (groundDetector.isActiveAndEnabled && groundDetector.isGrounded()) tryingToJump = true;
+                else if (groundDetector.isActiveAndEnabled && !groundDetector.isGrounded() && _jumpAmount > 0) tryingToJump = true;
+
+                if (tryingToJump)
+                {
+                    M_Stamina staminaModule = GetComponent<M_Stamina>();
+                    if (staminaModule != null && staminaModule.stamina < staminaModule.singleConsume)
+                    {
+                        staminaModule.ShowLowStaminaNotification(staminaModule.singleConsume);
+                        return;
+                    }
+
+                    if (groundDetector == null) jump();
+                    else if (groundDetector.isGrounded()) { _jumpAmount = jumpAmount - 1; onJump?.Invoke(); jump(); }
+                    else { _jumpAmount--; onJump?.Invoke(); jump(); }
+                }
             }
         }
 

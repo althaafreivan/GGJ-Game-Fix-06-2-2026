@@ -216,11 +216,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.InteractionTrigger
   TargetObject: {fileID: 0}
-  triggerType: 3
-  state: 0
+  triggerType: 2
+  state: 1
   weightLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 128
   buttonRenderer: {fileID: 6646007563073370894}
   onColor: {r: 0, g: 1, b: 0, a: 1}
   offColor: {r: 1, g: 0, b: 0, a: 1}

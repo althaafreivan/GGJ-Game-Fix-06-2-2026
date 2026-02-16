@@ -19,12 +19,28 @@ namespace EvanGameKits.Entity.Module
 
         public override void ProcessJump(bool isPressed)
         {
-            if (groundDetector == null && isPressed) jump(); 
-            if (groundDetector != null && groundDetector.isActiveAndEnabled && groundDetector.isGrounded() && isPressed) jump(); 
+            if (isPressed)
+            {
+                bool canJumpActually = (groundDetector == null) || (groundDetector.isActiveAndEnabled && groundDetector.isGrounded());
+                if (canJumpActually)
+                {
+                    jump();
+                }
+            }
         }
 
         private void jump()
         {
+            M_Stamina staminaModule = GetComponent<M_Stamina>();
+            if (staminaModule != null)
+            {
+                if (staminaModule.stamina < staminaModule.singleConsume)
+                {
+                    staminaModule.ShowLowStaminaNotification(staminaModule.singleConsume);
+                    return;
+                }
+            }
+
             onJump?.Invoke();
             player.rb.linearVelocity = new Vector3(player.rb.linearVelocity.x, jumpForce, player.rb.linearVelocity.z);
         }

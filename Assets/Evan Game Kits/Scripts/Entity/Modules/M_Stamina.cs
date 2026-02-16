@@ -9,16 +9,16 @@ namespace EvanGameKits.Entity.Module
     {
         [Header("Configuration")]
         [SerializeField] private bool alwaysRegen = true;
-        [SerializeField] private float singleConsume = 10f;
-        [SerializeField] private float multipleConsume = 20f;
-        [SerializeField] private float regenRate = 5f;
+        [SerializeField] public float singleConsume = 10f;
+        [SerializeField] public float multipleConsume = 20f;
+        [SerializeField] public float regenRate = 5f;
         [SerializeField] public float maxStamina = 100f;
 
         private M_LocomotionBoost boost;
         private M_BasicJump upforce;
         private M_MultipleJump mUpforce;
 
-        [SerializeField] private float stamina;
+        [SerializeField] public float stamina;
         private bool continuousConsumeActive;
         private Base entity;
 
@@ -45,42 +45,7 @@ namespace EvanGameKits.Entity.Module
                 boost.onBoost.AddListener((bool val) => { continuousConsumeActive = val; });
         }
 
-        private void OnEnable()
-        {
-            if (entity != null)
-            {
-                entity.IsJumpPressed += OnJumpAttempt;
-                entity.IsRunPressed += OnRunAttempt;
-            }
-        }
-
-        private void OnDisable()
-        {
-            if (entity != null)
-            {
-                entity.IsJumpPressed -= OnJumpAttempt;
-                entity.IsRunPressed -= OnRunAttempt;
-            }
-        }
-
-        private void OnJumpAttempt(bool isPressed)
-        {
-            if (isPressed && stamina < singleConsume)
-            {
-                ShowLowStaminaNotification(singleConsume);
-            }
-        }
-
-        private void OnRunAttempt(bool isPressed)
-        {
-            if (isPressed && stamina <= 0)
-            {
-                // To start boosting, we at least need some stamina
-                ShowLowStaminaNotification(multipleConsume * Time.fixedDeltaTime * 5f); // Arbitrary small amount (e.g. 5 frames worth)
-            }
-        }
-
-        private void ShowLowStaminaNotification(float requiredStamina)
+        public void ShowLowStaminaNotification(float requiredStamina)
         {
             float needed = requiredStamina - stamina;
             if (needed <= 0) return;
@@ -94,7 +59,6 @@ namespace EvanGameKits.Entity.Module
         {
             Regenerate();
             HandleContinuousConsumption();
-            UpdateComponentStates();
             onStaminaChange?.Invoke(stamina);
         }
 
@@ -105,33 +69,24 @@ namespace EvanGameKits.Entity.Module
 
         private void HandleContinuousConsumption()
         {
-            if (continuousConsumeActive && stamina > 0f)
+            bool isMoving = entity.MoveInput.sqrMagnitude > 0.01f;
+            if (continuousConsumeActive && isMoving && stamina > 0f)
             {
                 stamina -= multipleConsume * Time.fixedDeltaTime;
                 if (stamina <= 0f)
                 {
                     stamina = 0f;
-                    continuousConsumeActive = false;
                 }
             }
         }
 
         private void Regenerate()
         {
-            if (!continuousConsumeActive && stamina < maxStamina)
+            bool isConsuming = continuousConsumeActive && entity.MoveInput.sqrMagnitude > 0.01f && stamina > 0f;
+            if (!isConsuming && stamina < maxStamina)
             {
                 stamina = Mathf.Min(maxStamina, stamina + regenRate * Time.fixedDeltaTime);
             }
-        }
-
-        private void UpdateComponentStates()
-        {
-            bool canJump = stamina >= singleConsume;
-            if (upforce != null) upforce.enabled = canJump;
-            if (mUpforce != null) mUpforce.enabled = canJump;
-
-            bool canBoost = stamina > 0;
-            if (boost != null) boost.enabled = canBoost;
         }
     }
 }

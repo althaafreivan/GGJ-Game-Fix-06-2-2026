@@ -56,6 +56,18 @@ namespace EvanGameKits.Entity.Module
         {
             if (targetModule == null) return;
 
+            if (val)
+            {
+                M_Stamina staminaModule = GetComponent<M_Stamina>();
+                if (staminaModule != null && staminaModule.stamina <= 0)
+                {
+                    if (player.MoveInput.sqrMagnitude > 0.01f)
+                    {
+                        staminaModule.ShowLowStaminaNotification(1f);
+                    }
+                }
+            }
+
             isBoosting = val;
             targetSpeed = val ? baseSpeed * speedMultiplier : baseSpeed;
             onBoost?.Invoke(val);
@@ -70,11 +82,19 @@ namespace EvanGameKits.Entity.Module
         {
             if (targetModule == null || acceleration <= 0f) return;
 
-            if (Mathf.Approximately(targetModule.speed, targetSpeed)) return;
+            float currentTargetSpeed = targetSpeed;
+            M_Stamina staminaModule = GetComponent<M_Stamina>();
+
+            if (isBoosting && staminaModule != null && staminaModule.stamina <= 0)
+            {
+                currentTargetSpeed = baseSpeed;
+            }
+
+            if (Mathf.Approximately(targetModule.speed, currentTargetSpeed)) return;
 
             targetModule.speed = Mathf.SmoothDamp(
                  targetModule.speed,
-                 targetSpeed,
+                 currentTargetSpeed,
                  ref velocityRef,
                  1f / acceleration
             );

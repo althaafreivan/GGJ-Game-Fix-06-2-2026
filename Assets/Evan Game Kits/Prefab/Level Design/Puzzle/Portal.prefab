@@ -295,8 +295,10 @@ MonoBehaviour:
   playerTag: Player
   dissolveDuration: 0.5
   dissolvePropertyName: _DissolveAmount
+  dissolveStartValue: 0.35
+  dissolveEndValue: 0.5
   isFrozen: 0
-  teleportCooldown: 2
+  teleportCooldown: 1
 --- !u!65 &3265046212699614297
 BoxCollider:
   m_ObjectHideFlags: 0
