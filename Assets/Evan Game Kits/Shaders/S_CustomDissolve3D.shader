@@ -48,8 +48,9 @@ Shader "Custom/Dissolve_3D"
                 float4 col = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv);
 
                 // Dissolve Math
-                float dissolve = step(_DissolveAmount, noise);
-                float edge = step(_DissolveAmount - _EdgeWidth, noise) - dissolve;
+                float threshold = 1.0 - _DissolveAmount;
+                float dissolve = step(threshold, noise);
+                float edge = step(threshold - _EdgeWidth, noise) - dissolve;
 
                 col.rgb = lerp(col.rgb, _EdgeColor.rgb, edge);
                 col.a *= (dissolve + edge);

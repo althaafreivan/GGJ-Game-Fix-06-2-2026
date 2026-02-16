@@ -20,6 +20,8 @@ namespace EvanGameKits.Mechanic
         [Header("Visual Settings")]
         public float dissolveDuration = 1.2f;    
         public string dissolvePropertyName = "_DissolveAmount";
+        public float dissolveStartValue = 0f;
+        public float dissolveEndValue = 1f;
 
         [Header("State")]
         public bool isFrozen = false;       
@@ -51,7 +53,7 @@ namespace EvanGameKits.Mechanic
                     if (m != null && m.HasProperty(dissolvePropertyName))
                     {
                         portalMaterials.Add(m);
-                        m.SetFloat(dissolvePropertyName, 1f);
+                        m.SetFloat(dissolvePropertyName, dissolveStartValue);
                     }
                 }
             }
@@ -122,6 +124,34 @@ namespace EvanGameKits.Mechanic
             return null;
         }
 
+        private void SetPlayerFrozen(GameObject playerObj, bool freeze)
+        {
+            Player p = playerObj.GetComponent<Player>();
+            if (p == null) p = playerObj.GetComponentInParent<Player>();
+            
+            if (p != null)
+            {
+                p.MuteInput(freeze);
+            }
+
+            Rigidbody rb = playerObj.GetComponent<Rigidbody>();
+            if (rb == null) rb = playerObj.GetComponentInParent<Rigidbody>();
+
+            if (rb != null)
+            {
+                if (freeze)
+                {
+                    rb.linearVelocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                    rb.isKinematic = true;
+                }
+                else
+                {
+                    rb.isKinematic = false;
+                }
+            }
+        }
+
         private IEnumerator TeleportCountdown(GameObject playerObj)
         {
             activeTeleporters.Add(playerObj);
@@ -146,44 +176,67 @@ namespace EvanGameKits.Mechanic
                 }
 
                 // Wait for global busy state or cooldown
-                if (isAnyPortalTeleporting || (teleportCooldown > 0 && Time.time < lastTeleportTime + teleportCooldown))
+                if (isAnyPortalTeleporting || (Time.time < lastTeleportTime + teleportCooldown))
                 {
                     yield return null;
                     continue;
                 }
 
-                // Teleport
+                // --- STAGE 1: Charging (Dissolve In) ---
+                // Start visual charging immediately
+                AnimateDissolve(dissolveStartValue, dissolveEndValue);
+                if (targetPortal != null) targetPortal.AnimateDissolve(dissolveStartValue, dissolveEndValue);
+
+                float elapsed = 0f;
+                bool cancelled = false;
+                while (elapsed < dissolveDuration)
+                {
+                    if (!objectsInTrigger.Contains(playerObj))
+                    {
+                        cancelled = true;
+                        break;
+                    }
+                    if (isFrozen || (targetPortal != null && targetPortal.isFrozen))
+                    {
+                        cancelled = true;
+                        break;
+                    }
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+
+                if (cancelled)
+                {
+                    AnimateDissolve(dissolveEndValue, dissolveStartValue);
+                    if (targetPortal != null) targetPortal.AnimateDissolve(dissolveEndValue, dissolveStartValue);
+                    // Give a small grace period before allowing re-trigger
+                    yield return new WaitForSeconds(0.2f);
+                    continue; 
+                }
+
+                // --- STAGE 2: Instant Teleport ---
                 isAnyPortalTeleporting = true;
                 lastTeleportTime = Time.time;
 
-                // Visuals - start them but don't wait for "instant" feel
-                AnimateDissolve(1f, 0f);
-                if (isFrozen) currentTween?.Pause();
-                
+                // Move instantly
                 if (targetPortal != null)
                 {
-                    targetPortal.AnimateDissolve(1f, 0f);
-                    if (targetPortal.isFrozen) targetPortal.CurrentTween?.Pause();
-
                     Transform destination = targetPortal.spawnPoint != null ? targetPortal.spawnPoint : targetPortal.transform;
                     playerObj.transform.position = destination.position;
-                    playerObj.transform.rotation = destination.rotation;
+
+                    // Immediately start reverse dissolve (appearing at destination)
+                    AnimateDissolve(dissolveEndValue, dissolveStartValue); // Source fades out
+                    targetPortal.AnimateDissolve(dissolveEndValue, dissolveStartValue); // Target fades out
+                }
+                else
+                {
+                    AnimateDissolve(dissolveEndValue, dissolveStartValue);
                 }
 
-                // Brief lock to prevent physics double-teleport issues, then release busy state
+                // Player remains moveable immediately
+                // Wait a frame to let physics catch up before allowing another teleport
                 yield return new WaitForFixedUpdate();
                 isAnyPortalTeleporting = false;
-
-                // Visuals - return to normal
-                AnimateDissolve(0f, 1f);
-                if (isFrozen) currentTween?.Pause();
-                
-                if (targetPortal != null)
-                {
-                    targetPortal.AnimateDissolve(0f, 1f);
-                    if (targetPortal.isFrozen) targetPortal.CurrentTween?.Pause();
-                }
-
                 break;
             }
 
@@ -210,6 +263,22 @@ namespace EvanGameKits.Mechanic
             }
             currentTween = seq;
             return seq;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (spawnPoint != null)
+            {
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawWireSphere(spawnPoint.position, 0.5f);
+                Gizmos.DrawLine(spawnPoint.position, spawnPoint.position + spawnPoint.forward * 1.0f);
+                
+                // Draw a simple arrow head
+                Vector3 right = spawnPoint.right;
+                Vector3 forward = spawnPoint.forward;
+                Gizmos.DrawLine(spawnPoint.position + forward * 1.0f, spawnPoint.position + forward * 0.7f + right * 0.2f);
+                Gizmos.DrawLine(spawnPoint.position + forward * 1.0f, spawnPoint.position + forward * 0.7f - right * 0.2f);
+            }
         }
     }
 }
