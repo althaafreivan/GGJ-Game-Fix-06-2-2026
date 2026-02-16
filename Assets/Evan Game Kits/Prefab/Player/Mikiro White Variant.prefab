@@ -5465,7 +5465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89446fe745befc145b0dae9c461d5118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Entity.Module.M_RaycastDetection
-  detectionRadius: 0
+  detectionRadius: 0.48
   offset: {x: 0, y: 0.39, z: 0}
   groundLayer:
     serializedVersion: 2

@@ -32,8 +32,13 @@ namespace EvanGameKits.Entity.Module
             Player.onPlayerChange -= OnPlayerChange;
         }
 
+        private bool isRegistered = false;
+
         private void OnPlayerChange(Player newPlayer)
         {
+            // Force re-registration as the manager instance likely changed with the player
+            isRegistered = false;
+
             if(player != null && player == newPlayer)
             {
                 isCurrentlyChecking = false;
@@ -74,6 +79,14 @@ namespace EvanGameKits.Entity.Module
             if (player == null || player != Player.ActivePlayer)
             {
                 isCurrentlyChecking = false;
+                // If we stop checking, we should also handle the visibility state?
+                // Original code relied on CheckVisibility returning true/false.
+                // Here we might just unregister, but we should probably update state first?
+                // Actually, if we stop checking, we assume it's NOT visible (or handle it).
+                // But the original code called HandleVisibilityUpdate in Update loop.
+                // Wait, if isCurrentlyChecking becomes false, Update didn't run.
+                // So HandleVisibilityUpdate wasn't called.
+                // But OnBecameInvisible handles the "became invisible" event itself?
                 bool isReverse = M_FrustumDetect.instance != null && M_FrustumDetect.instance.isReverse;
                 HandleVisibilityUpdate(isReverse);
             }
@@ -81,9 +94,28 @@ namespace EvanGameKits.Entity.Module
 
         private void Update()
         {
-            if (isCurrentlyChecking && M_FrustumDetect.instance != null && targetCollider != null)
+            // Manage registration state based on requirements
+            if (isCurrentlyChecking)
             {
-                M_FrustumDetect.instance.CheckVisibility(targetCollider, (bool visibleNow) => HandleVisibilityUpdate(visibleNow));
+                if (!isRegistered)
+                {
+                    if (M_FrustumDetect.instance != null && targetCollider != null)
+                    {
+                        M_FrustumDetect.instance.Register(targetCollider, HandleVisibilityUpdate);
+                        isRegistered = true;
+                    }
+                }
+            }
+            else
+            {
+                if (isRegistered)
+                {
+                    if (M_FrustumDetect.instance != null && targetCollider != null)
+                    {
+                        M_FrustumDetect.instance.Unregister(targetCollider);
+                    }
+                    isRegistered = false;
+                }
             }
         }
 

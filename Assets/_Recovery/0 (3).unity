@@ -6149,7 +6149,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1916382773}
     m_Modifications:
     - target: {fileID: 1590251742084966433, guid: ba28c178facfd154d8637087b915fb2d, type: 3}
       propertyPath: m_Name
@@ -6161,23 +6161,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2115114181183926939, guid: ba28c178facfd154d8637087b915fb2d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 100
+      value: 99.99996
       objectReference: {fileID: 0}
     - target: {fileID: 2115114181183926939, guid: ba28c178facfd154d8637087b915fb2d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 583.7998
+      value: 583.7997
       objectReference: {fileID: 0}
     - target: {fileID: 2115114181183926939, guid: ba28c178facfd154d8637087b915fb2d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -47.1233
+      value: -15.402
       objectReference: {fileID: 0}
     - target: {fileID: 2115114181183926939, guid: ba28c178facfd154d8637087b915fb2d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.21237
+      value: -0.27
       objectReference: {fileID: 0}
     - target: {fileID: 2115114181183926939, guid: ba28c178facfd154d8637087b915fb2d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.12435663
+      value: -1.699
       objectReference: {fileID: 0}
     - target: {fileID: 2115114181183926939, guid: ba28c178facfd154d8637087b915fb2d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6220,6 +6220,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba28c178facfd154d8637087b915fb2d, type: 3}
+--- !u!4 &1454455681 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2115114181183926939, guid: ba28c178facfd154d8637087b915fb2d, type: 3}
+  m_PrefabInstance: {fileID: 1454455680}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1465357894
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8017,6 +8022,7 @@ Transform:
   - {fileID: 209710067}
   - {fileID: 1528666393}
   - {fileID: 2094584922}
+  - {fileID: 1454455681}
   - {fileID: 1824277271}
   - {fileID: 1538592239}
   - {fileID: 429285659}
@@ -10016,10 +10022,6 @@ PrefabInstance:
       propertyPath: hideTitleBar
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5910598966753548430, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
-      propertyPath: threadUpdateRate
-      value: 1650
-      objectReference: {fileID: 0}
     - target: {fileID: 8254417365595352106, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: cCam
       value: 
@@ -10071,7 +10073,6 @@ SceneRoots:
   - {fileID: 1386990757}
   - {fileID: 1916382773}
   - {fileID: 1050904147}
-  - {fileID: 1454455680}
   - {fileID: 539332797}
   - {fileID: 855314089}
   - {fileID: 60541813}
