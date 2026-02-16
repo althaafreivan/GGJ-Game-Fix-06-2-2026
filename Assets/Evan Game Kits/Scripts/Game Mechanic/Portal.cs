@@ -175,6 +175,10 @@ namespace EvanGameKits.Mechanic
                     continue;
                 }
 
+                // Reset notification flag if we passed the frozen check, 
+                // so it can show again if they become frozen again.
+                notifiedWaiting = false;
+
                 // Wait for global busy state or cooldown
                 if (isAnyPortalTeleporting || (Time.time < lastTeleportTime + teleportCooldown))
                 {
@@ -215,23 +219,39 @@ namespace EvanGameKits.Mechanic
                 }
 
                 // --- STAGE 2: Instant Teleport ---
+                if (targetPortal == null || targetPortal == this)
+                {
+                    AnimateDissolve(dissolveEndValue, dissolveStartValue);
+                    isAnyPortalTeleporting = false;
+                    break;
+                }
+
                 isAnyPortalTeleporting = true;
                 lastTeleportTime = Time.time;
 
-                // Move instantly
-                if (targetPortal != null)
-                {
-                    Transform destination = targetPortal.spawnPoint != null ? targetPortal.spawnPoint : targetPortal.transform;
-                    playerObj.transform.position = destination.position;
+                // Move instantly using Rigidbody if available for physics stability
+                Rigidbody rb = playerObj.GetComponent<Rigidbody>();
+                if (rb == null) rb = playerObj.GetComponentInParent<Rigidbody>();
 
-                    // Immediately start reverse dissolve (appearing at destination)
-                    AnimateDissolve(dissolveEndValue, dissolveStartValue); // Source fades out
-                    targetPortal.AnimateDissolve(dissolveEndValue, dissolveStartValue); // Target fades out
+                Transform destination = targetPortal.spawnPoint != null ? targetPortal.spawnPoint : targetPortal.transform;
+
+                if (rb != null)
+                {
+                    // Clear velocity to prevent "ghost" movement or snapping back
+                    rb.linearVelocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                    rb.position = destination.position;
+                    // We still set transform.position as a fallback/immediate update
+                    playerObj.transform.position = destination.position;
                 }
                 else
                 {
-                    AnimateDissolve(dissolveEndValue, dissolveStartValue);
+                    playerObj.transform.position = destination.position;
                 }
+
+                // Immediately start reverse dissolve (appearing at destination)
+                AnimateDissolve(dissolveEndValue, dissolveStartValue); // Source fades out
+                targetPortal.AnimateDissolve(dissolveEndValue, dissolveStartValue); // Target fades out
 
                 // Player remains moveable immediately
                 // Wait a frame to let physics catch up before allowing another teleport
