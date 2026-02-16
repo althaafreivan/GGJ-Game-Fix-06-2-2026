@@ -10013,6 +10013,10 @@ PrefabInstance:
       value: 3063
       objectReference: {fileID: 0}
     - target: {fileID: 5910598966753548430, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
+      propertyPath: smoothTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910598966753548430, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: hideTitleBar
       value: 1
       objectReference: {fileID: 0}

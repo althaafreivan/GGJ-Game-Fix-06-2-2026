@@ -72,6 +72,7 @@ namespace EvanGameKits.Core
         private readonly object posLock = new object();
         private Vector2 lastGlobalMousePos;
         private bool isDragging;
+        private int lastUpdateFrame = -1;
 
         protected override void Awake()
         {
@@ -118,33 +119,35 @@ namespace EvanGameKits.Core
 
         private void Update()
         {
-            #if UNITY_EDITOR
-            HandleWindowUpdate(Time.unscaledDeltaTime);
-            #endif
-
-            lock (posLock)
-            {
-                if (initialized && (Vector2.SqrMagnitude(currentWindowPos - targetWindowPos) > 0.001f || isDragging))
-                {
-                    // Move the window on main thread to avoid Win32 thread-affinity deadlocks
-                    SetWindowPos(hwnd, IntPtr.Zero, (int)currentWindowPos.x, (int)currentWindowPos.y, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
-                }
-            }
+            // Logic moved to SyncPortalToWindow for better synchronization
         }
 
         public void AutoCalibrate()
         {
             #if UNITY_EDITOR
+            RECT editorRect;
+            if (GetWindowRect(hwnd, out editorRect))
+            {
+                initialWindowPos = new Vector2(editorRect.Left, editorRect.Top);
+                currentWindowPos = initialWindowPos;
+                targetWindowPos = initialWindowPos;
+            }
+            else
+            {
+                initialWindowPos = new Vector2(Screen.width / 2f, Screen.height / 2f);
+                currentWindowPos = initialWindowPos;
+                targetWindowPos = initialWindowPos;
+            }
             initialized = true;
-            initialWindowPos = new Vector2(Screen.width/2, Screen.height/2);
-            currentWindowPos = initialWindowPos;
-            targetWindowPos = initialWindowPos;
-            return;
             #endif
 
-            float vFov = mainCam.fieldOfView;
-            sensitivity = (3.0f * Mathf.Tan(vFov * 0.5f * Mathf.Deg2Rad)) / Screen.height;
+            if (mainCam != null)
+            {
+                float vFov = mainCam.fieldOfView;
+                sensitivity = (3.0f * Mathf.Tan(vFov * 0.5f * Mathf.Deg2Rad)) / Screen.height;
+            }
 
+            #if !UNITY_EDITOR
             RECT rect;
             if (GetWindowRect(hwnd, out rect))
             {
@@ -167,6 +170,7 @@ namespace EvanGameKits.Core
                 SetWindowPos(hwnd, IntPtr.Zero, centerX, centerY, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
                 initialized = true;
             }
+            #endif
         }
 
         private void WindowThreadLoop()
@@ -225,7 +229,11 @@ namespace EvanGameKits.Core
                     isDragging = false;
                 }
 
-                if (Vector2.SqrMagnitude(currentWindowPos - targetWindowPos) > 0.0001f || isDragging)
+                if (isDragging)
+                {
+                    currentWindowPos = targetWindowPos;
+                }
+                else if (Vector2.SqrMagnitude(currentWindowPos - targetWindowPos) > 0.0001f)
                 {
                     float step = maxDragSpeed * dt;
                     currentWindowPos = Vector2.MoveTowards(currentWindowPos, targetWindowPos, step);
@@ -236,6 +244,25 @@ namespace EvanGameKits.Core
         private void SyncPortalToWindow()
         {
             if (!initialized) return;
+
+            // Ensure window update and HandleWindowUpdate run only once per frame
+            if (Time.frameCount != lastUpdateFrame)
+            {
+                lastUpdateFrame = Time.frameCount;
+
+                #if UNITY_EDITOR
+                HandleWindowUpdate(Time.unscaledDeltaTime);
+                #endif
+
+                lock (posLock)
+                {
+                    if (initialized && (Vector2.SqrMagnitude(currentWindowPos - targetWindowPos) > 0.001f || isDragging))
+                    {
+                        // Move the window on main thread to avoid Win32 thread-affinity deadlocks
+                        SetWindowPos(hwnd, IntPtr.Zero, (int)currentWindowPos.x, (int)currentWindowPos.y, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+                    }
+                }
+            }
 
             float curX, curY, initX, initY;
             lock (posLock)
