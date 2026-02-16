@@ -10022,7 +10022,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5910598966753548430, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: threadUpdateRate
-      value: 165
+      value: 1650
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910598966753548430, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
+      propertyPath: velocityThreshold
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 8254417365595352106, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: cCam

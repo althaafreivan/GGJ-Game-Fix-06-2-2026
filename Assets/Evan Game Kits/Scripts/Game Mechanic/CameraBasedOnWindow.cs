@@ -18,7 +18,9 @@ namespace EvanGameKits.Core
         [Header("Movement Settings")]
         [SerializeField] private bool hideTitleBar = true;
         [SerializeField] private float maxDragSpeed = 5000f;
-        [SerializeField] private float cameraSmoothing = 15f;
+        [SerializeField] private float minSmoothing = 25f;
+        [SerializeField] private float maxSmoothing = 5f;
+        [SerializeField] private float velocityThreshold = 1000f;
         [SerializeField, Range(60, 4000)] private int threadUpdateRate = 1000;
 
         [DllImport("user32.dll")]
@@ -75,6 +77,7 @@ namespace EvanGameKits.Core
         private bool isDragging;
         private int lastUpdateFrame = -1;
         private Vector2 interpolatedLensShift;
+        private float currentVelocity;
 
         protected override void Awake()
         {
@@ -225,10 +228,15 @@ namespace EvanGameKits.Core
                     Vector2 mouseDelta = currentGlobalMouse - lastGlobalMousePos;
                     targetWindowPos += mouseDelta;
                     lastGlobalMousePos = currentGlobalMouse;
+                    
+                    // Calculate velocity magnitude (pixels per second)
+                    if (dt > 0)
+                        currentVelocity = mouseDelta.magnitude / dt;
                 }
                 else
                 {
                     isDragging = false;
+                    currentVelocity = 0;
                 }
 
                 if (isDragging)
@@ -283,10 +291,14 @@ namespace EvanGameKits.Core
                 -deltaY * sensitivity
             );
 
-            if (cameraSmoothing > 0)
+            // Calculate dynamic smoothing based on velocity. 
+            // Higher velocity = lower smoothing value = more interpolation (to hide stutters).
+            float t = Mathf.Clamp01(currentVelocity / velocityThreshold);
+            float dynamicSmoothing = Mathf.Lerp(minSmoothing, maxSmoothing, t);
+
+            if (dynamicSmoothing > 0)
             {
-                // Interpolate the camera shift. Higher speed dragging creates more apparent "lag" or "trailing"
-                interpolatedLensShift = Vector2.Lerp(interpolatedLensShift, targetLensShift, Time.unscaledDeltaTime * cameraSmoothing);
+                interpolatedLensShift = Vector2.Lerp(interpolatedLensShift, targetLensShift, Time.unscaledDeltaTime * dynamicSmoothing);
             }
             else
             {
