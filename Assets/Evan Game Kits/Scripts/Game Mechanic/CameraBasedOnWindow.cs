@@ -18,6 +18,7 @@ namespace EvanGameKits.Core
         [Header("Movement Settings")]
         [SerializeField] private bool hideTitleBar = true;
         [SerializeField] private float maxDragSpeed = 5000f;
+        [SerializeField] private float cameraSmoothing = 15f;
         [SerializeField, Range(60, 4000)] private int threadUpdateRate = 1000;
 
         [DllImport("user32.dll")]
@@ -73,6 +74,7 @@ namespace EvanGameKits.Core
         private Vector2 lastGlobalMousePos;
         private bool isDragging;
         private int lastUpdateFrame = -1;
+        private Vector2 interpolatedLensShift;
 
         protected override void Awake()
         {
@@ -276,10 +278,22 @@ namespace EvanGameKits.Core
             float deltaX = curX - initX;
             float deltaY = curY - initY;
 
-            mainCam.lensShift = new Vector2(
+            Vector2 targetLensShift = new Vector2(
                 deltaX * sensitivity,
                 -deltaY * sensitivity
             );
+
+            if (cameraSmoothing > 0)
+            {
+                // Interpolate the camera shift. Higher speed dragging creates more apparent "lag" or "trailing"
+                interpolatedLensShift = Vector2.Lerp(interpolatedLensShift, targetLensShift, Time.unscaledDeltaTime * cameraSmoothing);
+            }
+            else
+            {
+                interpolatedLensShift = targetLensShift;
+            }
+
+            mainCam.lensShift = interpolatedLensShift;
         }
 
         protected override void PostPipelineStageCallback(CinemachineVirtualCameraBase vcam, CinemachineCore.Stage stage, ref CameraState state, float deltaTime) { }
