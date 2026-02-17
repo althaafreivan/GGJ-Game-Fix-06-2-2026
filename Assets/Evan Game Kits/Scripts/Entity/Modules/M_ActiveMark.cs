@@ -9,6 +9,7 @@ namespace EvanGameKits.Entity.Module
     {
         [Header("References")]
         [SerializeField] private GameObject activeMark;
+        [SerializeField] private GameObject highlightMark;
 
         [Header("Rotation Settings")]
         [SerializeField] private float rotationSpeed = 180f; // degrees per second
@@ -46,6 +47,7 @@ namespace EvanGameKits.Entity.Module
 
             bool isActive = (activePlayer == player);
             activeMark.SetActive(isActive);
+            highlightMark.SetActive(isActive);
 
             if (isActive)
             {

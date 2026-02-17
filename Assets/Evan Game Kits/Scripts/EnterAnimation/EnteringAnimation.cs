@@ -11,6 +11,7 @@ public class EnteringAnimation : MonoBehaviour
     public GameObject ExplosionVFX;
     public Transform Cam;
     public Transform tv;
+    public Transform background;
     public string sceneToLoad;
 
     [Header("Post Processing")]
@@ -33,6 +34,7 @@ public class EnteringAnimation : MonoBehaviour
 
         // 1. Initial Sequence: Pad rotates and Camera starts creeping forward
         s.Append(Pad.DORotate(targetRot, 2f).SetEase(Ease.InOutQuad));
+        s.Join(background.DOScale(0f, 2f).SetEase(Ease.InOutQuad));
         s.Join(Cam.DOLocalMove(startPos + new Vector3(0, 5, -5), 2f).SetEase(Ease.InOutExpo));
 
         // 2. VFX Enabled (Duration: 5 seconds before warp)
