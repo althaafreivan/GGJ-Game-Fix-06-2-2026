@@ -29,82 +29,100 @@ namespace EvanGameKits.Mechanic
         private bool isOpen = false;
         private bool isPlayerInRange = false;
         private bool isFrozen = false;
-        private Sequence currentSequence;
-
-        private void Start()
-        {
-            if (doorTransform == null) doorTransform = transform;
-        }
-
-        public void SetFrozen(bool state)
-        {
-            isFrozen = state;
-            if (isFrozen)
-            {
-                currentSequence?.Pause();
-            }
-            else
-            {
-                currentSequence?.Play();
-            }
-        }
-
-        private void Update()
-        {
-            if (isFrozen) return;
-
-            if (isPlayerInRange && Input.GetKeyDown(interactionKey))
-            {
-                if (IsWhiteCatActive())
+                private Sequence currentSequence;
+                private List<Transform> grabbedContent = new List<Transform>();
+                private Transform playerOriginalParent;
+                private bool playerWasKinematic;
+        
+                private void Start()
                 {
-                    NotificationController.instance?.ShowNotification("White freeze time, door feel's like jammed");
-                    return;
+                    if (doorTransform == null) doorTransform = transform;
                 }
-                ToggleState();
-            }
-        }
-
-        private bool IsWhiteCatActive()
-        {
-            if (Player.ActivePlayer == null) return false;
-            var identity = Player.ActivePlayer.GetComponent<M_CatIdentity>();
-            return identity != null && identity.catType == CatType.White;
-        }
-
-        public void ToggleState()
-        {
-            isOpen = !isOpen;
-
-            if (isOpen)
-            {
-                GrabMapContent();
-            }
-
-            Animate(isOpen);
-        }
-
-        private void GrabMapContent()
-        {
-            GameObject mapContainer = GameObject.Find(mapContainerName);
-            if (mapContainer == null)
-            {
-                Debug.LogWarning($"DoorMapController: Could not find map container named '{mapContainerName}'");
-                return;
-            }
-
-            List<Transform> children = new List<Transform>();
-            foreach (Transform child in mapContainer.transform)
-            {
-                if (IsChildOf(doorTransform, child)) continue;
-                children.Add(child);
-            }
-
-            foreach (Transform child in children)
-            {
-                child.SetParent(doorTransform, true);
-            }
-        }
-
+        
+                public void SetFrozen(bool state)
+                {
+                    isFrozen = state;
+                    if (isFrozen)
+                    {
+                        currentSequence?.Pause();
+                    }
+                    else
+                    {
+                        currentSequence?.Play();
+                    }
+                }
+        
+                private void Update()
+                {
+                    if (isFrozen) return;
+        
+                    if (isPlayerInRange && Input.GetKeyDown(interactionKey))
+                    {
+                        if (IsWhiteCatActive())
+                        {
+                            NotificationController.instance?.ShowNotification("White freeze time, door feel's like jammed");
+                            return;
+                        }
+                        ToggleState();
+                    }
+                }
+        
+                private bool IsWhiteCatActive()
+                {
+                    if (Player.ActivePlayer == null) return false;
+                    var identity = Player.ActivePlayer.GetComponent<M_CatIdentity>();
+                    return identity != null && identity.catType == CatType.White;
+                }
+        
+                        public void ToggleState()
+                        {
+                            if (currentSequence != null && currentSequence.IsActive() && currentSequence.IsPlaying()) return;
+                
+                            isOpen = !isOpen;
+                
+                            GrabMapContent();
+                            Animate(isOpen, () => ReleaseMapContent());
+                        }
+                
+                        private void GrabMapContent()
+                        {
+                            GameObject mapContainer = GameObject.Find(mapContainerName);
+                            if (mapContainer == null)
+                            {
+                                Debug.LogWarning($"DoorMapController: Could not find map container named '{mapContainerName}'");
+                                return;
+                            }
+                
+                            grabbedContent.Clear();
+                            List<Transform> childrenToMove = new List<Transform>();
+                            
+                            foreach (Transform child in mapContainer.transform)
+                            {
+                                if (IsChildOf(doorTransform, child)) continue;
+                                childrenToMove.Add(child);
+                            }
+                
+                            foreach (Transform child in childrenToMove)
+                            {
+                                child.SetParent(doorTransform, true);
+                                grabbedContent.Add(child);
+                            }
+                        }
+                
+                        private void ReleaseMapContent()
+                        {
+                            GameObject mapContainer = GameObject.Find(mapContainerName);
+                            if (mapContainer == null) return;
+                
+                            foreach (Transform child in grabbedContent)
+                            {
+                                if (child != null && child.parent == doorTransform)
+                                {
+                                    child.SetParent(mapContainer.transform, true);
+                                }
+                            }
+                            grabbedContent.Clear();
+                        }
         private bool IsChildOf(Transform target, Transform potentialParent)
         {
             Transform current = target;
@@ -116,13 +134,20 @@ namespace EvanGameKits.Mechanic
             return false;
         }
 
-        private void Animate(bool open)
+        private void Animate(bool open, System.Action onComplete = null)
         {
             currentSequence?.Kill();
             currentSequence = DOTween.Sequence();
 
             Vector3 targetDoorRot = open ? doorOpenRotation : doorClosedRotation;
-            currentSequence.Join(doorTransform.DOLocalRotate(targetDoorRot, duration).SetEase(easeType));
+            Quaternion targetQuat = Quaternion.Euler(targetDoorRot);
+            
+            // Using DOLocalRotateQuaternion ensures we always take the shortest path (nearest rotating direction)
+            // as it uses Quaternion interpolation (Slerp) which is immune to Euler wrap-around issues.
+            currentSequence.Join(doorTransform.DOLocalRotateQuaternion(targetQuat, duration).SetEase(easeType));
+
+            if (onComplete != null)
+                currentSequence.OnComplete(() => onComplete());
 
             if (isFrozen) currentSequence.Pause();
         }

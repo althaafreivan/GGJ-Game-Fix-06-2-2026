@@ -12,11 +12,34 @@ namespace EvanGameKits.Entity.Module
         public LayerMask groundLayer;
         public UnityEvent<Player> OnCollide;
         private Player player;
+        private M_SwapPlayer swapPlayer;
         private Rigidbody lastGroundRigidbody;
+        private Transform lastGroundTransform;
 
         private void Start()
         {
             player = GetComponent<Player>();
+            swapPlayer = GetComponent<M_SwapPlayer>();
+            swapPlayer.OnPlayerDeactivate?.AddListener(playerDeactivate);
+            swapPlayer.OnPlayerActivate?.AddListener(playerActivate);
+        }
+
+        private void playerActivate()
+        {
+            transform.parent = null;
+        }
+
+        private void playerDeactivate()
+        {
+            isGrounded();
+            if (lastGroundTransform != null)
+            {
+                if (transform.parent != lastGroundTransform) transform.parent = lastGroundTransform;
+            }
+            else
+            {
+                transform.parent = null;
+            }
         }
 
         public override Rigidbody GetGroundRigidbody() => lastGroundRigidbody;
@@ -26,6 +49,7 @@ namespace EvanGameKits.Entity.Module
             Collider[] colliders = Physics.OverlapSphere(transform.position + offset, detectionRadius, groundLayer);
             
             lastGroundRigidbody = null;
+            lastGroundTransform = null;
             foreach (var col in colliders)
             {
                 // If the collider is not part of this player's hierarchy, we found valid ground
@@ -33,6 +57,7 @@ namespace EvanGameKits.Entity.Module
                 {
                     OnCollide?.Invoke(player);
                     lastGroundRigidbody = col.attachedRigidbody;
+                    lastGroundTransform = col.transform;
                     return true;
                 }
             }
