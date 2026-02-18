@@ -54,9 +54,14 @@ namespace EvanGameKits.Tutorial
             isStarted = true;
             gameObject.SetActive(true);
             
+            transform.DOKill();
+            transform.localScale = Vector3.zero;
+            transform.DOScale(1f, fadeDuration).SetEase(Ease.OutBack).SetUpdate(true);
+
             if (canvasGroup != null)
             {
                 canvasGroup.DOKill();
+                canvasGroup.alpha = 0f;
                 canvasGroup.DOFade(1f, fadeDuration).SetUpdate(true);
             }
 
@@ -146,6 +151,9 @@ namespace EvanGameKits.Tutorial
             {
                 DialogueManager.instance.ClearActiveTutorial();
             }
+
+            transform.DOKill();
+            transform.DOScale(0f, fadeDuration).SetEase(Ease.InBack).SetUpdate(true);
 
             if (canvasGroup != null)
             {

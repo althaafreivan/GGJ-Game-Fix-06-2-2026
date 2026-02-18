@@ -18,7 +18,10 @@ namespace EvanGameKits.Mechanic
         public bool useCurrentPosition = true;
         public DG.Tweening.Ease ease = Ease.InOutCubic;
         public UnityEvent invokeTrigger, revokeTrigger;
-        public UnityAction onFinish;
+        
+        public System.Action onFinish;
+        public System.Action onReachedEnd;
+        public System.Action onReachedStart;
 
         public bool isTriggered = false;
         private bool isFrozen = false;
@@ -103,6 +106,11 @@ namespace EvanGameKits.Mechanic
 
                 if (startScale != endScale) currentSequence.Join(m_Target.DOScale(endScale, invokeDuration).SetEase(ease));
                 
+                currentSequence.OnComplete(() => {
+                    onReachedEnd?.Invoke();
+                    onFinish?.Invoke();
+                });
+
                 invokeTrigger?.Invoke();
             }
             else
@@ -131,6 +139,10 @@ namespace EvanGameKits.Mechanic
                 }
 
                 if (startScale != endScale) currentSequence.Join(m_Target.DOScale(startScale, revokeDuration).SetEase(ease));
+
+                currentSequence.OnComplete(() => {
+                    onReachedStart?.Invoke();
+                });
 
                 revokeTrigger?.Invoke();
             }

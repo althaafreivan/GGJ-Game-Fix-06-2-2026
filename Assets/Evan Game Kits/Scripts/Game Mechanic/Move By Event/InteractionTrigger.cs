@@ -41,24 +41,47 @@ namespace EvanGameKits.Mechanic
         private HashSet<Collider> trackedColliders = new HashSet<Collider>();
         private HashSet<Collider2D> trackedColliders2D = new HashSet<Collider2D>();
 
-        private void Start()
-        {
-            if ((triggerType.Equals(TriggerType.Collider3D)) && (Camera.main != null && Camera.main.GetComponent<PhysicsRaycaster>() == null)) Camera.main.AddComponent<PhysicsRaycaster>();
-            if ((triggerType.Equals(TriggerType.Collider2D)) && (Camera.main != null && Camera.main.GetComponent<Physics2DRaycaster>() == null)) Camera.main.AddComponent<Physics2DRaycaster>();
-            propBlock = new MaterialPropertyBlock();
-            UpdateVisuals(false);
-        }
-
-        private void Update()
-        {
-            if (isFrozen) return;
-
-            if (Time.time - lastCheckTime >= 1.0f)
-            {
-                lastCheckTime = Time.time;
-                RefreshTriggerState();
-            }
-        }
+                        private void Start()
+                        {
+                            if ((triggerType.Equals(TriggerType.Collider3D)) && (Camera.main != null && Camera.main.GetComponent<PhysicsRaycaster>() == null)) Camera.main.AddComponent<PhysicsRaycaster>();
+                            if ((triggerType.Equals(TriggerType.Collider2D)) && (Camera.main != null && Camera.main.GetComponent<Physics2DRaycaster>() == null)) Camera.main.AddComponent<Physics2DRaycaster>();
+                            
+                            if (TargetObject != null)
+                            {
+                                TargetObject.onReachedEnd += HandleTweenFinish;
+                            }
+                
+                            propBlock = new MaterialPropertyBlock();
+                            UpdateVisuals(false);
+                        }
+                
+                        private void OnDestroy()
+                        {
+                            if (TargetObject != null)
+                            {
+                                TargetObject.onReachedEnd -= HandleTweenFinish;
+                            }
+                        }
+                
+                        private void HandleTweenFinish()
+                        {
+                            // Trigger OnEnd when the target object finishes moving to its triggered state (endPosition)
+                            if (TargetObject != null && TargetObject.isTriggered)
+                            {
+                                OnEnd?.Invoke();
+                            }
+                        }
+                                private void Update()
+                {
+                    if (isFrozen) return;
+        
+                    if (Time.time - lastCheckTime >= 1.0f)
+                    {
+                        lastCheckTime = Time.time;
+                        RefreshTriggerState();
+                    }
+                }
+        
 
         public void SetFrozen(bool state)
         {
@@ -105,7 +128,14 @@ namespace EvanGameKits.Mechanic
         {
             if (isOn != lastTriggeredState)
             {
-                if (isOn) OnStart?.Invoke();
+                if (isOn)
+                {
+                    OnStart?.Invoke();
+                }
+                else
+                {
+                    if (TargetObject == null) OnEnd?.Invoke();
+                }
                 lastTriggeredState = isOn;
             }
 

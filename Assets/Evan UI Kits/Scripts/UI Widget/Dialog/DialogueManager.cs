@@ -7,7 +7,7 @@ using System;
 using UnityEngine.EventSystems;
 using EvanUIKits.Tweening;
 using EvanUIKits.Audio;
-using EvanUIKits.Confirmation;
+using EvanGameKits.Mechanic;
 
 namespace EvanUIKits.Dialogue
 {
@@ -139,9 +139,9 @@ namespace EvanUIKits.Dialogue
 
             if (activeTutorial != null && !activeTutorial.IsCompleted())
             {
-                if (Alert.Instance != null)
+                if (NotificationController.instance != null)
                 {
-                    Alert.Instance.Show(tutorialLockedMessage, null);
+                    NotificationController.instance.ShowNotification(tutorialLockedMessage);
                 }
                 return;
             }
