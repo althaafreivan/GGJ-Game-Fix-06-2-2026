@@ -6,7 +6,7 @@ namespace EvanGameKits.Mechanic
 {
     [CustomEditor(typeof(InteractionTrigger))]
     [CanEditMultipleObjects]
-    public class E_InteractionTrigger : Editor
+    public class E_InteractionTrigger : UnityEditor.Editor
     {
         SerializedProperty targetObject;
         SerializedProperty triggerType;
@@ -15,6 +15,8 @@ namespace EvanGameKits.Mechanic
         SerializedProperty buttonRenderer;
         SerializedProperty onColor;
         SerializedProperty offColor;
+        SerializedProperty onStart;
+        SerializedProperty onEnd;
 
         private void OnEnable()
         {
@@ -25,6 +27,8 @@ namespace EvanGameKits.Mechanic
             buttonRenderer = serializedObject.FindProperty("buttonRenderer");
             onColor = serializedObject.FindProperty("onColor");
             offColor = serializedObject.FindProperty("offColor");
+            onStart = serializedObject.FindProperty("OnStart");
+            onEnd = serializedObject.FindProperty("OnEnd");
         }
 
         public override void OnInspectorGUI()
@@ -66,6 +70,11 @@ namespace EvanGameKits.Mechanic
                     }
                 }
             }
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Events", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(onStart);
+            EditorGUILayout.PropertyField(onEnd);
 
             serializedObject.ApplyModifiedProperties();
         }

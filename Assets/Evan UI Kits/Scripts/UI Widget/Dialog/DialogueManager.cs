@@ -36,7 +36,7 @@ namespace EvanUIKits.Dialogue
         private Action onCompleteCallback;
         private RectTransform containerRect;
 
-        private ITutorialTask activeTutorial;
+        public ITutorialTask activeTutorial { get; private set; }
 
         [HideInInspector] public int selectedKeyIndex;
 

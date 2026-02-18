@@ -224,6 +224,12 @@ MonoBehaviour:
   buttonRenderer: {fileID: 6646007563073370894}
   onColor: {r: 0, g: 1, b: 0, a: 1}
   offColor: {r: 1, g: 0, b: 0, a: 1}
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1803799202789661179
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -26,10 +26,15 @@ namespace EvanGameKits.Mechanic
         [ColorUsage(true, true)] public Color onColor = Color.green;
         [ColorUsage(true, true)] public Color offColor = Color.black;
 
+        [Header("Events")]
+        public UnityEngine.Events.UnityEvent OnStart;
+        public UnityEngine.Events.UnityEvent OnEnd;
+
         private MaterialPropertyBlock propBlock;
         private bool isActive = false;
         private bool isFrozen = false;
         private bool wasOccupied = false;
+        private bool lastTriggeredState = false;
         private float lastCheckTime = 0f;
 
         // Use HashSet to prevent double counting
@@ -40,7 +45,6 @@ namespace EvanGameKits.Mechanic
         {
             if ((triggerType.Equals(TriggerType.Collider3D)) && (Camera.main != null && Camera.main.GetComponent<PhysicsRaycaster>() == null)) Camera.main.AddComponent<PhysicsRaycaster>();
             if ((triggerType.Equals(TriggerType.Collider2D)) && (Camera.main != null && Camera.main.GetComponent<Physics2DRaycaster>() == null)) Camera.main.AddComponent<Physics2DRaycaster>();
-            
             propBlock = new MaterialPropertyBlock();
             UpdateVisuals(false);
         }
@@ -99,6 +103,12 @@ namespace EvanGameKits.Mechanic
 
         private void UpdateVisuals(bool isOn)
         {
+            if (isOn != lastTriggeredState)
+            {
+                if (isOn) OnStart?.Invoke();
+                lastTriggeredState = isOn;
+            }
+
             isActive = isOn;
             if (isFrozen) return;
             if (triggerType != TriggerType.Weight && triggerType != TriggerType.Collider3D) return;

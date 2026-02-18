@@ -44,6 +44,12 @@ namespace EvanGameKits.Tutorial
             }
         }
 
+        public void AnimateActionFeedback()
+        {
+            transform.DOKill(true);
+            transform.DOPunchScale(Vector3.one * 0.2f, 0.3f, 5, 1).SetUpdate(true);
+        }
+
         public void SetCompleted(bool completed)
         {
             if (isCompleted == completed) return;

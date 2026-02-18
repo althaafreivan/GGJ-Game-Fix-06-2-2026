@@ -3,8 +3,6 @@ using UnityEditor;
 using UnityEditorInternal;
 using EvanGameKits.Mechanic;
 
-namespace EvanGameKits.Mechanic
-{
     [CustomEditor(typeof(GuideSystem))]
     public class E_GuideSystem : Editor
     {
@@ -108,4 +106,3 @@ namespace EvanGameKits.Mechanic
             serializedObject.ApplyModifiedProperties();
         }
     }
-}

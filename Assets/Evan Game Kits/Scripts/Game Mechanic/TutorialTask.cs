@@ -7,10 +7,14 @@ using DG.Tweening;
 
 namespace EvanGameKits.Tutorial
 {
+    public enum RequirementType { Key, Action }
+
     [Serializable]
     public class TutorialRequirement
     {
+        public RequirementType type;
         public Key key;
+        public string actionName;
         public TutorialKeyUI keyUI;
         [HideInInspector] public bool isMet = false;
     }
@@ -25,7 +29,7 @@ namespace EvanGameKits.Tutorial
         public bool deactivateOnComplete = false;
         public float fadeDuration = 0.5f;
 
-        [Header("References")]
+        [Header("UI References")]
         [SerializeField] private CanvasGroup canvasGroup;
 
         private bool isStarted = false;
@@ -65,7 +69,11 @@ namespace EvanGameKits.Tutorial
             foreach (var req in requirements)
             {
                 req.isMet = false;
-                if (req.keyUI != null) req.keyUI.SetCompleted(false);
+                if (req.keyUI != null) 
+                {
+                    req.keyUI.SetCompleted(false);
+                    req.keyUI.SetPressed(false);
+                }
             }
         }
 
@@ -78,22 +86,43 @@ namespace EvanGameKits.Tutorial
             return true;
         }
 
+        public void NotifyAction(string actionName)
+        {
+            if (!isStarted) return;
+
+            foreach (var req in requirements)
+            {
+                if (req.type == RequirementType.Action && req.actionName == actionName && !req.isMet)
+                {
+                    req.isMet = true;
+                    if (req.keyUI != null) 
+                    {
+                        req.keyUI.AnimateActionFeedback();
+                        req.keyUI.SetCompleted(true);
+                    }
+                }
+            }
+        }
+
         private void Update()
         {
             if (!isStarted) return;
 
             bool allFinished = true;
+
             foreach (var req in requirements)
             {
-                // Check if key is currently being pressed for animation
-                if (Keyboard.current[req.key].isPressed)
+                if (req.type == RequirementType.Key)
                 {
-                    req.isMet = true; // Mark as met if pressed at least once
-                    if (req.keyUI != null) req.keyUI.SetPressed(true);
-                }
-                else
-                {
-                    if (req.keyUI != null) req.keyUI.SetPressed(false);
+                    // Check if key is currently being pressed for animation
+                    bool isPressed = Keyboard.current[req.key].isPressed;
+                    
+                    if (isPressed && !req.isMet)
+                    {
+                        req.isMet = true;
+                    }
+
+                    if (req.keyUI != null) req.keyUI.SetPressed(isPressed);
                 }
                 
                 // Update the completed visual state

@@ -5,7 +5,7 @@ using EvanGameKits.Mechanic;
 namespace EvanGameKits.Mechanic
 {
     [CustomEditor(typeof(TransformStateTweener))]
-    public class E_TransformStateTweener : Editor
+    public class E_TransformStateTweener : UnityEditor.Editor
     {
         bool showEvents = false;
         bool showConfig = false;
