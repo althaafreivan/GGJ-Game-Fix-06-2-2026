@@ -26,11 +26,15 @@ namespace EvanGameKits.Core
     {
         public static LeaderboardManager instance;
 
+        [Header("Settings")]
+        public string mainMenuSceneName = "MainMenuScene";
+
         [Header("Current Session")]
         public string currentPlayerName = "Anonymous";
         public float sessionTime = 0f;
         public int currentHighestLevel = 0;
         public bool isTracking = false;
+        public bool isPaused = false;
 
         private string SavePath => Path.Combine(Application.persistentDataPath, "leaderboard.json");
 
@@ -51,27 +55,70 @@ namespace EvanGameKits.Core
         private void OnEnable()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
 
         private void OnDisable()
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
+            SceneManager.sceneUnloaded -= OnSceneUnloaded;
+        }
+
+        private void OnSceneUnloaded(Scene scene)
+        {
+            // Pause timing when a level is unloaded (loading starts)
+            if (isTracking && scene.name != mainMenuSceneName)
+            {
+                isPaused = true;
+            }
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            if (!isTracking) return;
+            // Stop tracking and save if we return to the main menu
+            if (scene.name == mainMenuSceneName)
+            {
+                if (isTracking)
+                {
+                    SaveAndStop();
+                }
+                // Reset session data for a completely new run next time
+                sessionTime = 0f;
+                currentHighestLevel = 0;
+                return;
+            }
+
+            // Resume timing when a new level is loaded
+            if (isTracking)
+            {
+                isPaused = false;
+            }
+
+            // If we are not tracking and entered a level, start a new session
+            if (!isTracking)
+            {
+                StartTracking();
+                return;
+            }
 
             // Align with GameCore level progression logic
             int levelNum = -1;
-            if (scene.name.Contains("Level"))
+            
+            // 1. Try to find a number in the scene name (e.g., "Level 1", "Level1", "Stage 5")
+            string digitsOnly = new string(scene.name.Where(char.IsDigit).ToArray());
+            if (!string.IsNullOrEmpty(digitsOnly) && int.TryParse(digitsOnly, out levelNum))
             {
-                string numPart = scene.name.Replace("Level ", "").Replace("Level", "").Trim();
-                if (int.TryParse(numPart, out levelNum)) { }
+                // Found a number
             }
-            else if (scene.name == "Tutorial")
+            // 2. Fallback for Tutorial or other special names
+            else if (scene.name.ToLower().Contains("tutorial"))
             {
                 levelNum = 0;
+            }
+            // 3. Last fallback: use build index if no numbers found
+            else
+            {
+                levelNum = scene.buildIndex;
             }
 
             if (levelNum > currentHighestLevel)
@@ -82,7 +129,7 @@ namespace EvanGameKits.Core
 
         private void Update()
         {
-            if (isTracking)
+            if (isTracking && !isPaused)
             {
                 sessionTime += Time.deltaTime;
             }
@@ -96,8 +143,10 @@ namespace EvanGameKits.Core
         public void StartTracking()
         {
             isTracking = true;
-            sessionTime = 0f;
-            currentHighestLevel = 0;
+            isPaused = false;
+            // Note: sessionTime and currentHighestLevel are NOT reset here 
+            // to allow accumulation across levels if the session was stopped/restarted.
+            // They are reset only in OnSceneLoaded when returning to Main Menu.
             
             // Initial check for current scene
             OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
@@ -109,6 +158,7 @@ namespace EvanGameKits.Core
 
             SaveCurrentSession();
             isTracking = false;
+            isPaused = false;
             Debug.Log($"Leaderboard: Session saved and tracking stopped for {currentPlayerName}");
         }
 
