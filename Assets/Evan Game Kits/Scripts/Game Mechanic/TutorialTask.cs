@@ -111,7 +111,7 @@ namespace EvanGameKits.Tutorial
 
         private void Update()
         {
-            if (!isStarted) return;
+            if (!isStarted || requirements.Count == 0) return;
 
             bool allFinished = true;
 

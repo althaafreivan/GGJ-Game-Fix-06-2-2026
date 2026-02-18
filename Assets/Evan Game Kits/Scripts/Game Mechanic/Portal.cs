@@ -31,6 +31,12 @@ namespace EvanGameKits.Mechanic
         private static float lastTeleportTime;
         private static bool isAnyPortalTeleporting = false;
 
+        [Header("Events")]
+        public UnityEngine.Events.UnityEvent onTeleportStart;
+        public UnityEngine.Events.UnityEvent onTeleportEnd;
+        public UnityEngine.Events.UnityEvent onChargeStart;
+        public UnityEngine.Events.UnityEvent onChargeCancel;
+
         private List<Material> portalMaterials = new List<Material>();
         private HashSet<GameObject> objectsInTrigger = new HashSet<GameObject>();
         private HashSet<GameObject> activeTeleporters = new HashSet<GameObject>();
@@ -188,6 +194,7 @@ namespace EvanGameKits.Mechanic
 
                 // --- STAGE 1: Charging (Dissolve In) ---
                 // Start visual charging immediately
+                onChargeStart?.Invoke();
                 AnimateDissolve(dissolveStartValue, dissolveEndValue);
                 if (targetPortal != null) targetPortal.AnimateDissolve(dissolveStartValue, dissolveEndValue);
 
@@ -211,6 +218,7 @@ namespace EvanGameKits.Mechanic
 
                 if (cancelled)
                 {
+                    onChargeCancel?.Invoke();
                     AnimateDissolve(dissolveEndValue, dissolveStartValue);
                     if (targetPortal != null) targetPortal.AnimateDissolve(dissolveEndValue, dissolveStartValue);
                     // Give a small grace period before allowing re-trigger
@@ -221,6 +229,7 @@ namespace EvanGameKits.Mechanic
                 // --- STAGE 2: Instant Teleport ---
                 if (targetPortal == null || targetPortal == this)
                 {
+                    onChargeCancel?.Invoke();
                     AnimateDissolve(dissolveEndValue, dissolveStartValue);
                     isAnyPortalTeleporting = false;
                     break;
@@ -228,6 +237,7 @@ namespace EvanGameKits.Mechanic
 
                 isAnyPortalTeleporting = true;
                 lastTeleportTime = Time.time;
+                onTeleportStart?.Invoke();
 
                 // Move instantly using Rigidbody if available for physics stability
                 Rigidbody rb = playerObj.GetComponent<Rigidbody>();
@@ -256,6 +266,7 @@ namespace EvanGameKits.Mechanic
                 // Player remains moveable immediately
                 // Wait a frame to let physics catch up before allowing another teleport
                 yield return new WaitForFixedUpdate();
+                onTeleportEnd?.Invoke();
                 isAnyPortalTeleporting = false;
                 break;
             }

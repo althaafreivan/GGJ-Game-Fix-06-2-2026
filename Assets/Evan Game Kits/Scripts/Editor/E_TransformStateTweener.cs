@@ -20,6 +20,8 @@ namespace EvanGameKits.Mechanic
             SerializedProperty timePropEnd = serializedObject.FindProperty("revokeDuration");
             SerializedProperty invokeEvt = serializedObject.FindProperty("invokeTrigger");
             SerializedProperty revokeEvt = serializedObject.FindProperty("revokeTrigger");
+            SerializedProperty reachedEndEvt = serializedObject.FindProperty("onReachedEndEvent");
+            SerializedProperty reachedStartEvt = serializedObject.FindProperty("onReachedStartEvent");
             SerializedProperty ease = serializedObject.FindProperty("ease");
             SerializedProperty ucPosition = serializedObject.FindProperty("useCurrentPosition");
 
@@ -42,6 +44,8 @@ namespace EvanGameKits.Mechanic
                 EditorGUI.indentLevel++;
                 EditorGUILayout.PropertyField(invokeEvt);
                 EditorGUILayout.PropertyField(revokeEvt);
+                EditorGUILayout.PropertyField(reachedEndEvt);
+                EditorGUILayout.PropertyField(reachedStartEvt);
                 EditorGUI.indentLevel--;
             }
 

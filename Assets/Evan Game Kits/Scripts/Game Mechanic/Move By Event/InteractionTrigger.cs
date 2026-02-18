@@ -29,6 +29,9 @@ namespace EvanGameKits.Mechanic
         [Header("Events")]
         public UnityEngine.Events.UnityEvent OnStart;
         public UnityEngine.Events.UnityEvent OnEnd;
+        public UnityEngine.Events.UnityEvent OnReachedEnd;
+        public UnityEngine.Events.UnityEvent OnReachedStart;
+        public UnityEngine.Events.UnityEvent OnTweenComplete;
 
         private MaterialPropertyBlock propBlock;
         private bool isActive = false;
@@ -48,7 +51,8 @@ namespace EvanGameKits.Mechanic
                             
                             if (TargetObject != null)
                             {
-                                TargetObject.onReachedEnd += HandleTweenFinish;
+                                TargetObject.onReachedEnd += HandleReachedEnd;
+                                TargetObject.onReachedStart += HandleReachedStart;
                             }
                 
                             propBlock = new MaterialPropertyBlock();
@@ -59,17 +63,22 @@ namespace EvanGameKits.Mechanic
                         {
                             if (TargetObject != null)
                             {
-                                TargetObject.onReachedEnd -= HandleTweenFinish;
+                                TargetObject.onReachedEnd -= HandleReachedEnd;
+                                TargetObject.onReachedStart -= HandleReachedStart;
                             }
                         }
                 
-                        private void HandleTweenFinish()
+                        private void HandleReachedEnd()
                         {
-                            // Trigger OnEnd when the target object finishes moving to its triggered state (endPosition)
-                            if (TargetObject != null && TargetObject.isTriggered)
-                            {
-                                OnEnd?.Invoke();
-                            }
+                            OnEnd?.Invoke(); // Maintains old functionality where OnEnd fired at end of movement
+                            OnReachedEnd?.Invoke();
+                            OnTweenComplete?.Invoke();
+                        }
+
+                        private void HandleReachedStart()
+                        {
+                            OnReachedStart?.Invoke();
+                            OnTweenComplete?.Invoke();
                         }
                                 private void Update()
                 {

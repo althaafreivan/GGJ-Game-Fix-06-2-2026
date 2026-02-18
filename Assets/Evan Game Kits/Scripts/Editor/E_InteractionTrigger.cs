@@ -17,6 +17,9 @@ namespace EvanGameKits.Mechanic
         SerializedProperty offColor;
         SerializedProperty onStart;
         SerializedProperty onEnd;
+        SerializedProperty onReachedEnd;
+        SerializedProperty onReachedStart;
+        SerializedProperty onTweenComplete;
 
         private void OnEnable()
         {
@@ -29,6 +32,9 @@ namespace EvanGameKits.Mechanic
             offColor = serializedObject.FindProperty("offColor");
             onStart = serializedObject.FindProperty("OnStart");
             onEnd = serializedObject.FindProperty("OnEnd");
+            onReachedEnd = serializedObject.FindProperty("OnReachedEnd");
+            onReachedStart = serializedObject.FindProperty("OnReachedStart");
+            onTweenComplete = serializedObject.FindProperty("OnTweenComplete");
         }
 
         public override void OnInspectorGUI()
@@ -75,6 +81,9 @@ namespace EvanGameKits.Mechanic
             EditorGUILayout.LabelField("Events", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(onStart);
             EditorGUILayout.PropertyField(onEnd);
+            EditorGUILayout.PropertyField(onReachedEnd);
+            EditorGUILayout.PropertyField(onReachedStart);
+            EditorGUILayout.PropertyField(onTweenComplete);
 
             serializedObject.ApplyModifiedProperties();
         }

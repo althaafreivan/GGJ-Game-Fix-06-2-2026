@@ -17,7 +17,10 @@ namespace EvanGameKits.Mechanic
         public float invokeDuration = 1f, revokeDuration = 1f;
         public bool useCurrentPosition = true;
         public DG.Tweening.Ease ease = Ease.InOutCubic;
+        
+        [Header("Triggers")]
         public UnityEvent invokeTrigger, revokeTrigger;
+        public UnityEvent onReachedEndEvent, onReachedStartEvent;
         
         public System.Action onFinish;
         public System.Action onReachedEnd;
@@ -108,6 +111,7 @@ namespace EvanGameKits.Mechanic
                 
                 currentSequence.OnComplete(() => {
                     onReachedEnd?.Invoke();
+                    onReachedEndEvent?.Invoke();
                     onFinish?.Invoke();
                 });
 
@@ -142,6 +146,8 @@ namespace EvanGameKits.Mechanic
 
                 currentSequence.OnComplete(() => {
                     onReachedStart?.Invoke();
+                    onReachedStartEvent?.Invoke();
+                    onFinish?.Invoke();
                 });
 
                 revokeTrigger?.Invoke();
