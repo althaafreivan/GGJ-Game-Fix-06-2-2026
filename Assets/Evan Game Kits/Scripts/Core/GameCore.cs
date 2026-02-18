@@ -63,6 +63,10 @@ namespace EvanGameKits.Core
 
         public void win()
         {
+            if (LeaderboardManager.instance != null)
+            {
+                LeaderboardManager.instance.SaveAndStop();
+            }
             onWin?.Invoke();
         }
 
@@ -124,6 +128,10 @@ namespace EvanGameKits.Core
 
         public void EndGame()
         {
+            if (LeaderboardManager.instance != null)
+            {
+                LeaderboardManager.instance.SaveAndStop();
+            }
             onExit?.Invoke();
             if (!string.IsNullOrEmpty(mainMenuScene))
             {
