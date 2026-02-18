@@ -7,6 +7,7 @@ using System;
 using UnityEngine.EventSystems;
 using EvanUIKits.Tweening;
 using EvanUIKits.Audio;
+using EvanUIKits.Confirmation;
 
 namespace EvanUIKits.Dialogue
 {
@@ -25,13 +26,17 @@ namespace EvanUIKits.Dialogue
         [Header("Settings")]
         public float typingSpeed = 0.05f;
         public AnimateButton.AnimationType animationType = AnimateButton.AnimationType.Scale;
+        public string tutorialLockedMessage = "Please complete the tutorial before proceeding!";
 
         private Queue<SentenceData> sentenceQueue = new Queue<SentenceData>();
         private SentenceData currentSentenceData;
         private DialogueEntry currentEntry;
         private bool isTyping = false;
+        private bool isDialogueActive = false;
         private Action onCompleteCallback;
         private RectTransform containerRect;
+
+        private ITutorialTask activeTutorial;
 
         [HideInInspector] public int selectedKeyIndex;
 
@@ -48,6 +53,14 @@ namespace EvanUIKits.Dialogue
 
                 visualContainer.SetActive(true);
                 ToggleUI(false);
+            }
+        }
+
+        private void Update()
+        {
+            if (isDialogueActive && Input.GetMouseButtonUp(0))
+            {
+                DisplayNextSentence();
             }
         }
 
@@ -74,10 +87,13 @@ namespace EvanUIKits.Dialogue
         {
             if (entry.isOneTime && entry.hasBeenPlayed) return;
 
-            Time.timeScale = 0;
+            // Deselect any currently selected UI object to prevent accidental triggers (like space/enter)
+            if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(null);
+
             entry.hasBeenPlayed = true;
             currentEntry = entry;
             onCompleteCallback = callback;
+            isDialogueActive = true;
             ToggleUI(true);
 
             sentenceQueue.Clear();
@@ -102,11 +118,31 @@ namespace EvanUIKits.Dialogue
             }
         }
 
+        public void SetActiveTutorial(ITutorialTask tutorial)
+        {
+            activeTutorial = tutorial;
+        }
+
+        public void ClearActiveTutorial()
+        {
+            activeTutorial?.StopTutorial();
+            activeTutorial = null;
+        }
+
         public void DisplayNextSentence()
         {
             if (isTyping)
             {
                 CompleteSentenceInstantly();
+                return;
+            }
+
+            if (activeTutorial != null && !activeTutorial.IsCompleted())
+            {
+                if (Alert.Instance != null)
+                {
+                    Alert.Instance.Show(tutorialLockedMessage, null);
+                }
                 return;
             }
 
@@ -164,7 +200,7 @@ namespace EvanUIKits.Dialogue
                     AudioManager.instance.PlaySFX("Typing");
                 }
                 
-                yield return new WaitForSecondsRealtime(typingSpeed);
+                yield return new WaitForSeconds(typingSpeed);
             }
 
             isTyping = false;
@@ -179,20 +215,23 @@ namespace EvanUIKits.Dialogue
 
         private void EndDialogue()
         {
-            Time.timeScale = 1;
+            isDialogueActive = false;
             ToggleUI(false);
             onCompleteCallback?.Invoke();
             currentSentenceData = null;
             currentEntry = null;
+            ClearActiveTutorial();
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (containerRect != null) AnimateButton.OnButtonDown(containerRect, type: animationType, ignoreTimeScale: true);
+            if (isDialogueActive && containerRect != null) AnimateButton.OnButtonDown(containerRect, type: animationType, ignoreTimeScale: true);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (!isDialogueActive) return;
+
             if (AudioManager.instance != null)
             {
                 AudioManager.instance.PlaySFX("Button");
@@ -201,12 +240,9 @@ namespace EvanUIKits.Dialogue
             if (containerRect != null)
             {
                 AnimateButton.OnButtonUp(containerRect, type: animationType, ignoreTimeScale: true, onComplete: () => {
-                    DisplayNextSentence();
+                    // Click advanced the dialogue via Update, so we don't necessarily need to call it again here 
+                    // unless we want clicking the box specifically to advance as well (which Update already handles).
                 });
-            }
-            else
-            {
-                DisplayNextSentence();
             }
         }
     }
