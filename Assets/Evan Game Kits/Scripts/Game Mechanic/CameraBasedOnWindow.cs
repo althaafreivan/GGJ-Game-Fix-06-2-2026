@@ -13,15 +13,15 @@ namespace EvanGameKits.Core
         private Camera mainCam;
 
         [Header("Portal Settings")]
-        [SerializeField] private float sensitivity = 0.001f;
+        public float sensitivity = 0.001f;
 
         [Header("Movement Settings")]
-        [SerializeField] private bool hideTitleBar = true;
-        [SerializeField] private float maxDragSpeed = 5000f;
-        [SerializeField] private float minSmoothing = 25f;
-        [SerializeField] private float maxSmoothing = 5f;
-        [SerializeField] private float velocityThreshold = 1000f;
-        [SerializeField, Range(60, 4000)] private int threadUpdateRate = 1000;
+        public bool hideTitleBar = true;
+        public float maxDragSpeed = 5000f;
+        public float minSmoothing = 25f;
+        public float maxSmoothing = 5f;
+        public float velocityThreshold = 1000f;
+        [Range(60, 4000)] public int threadUpdateRate = 1000;
 
         [DllImport("user32.dll")]
         private static extern int GetSystemMetrics(int nIndex);
