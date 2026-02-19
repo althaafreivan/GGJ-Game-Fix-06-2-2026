@@ -13,6 +13,7 @@ namespace EvanGameKits.Mechanic
         private void Awake()
         {
             portal = GetComponent<Portal>();
+            if (portal == null) portal = GetComponentInParent<Portal>();
             targetCollider = GetComponent<Collider>();
         }
 
@@ -33,6 +34,7 @@ namespace EvanGameKits.Mechanic
 
         private void OnPlayerChange(Player newPlayer)
         {
+            if (this == null) return;
             // Portals are not the player, so we always want to check their visibility 
             // when they are being observed by the active player's camera frustum.
             isCurrentlyChecking = true;
@@ -40,9 +42,13 @@ namespace EvanGameKits.Mechanic
 
         private void Update()
         {
+            if (this == null || portal == null) return;
+
             if (isCurrentlyChecking && M_FrustumDetect.instance != null && targetCollider != null)
             {
-                M_FrustumDetect.instance.CheckVisibility(targetCollider, (bool visibleNow) => HandleVisibilityUpdate(visibleNow));
+                M_FrustumDetect.instance.CheckVisibility(targetCollider, (bool visibleNow) => {
+                    if (this != null) HandleVisibilityUpdate(visibleNow);
+                });
             }
         }
 

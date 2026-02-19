@@ -32,10 +32,12 @@ namespace EvanGameKits.Mechanic
         private static bool isAnyPortalTeleporting = false;
 
         [Header("Events")]
-        public UnityEngine.Events.UnityEvent onTeleportStart;
-        public UnityEngine.Events.UnityEvent onTeleportEnd;
-        public UnityEngine.Events.UnityEvent onChargeStart;
-        public UnityEngine.Events.UnityEvent onChargeCancel;
+        public UnityEngine.Events.UnityEvent onTeleportStart = new UnityEngine.Events.UnityEvent();
+        public UnityEngine.Events.UnityEvent onTeleportEnd = new UnityEngine.Events.UnityEvent();
+        public UnityEngine.Events.UnityEvent onTeleportEndWhiteCat = new UnityEngine.Events.UnityEvent();
+        public UnityEngine.Events.UnityEvent onTeleportEndBlackCat = new UnityEngine.Events.UnityEvent();
+        public UnityEngine.Events.UnityEvent onChargeStart = new UnityEngine.Events.UnityEvent();
+        public UnityEngine.Events.UnityEvent onChargeCancel = new UnityEngine.Events.UnityEvent();
 
         private List<Material> portalMaterials = new List<Material>();
         private HashSet<GameObject> objectsInTrigger = new HashSet<GameObject>();
@@ -47,6 +49,24 @@ namespace EvanGameKits.Mechanic
         private void Awake()
         {
             isAnyPortalTeleporting = false;
+        }
+
+        private void OnDestroy()
+        {
+            if (currentTween != null && currentTween.IsActive()) currentTween.Kill();
+            
+            // Clean up instantiated materials
+            foreach (var m in portalMaterials)
+            {
+                if (m != null)
+                {
+                    if (Application.isPlaying)
+                        Destroy(m);
+                    else
+                        DestroyImmediate(m);
+                }
+            }
+            portalMaterials.Clear();
         }
 
         private void Start()
@@ -267,6 +287,15 @@ namespace EvanGameKits.Mechanic
                 // Wait a frame to let physics catch up before allowing another teleport
                 yield return new WaitForFixedUpdate();
                 onTeleportEnd?.Invoke();
+
+                var identity = playerObj.GetComponent<M_CatIdentity>();
+                if (identity == null) identity = playerObj.GetComponentInParent<M_CatIdentity>();
+                if (identity != null)
+                {
+                    if (identity.catType == CatType.White) onTeleportEndWhiteCat?.Invoke();
+                    else if (identity.catType == CatType.Black) onTeleportEndBlackCat?.Invoke();
+                }
+
                 isAnyPortalTeleporting = false;
                 break;
             }
