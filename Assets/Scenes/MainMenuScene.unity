@@ -3314,6 +3314,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1572926669494467178, guid: 0d803a9fda95c254fbbaa21f76b514b6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 281626334}
+    - targetCorrespondingSourceObject: {fileID: 1572926669494467178, guid: 0d803a9fda95c254fbbaa21f76b514b6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1310260240}
     - targetCorrespondingSourceObject: {fileID: 4893047732915708658, guid: 0d803a9fda95c254fbbaa21f76b514b6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 367836865}
@@ -3323,6 +3326,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1065644681617337544, guid: 0d803a9fda95c254fbbaa21f76b514b6, type: 3}
   m_PrefabInstance: {fileID: 1310260238}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1310260240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281626332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c334076d33852884d91920421f461248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Core.WindowTitleBarController
+  showTitleBarOnStart: 1
+  centerWindow: 1
+  windowSize: {x: 1280, y: 720}
 --- !u!1 &1312087553 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 487639121483640062, guid: 983e5d883ac89724db3ccfd86a774f03, type: 3}

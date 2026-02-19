@@ -61,6 +61,7 @@ namespace EvanGameKits.Core
         private const int WS_THICKFRAME = 0x00040000;
         private const uint SWP_NOSIZE = 0x0001;
         private const uint SWP_NOZORDER = 0x0004;
+        private const uint SWP_FRAMECHANGED = 0x0020;
         private const int VK_LBUTTON = 0x01;
 
         private Vector2 initialWindowPos;
@@ -104,6 +105,8 @@ namespace EvanGameKits.Core
             {
                 int style = GetWindowLong(hwnd, GWL_STYLE);
                 SetWindowLong(hwnd, GWL_STYLE, style & ~WS_CAPTION & ~WS_THICKFRAME);
+                // Force a frame change to apply the style immediately
+                SetWindowPos(hwnd, IntPtr.Zero, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
             }
         }
 
