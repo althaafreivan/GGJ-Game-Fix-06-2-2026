@@ -56,8 +56,8 @@ namespace EvanGameKits.Mechanic
         {
             if (portal != null)
             {
-                // M_FrustumDetect already accounts for isReverse (White cat looking = false).
-                // So if isVisible is false, it means it should be frozen.
+                // Note: isVisible here actually means "mechanically active" 
+                // (Black Cat looking at it OR White Cat NOT looking at it)
                 portal.SetFrozen(!isVisible);
             }
         }
@@ -69,8 +69,13 @@ namespace EvanGameKits.Mechanic
 
         private void OnBecameInvisible()
         {
+            // When culled/off-screen, we should set the state based on the cat type.
+            // White cat looking away (invisible) -> Unfrozen (isVisible = true)
+            // Black cat looking away (invisible) -> Frozen (isVisible = false)
+            bool isReverse = M_FrustumDetect.instance != null && M_FrustumDetect.instance.isReverse;
+            HandleVisibilityUpdate(isReverse);
+            
             isCurrentlyChecking = false;
-            HandleVisibilityUpdate(false);
         }
     }
 }

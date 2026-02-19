@@ -6430,6 +6430,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 605350143515947234, guid: 41be5d4bec639114eb92edc6a121f117, type: 3}
   m_PrefabInstance: {fileID: 1441428245}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1624530626 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3374842137293660003, guid: 463480f5d2c21264ab73cc6329eb0760, type: 3}
+  m_PrefabInstance: {fileID: 8609005910485088057}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1637095266 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2115114181183926939, guid: ba28c178facfd154d8637087b915fb2d, type: 3}
@@ -8515,13 +8520,28 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7482618852606694474, guid: 463480f5d2c21264ab73cc6329eb0760, type: 3}
       insertIndex: -1
       addedObject: {fileID: 855070313}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3374842137293660003, guid: 463480f5d2c21264ab73cc6329eb0760, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8609005910485088062}
   m_SourcePrefab: {fileID: 100100000, guid: 463480f5d2c21264ab73cc6329eb0760, type: 3}
 --- !u!4 &8609005910485088058 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7482618852606694474, guid: 463480f5d2c21264ab73cc6329eb0760, type: 3}
   m_PrefabInstance: {fileID: 8609005910485088057}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8609005910485088062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624530626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 782f299508b6ef8458244de976ec4bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.M_DoorVisibilityTrigger
 --- !u!4 &8928678358296115260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4053516680002942224, guid: f8e64255e98f8ea489c8c37135305851, type: 3}
