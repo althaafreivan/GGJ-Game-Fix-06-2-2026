@@ -46,13 +46,28 @@ namespace EvanGameKits.Mechanic
 
         public Tween CurrentTween => currentTween;
 
+        private static List<Portal> allPortals = new List<Portal>();
+
+        public static void ResetAllPortalsFreeze()
+        {
+            foreach (var portal in allPortals)
+            {
+                if (portal != null)
+                {
+                    portal.SetFrozen(false);
+                }
+            }
+        }
+
         private void Awake()
         {
             isAnyPortalTeleporting = false;
+            if (!allPortals.Contains(this)) allPortals.Add(this);
         }
 
         private void OnDestroy()
         {
+            allPortals.Remove(this);
             if (currentTween != null && currentTween.IsActive()) currentTween.Kill();
             
             // Clean up instantiated materials

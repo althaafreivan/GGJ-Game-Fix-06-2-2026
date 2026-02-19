@@ -69,6 +69,9 @@ namespace EvanGameKits.Entity.Module
 
             if (targetPlayerObject == null) yield break;
 
+            // Reset portal freezes on swap to ensure immediate teleportation capability
+            EvanGameKits.Mechanic.Portal.ResetAllPortalsFreeze();
+
             PlayerInput targetInput = targetPlayerObject.GetComponent<PlayerInput>();
             Player targetPlayer = targetPlayerObject.GetComponent<Player>();
             M_FrustumDetect targetModule = targetPlayerObject.GetComponent<M_FrustumDetect>();
