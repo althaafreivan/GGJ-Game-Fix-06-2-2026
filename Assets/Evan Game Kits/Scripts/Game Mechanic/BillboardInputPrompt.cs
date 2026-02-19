@@ -21,6 +21,8 @@ namespace EvanGameKits.Mechanic
         private Camera mainCam;
         private bool isPlayerInRange = false;
         private Transform iconTransform;
+        private Material iconMaterial;
+        private readonly int scalePropID = Shader.PropertyToID("_Scale");
 
         private void Start()
         {
@@ -32,8 +34,16 @@ namespace EvanGameKits.Mechanic
             if (iconObject != null)
             {
                 iconTransform = iconObject.transform;
+                
+                Renderer renderer = iconObject.GetComponent<Renderer>();
+                if (renderer != null)
+                {
+                    iconMaterial = renderer.material;
+                }
+
                 iconObject.SetActive(false);
-                iconTransform.localScale = Vector3.zero;
+                if (iconMaterial != null) iconMaterial.SetFloat(scalePropID, 0f);
+                else iconTransform.localScale = Vector3.zero;
             }
         }
 
@@ -64,8 +74,17 @@ namespace EvanGameKits.Mechanic
             {
                 isPlayerInRange = true;
                 iconObject.SetActive(true);
-                iconTransform.DOKill();
-                iconTransform.DOScale(Vector3.one, showHideDuration).SetEase(Ease.OutBack);
+                
+                if (iconMaterial != null)
+                {
+                    iconMaterial.DOKill();
+                    iconMaterial.DOFloat(1f, scalePropID, showHideDuration).SetEase(Ease.OutBack);
+                }
+                else
+                {
+                    iconTransform.DOKill();
+                    iconTransform.DOScale(Vector3.one, showHideDuration).SetEase(Ease.OutBack);
+                }
             }
         }
 
@@ -74,10 +93,21 @@ namespace EvanGameKits.Mechanic
             if (other.CompareTag("Player") && iconObject != null)
             {
                 isPlayerInRange = false;
-                iconTransform.DOKill();
-                iconTransform.DOScale(Vector3.zero, showHideDuration)
-                    .SetEase(Ease.InBack)
-                    .OnComplete(() => iconObject.SetActive(false));
+
+                if (iconMaterial != null)
+                {
+                    iconMaterial.DOKill();
+                    iconMaterial.DOFloat(0f, scalePropID, showHideDuration)
+                        .SetEase(Ease.InBack)
+                        .OnComplete(() => iconObject.SetActive(false));
+                }
+                else
+                {
+                    iconTransform.DOKill();
+                    iconTransform.DOScale(Vector3.zero, showHideDuration)
+                        .SetEase(Ease.InBack)
+                        .OnComplete(() => iconObject.SetActive(false));
+                }
             }
         }
 
@@ -85,8 +115,21 @@ namespace EvanGameKits.Mechanic
         {
             if (iconTransform == null) return;
 
-            iconTransform.DOKill(true);
-            iconTransform.DOPunchScale(Vector3.one * (punchScale - 1f), animationDuration, 5, 1);
+            if (iconMaterial != null)
+            {
+                iconMaterial.DOKill(true);
+                // Punch the material scale property
+                float currentScale = iconMaterial.GetFloat(scalePropID);
+                DOTween.To(() => iconMaterial.GetFloat(scalePropID), x => iconMaterial.SetFloat(scalePropID, x), 
+                    currentScale * punchScale, animationDuration / 2)
+                    .SetLoops(2, LoopType.Yoyo)
+                    .SetEase(Ease.OutQuad);
+            }
+            else
+            {
+                iconTransform.DOKill(true);
+                iconTransform.DOPunchScale(Vector3.one * (punchScale - 1f), animationDuration, 5, 1);
+            }
         }
     }
 }

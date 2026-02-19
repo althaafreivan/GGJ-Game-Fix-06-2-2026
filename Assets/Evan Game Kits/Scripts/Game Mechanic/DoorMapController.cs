@@ -54,16 +54,19 @@ namespace EvanGameKits.Mechanic
         
                 private void Update()
                 {
-                    if (isFrozen) return;
-        
-                    if (isPlayerInRange && Input.GetKeyDown(interactionKey))
+                    if (!isPlayerInRange) return;
+
+                    if (Input.GetKeyDown(interactionKey))
                     {
                         if (IsWhiteCatActive())
                         {
-                            NotificationController.instance?.ShowNotification("White freeze time, door feel's like jammed");
-                            return;
+                            NotificationController.instance?.ShowNotification("The door is opened, but maybe the time freeze?");
+                            ToggleState();
                         }
-                        ToggleState();
+                        else if (!isFrozen)
+                        {
+                            ToggleState();
+                        }
                     }
                 }
         
