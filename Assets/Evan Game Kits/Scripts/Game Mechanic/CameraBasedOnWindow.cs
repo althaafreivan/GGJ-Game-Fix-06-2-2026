@@ -86,6 +86,20 @@ namespace EvanGameKits.Core
             mainCam = Camera.main;
 
             hwnd = GetActiveWindow();
+
+            #if !UNITY_EDITOR && UNITY_STANDALONE_WIN
+            // Force 1280x720 and center window
+            int windowWidth = 1280;
+            int windowHeight = 720;
+            int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+            int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+            int centerX = (screenWidth - windowWidth) / 2;
+            int centerY = (screenHeight - windowHeight) / 2;
+
+            // Remove SWP_NOSIZE so we can actually set the size
+            SetWindowPos(hwnd, IntPtr.Zero, centerX, centerY, windowWidth, windowHeight, SWP_NOZORDER);
+            #endif
+
             if (hideTitleBar && !Application.isEditor)
             {
                 int style = GetWindowLong(hwnd, GWL_STYLE);
