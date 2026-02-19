@@ -6460,6 +6460,28 @@ PrefabInstance:
       propertyPath: guideImage
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[0].description
+      value: Get the black cat on the platform, then switch to white.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[1].description
+      value: After that, use the white to switch the trigger state, but freeze the
+        platform.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[2].description
+      value: Get the white on the platform too, and move window to avoid the platform
+        but maintain the trigger on sight.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2730663753564064038, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 387.70404
+      objectReference: {fileID: 0}
     - target: {fileID: 2903983826945984148, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -6521,9 +6543,21 @@ PrefabInstance:
       value: 820.7345
       objectReference: {fileID: 0}
     - target: {fileID: 4641454447572418213, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 107.7059
+      objectReference: {fileID: 0}
+    - target: {fileID: 4641454447572418213, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4641454447572418213, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -214.29405
+      objectReference: {fileID: 0}
+    - target: {fileID: 5017525881621022706, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 8400000, guid: 9264e0479d8a520499b90db0e6935716, type: 2}
     - target: {fileID: 5029933376185111091, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -6664,6 +6698,17 @@ PrefabInstance:
       propertyPath: videoClips.Array.data[0].clip
       value: 
       objectReference: {fileID: 32900000, guid: 7e45333c94072a1459066852138815f9, type: 3}
+    - target: {fileID: 8245556057257549705, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 469.19064
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271844608277800690, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: m_text
+      value: 'The explanation will be here, maybe 200 characters long because the
+        space is not too wide or narrow.
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 8888220596673376243, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

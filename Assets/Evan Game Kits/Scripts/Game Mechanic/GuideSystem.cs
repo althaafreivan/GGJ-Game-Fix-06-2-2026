@@ -12,6 +12,7 @@ namespace EvanGameKits.Mechanic
         public class GuideStep
         {
             public string description;
+            [Tooltip("Optional image. If left null, only text will be updated (useful for video guides)")]
             public Sprite image;
         }
 
@@ -127,8 +128,23 @@ namespace EvanGameKits.Mechanic
             if (currentIndex >= 0 && currentIndex < steps.Count)
             {
                 guideText.text = steps[currentIndex].description;
-                guideImage.sprite = steps[currentIndex].image;
-                guideImage.gameObject.SetActive(steps[currentIndex].image != null);
+                
+                // Only update image if one is provided. 
+                // This allows a static Video to play in the background while only text changes.
+                if (guideImage != null)
+                {
+                    if (steps[currentIndex].image != null)
+                    {
+                        guideImage.sprite = steps[currentIndex].image;
+                        guideImage.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        // If no image is provided, we might want to hide the placeholder image
+                        // but keep the video background visible.
+                        guideImage.gameObject.SetActive(false);
+                    }
+                }
 
                 if (pageIndicator != null)
                 {

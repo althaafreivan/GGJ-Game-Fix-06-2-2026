@@ -38,8 +38,19 @@ namespace EvanGameKits.Mechanic
 
         public void ShowGuide(Sprite guideSprite)
         {
-            if (guideImageDisplay != null && guideSprite != null) 
-                guideImageDisplay.sprite = guideSprite;
+            if (guideImageDisplay != null)
+            {
+                if (guideSprite != null)
+                {
+                    guideImageDisplay.sprite = guideSprite;
+                    guideImageDisplay.gameObject.SetActive(true);
+                }
+                else
+                {
+                    // If null is passed, hide the image component so it doesn't block the video
+                    guideImageDisplay.gameObject.SetActive(false);
+                }
+            }
             
             Open();
         }
