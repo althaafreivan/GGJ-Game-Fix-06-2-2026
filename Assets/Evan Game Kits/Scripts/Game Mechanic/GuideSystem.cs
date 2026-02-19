@@ -20,6 +20,7 @@ namespace EvanGameKits.Mechanic
 
         [Header("References")]
         [SerializeField] private CanvasGroup mainCanvasGroup;
+        [SerializeField] private RectTransform contentContainer;
         [SerializeField] private Image guideImage;
         [SerializeField] private TMP_Text guideText;
         [SerializeField] private Button nextButton;
@@ -36,6 +37,7 @@ namespace EvanGameKits.Mechanic
         [SerializeField] private Ease easeType = Ease.OutBack;
 
         private int currentIndex = 0;
+        private bool isAnimating = false;
 
         private void Awake()
         {
@@ -78,11 +80,13 @@ namespace EvanGameKits.Mechanic
             mainCanvasGroup.transform.DOScale(0f, moveDuration).SetEase(Ease.InBack).SetUpdate(true).OnComplete(() => {
                 mainCanvasGroup.interactable = false;
                 mainCanvasGroup.blocksRaycasts = false;
+                isAnimating = false;
             });
         }
 
         public void NextStep()
         {
+            if (isAnimating) return;
             if (currentIndex < steps.Count - 1)
             {
                 currentIndex++;
@@ -92,6 +96,7 @@ namespace EvanGameKits.Mechanic
 
         public void PreviousStep()
         {
+            if (isAnimating) return;
             if (currentIndex > 0)
             {
                 currentIndex--;
@@ -101,26 +106,42 @@ namespace EvanGameKits.Mechanic
 
         private void AnimateTransition(int direction)
         {
-            // Simple slide-out / slide-in effect for content
+            // Use the explicit contentContainer if assigned, otherwise fallback to guideText parent
+            Transform targetTransform = contentContainer != null ? contentContainer : (guideText != null ? guideText.transform.parent : null);
+
+            if (targetTransform == null)
+            {
+                UpdateUI();
+                return;
+            }
+
+            isAnimating = true;
             float moveDist = 50f;
-            Transform contentTransform = guideImage.transform.parent; // Assuming image and text are in a container
-            CanvasGroup cg = contentTransform.GetComponent<CanvasGroup>();
+            CanvasGroup cg = targetTransform.GetComponent<CanvasGroup>();
 
             Sequence seq = DOTween.Sequence().SetUpdate(true);
-            seq.Append(contentTransform.DOLocalMoveX(-moveDist * direction, fadeDuration / 2f).SetRelative().SetEase(Ease.InQuad));
+            
+            // Slide out
+            seq.Append(targetTransform.DOLocalMoveX(-moveDist * direction, fadeDuration / 2f).SetRelative().SetEase(Ease.InQuad));
             
             if (cg != null) seq.Join(cg.DOFade(0f, fadeDuration / 2f));
-            else seq.Join(contentTransform.DOScale(0.95f, fadeDuration / 2f));
+            else seq.Join(targetTransform.DOScale(0.95f, fadeDuration / 2f));
             
             seq.AppendCallback(() => {
                 UpdateUI();
-                contentTransform.localPosition = new Vector3(moveDist * direction, contentTransform.localPosition.y, contentTransform.localPosition.z);
+                // Snap to opposite side for slide-in
+                targetTransform.localPosition = new Vector3(moveDist * direction, targetTransform.localPosition.y, targetTransform.localPosition.z);
             });
 
-            seq.Append(contentTransform.DOLocalMoveX(0, fadeDuration / 2f).SetEase(Ease.OutQuad));
+            // Slide in
+            seq.Append(targetTransform.DOLocalMoveX(0, fadeDuration / 2f).SetEase(Ease.OutQuad));
             
             if (cg != null) seq.Join(cg.DOFade(1f, fadeDuration / 2f));
-            else seq.Join(contentTransform.DOScale(1f, fadeDuration / 2f));
+            else seq.Join(targetTransform.DOScale(1f, fadeDuration / 2f));
+
+            seq.OnComplete(() => {
+                isAnimating = false;
+            });
         }
 
         private void UpdateUI()

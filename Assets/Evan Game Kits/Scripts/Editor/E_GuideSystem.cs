@@ -8,6 +8,7 @@ using EvanGameKits.Mechanic;
     {
         private ReorderableList stepsList;
         private SerializedProperty mainCanvasGroup;
+        private SerializedProperty contentContainer;
         private SerializedProperty guideImage;
         private SerializedProperty guideText;
         private SerializedProperty nextButton;
@@ -21,6 +22,7 @@ using EvanGameKits.Mechanic;
         private void OnEnable()
         {
             mainCanvasGroup = serializedObject.FindProperty("mainCanvasGroup");
+            contentContainer = serializedObject.FindProperty("contentContainer");
             guideImage = serializedObject.FindProperty("guideImage");
             guideText = serializedObject.FindProperty("guideText");
             nextButton = serializedObject.FindProperty("nextButton");
@@ -68,6 +70,7 @@ using EvanGameKits.Mechanic;
             EditorGUILayout.BeginVertical("helpBox");
             EditorGUILayout.LabelField("UI References", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(mainCanvasGroup);
+            EditorGUILayout.PropertyField(contentContainer);
             EditorGUILayout.PropertyField(guideImage);
             EditorGUILayout.PropertyField(guideText);
             EditorGUILayout.PropertyField(nextButton);

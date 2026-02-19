@@ -2549,6 +2549,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d978456eeac33f346a54df630bd5071d, type: 3}
+--- !u!224 &657046053 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6293765256314858762, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+  m_PrefabInstance: {fileID: 8232369603655106051}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &659769835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6461,6 +6466,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: contentContainer
+      value: 
+      objectReference: {fileID: 657046053}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: steps.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -6477,10 +6486,6 @@ PrefabInstance:
       propertyPath: steps.Array.data[2].description
       value: Get the white on the platform too, and move window to avoid the platform
         but maintain the trigger on sight.
-      objectReference: {fileID: 0}
-    - target: {fileID: 2730663753564064038, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 387.70404
       objectReference: {fileID: 0}
     - target: {fileID: 2903983826945984148, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_IsActive
@@ -6540,11 +6545,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4641454447572418213, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 820.7345
+      value: 895.73
       objectReference: {fileID: 0}
     - target: {fileID: 4641454447572418213, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 107.7059
+      value: 115.2059
       objectReference: {fileID: 0}
     - target: {fileID: 4641454447572418213, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -6552,7 +6557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4641454447572418213, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -214.29405
+      value: -281.27826
       objectReference: {fileID: 0}
     - target: {fileID: 5017525881621022706, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_TargetTexture
@@ -6640,7 +6645,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5747276075468611665, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_Alpha
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6022576948373276820, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_IsActive
@@ -6703,11 +6708,12 @@ PrefabInstance:
       value: 469.19064
       objectReference: {fileID: 0}
     - target: {fileID: 8271844608277800690, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
-      propertyPath: m_text
-      value: 'The explanation will be here, maybe 200 characters long because the
-        space is not too wide or narrow.
-
-'
+      propertyPath: m_fontSize
+      value: 29.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271844608277800690, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8888220596673376243, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_AnchorMax.x
