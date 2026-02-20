@@ -1619,6 +1619,38 @@ PrefabInstance:
       propertyPath: allowedLayer.m_Bits
       value: 128
       objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 609877015}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EvanUIKits.Audio.AudioManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2499,6 +2531,38 @@ PrefabInstance:
       propertyPath: allowedLayer.m_Bits
       value: 128
       objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 609877015}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EvanUIKits.Audio.AudioManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2599,6 +2663,38 @@ PrefabInstance:
     - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
       propertyPath: allowedLayer.m_Bits
       value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 609877015}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EvanUIKits.Audio.AudioManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3096,6 +3192,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4480449092767224140, guid: d978456eeac33f346a54df630bd5071d, type: 3}
   m_PrefabInstance: {fileID: 587228743}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &609877015 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3114124964579747012, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+  m_PrefabInstance: {fileID: 8232369603655106051}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9acdc383f678c8b439861ff7f7e1717b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &620596372 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 605350143515947234, guid: 41be5d4bec639114eb92edc6a121f117, type: 3}
@@ -3832,6 +3939,38 @@ PrefabInstance:
     - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
       propertyPath: allowedLayer.m_Bits
       value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 609877015}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaySFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EvanUIKits.Audio.AudioManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 5783186576758782194, guid: 2b0de0fb600e0874fab0f23b9fff8ba1, type: 3}
+      propertyPath: onChargeStart.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8325,6 +8464,34 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3114124964579747012, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: soundEffects.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3114124964579747012, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: soundEffects.Array.data[8].key
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 3114124964579747012, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: soundEffects.Array.data[9].key
+      value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 3114124964579747012, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: soundEffects.Array.data[10].key
+      value: Portal
+      objectReference: {fileID: 0}
+    - target: {fileID: 3114124964579747012, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: soundEffects.Array.data[8].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 853575cf5263f064ba1b2cf37514f7c0, type: 3}
+    - target: {fileID: 3114124964579747012, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: soundEffects.Array.data[9].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 48562a5e62bc882409ad68b4cbf54fa7, type: 3}
+    - target: {fileID: 3114124964579747012, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: soundEffects.Array.data[10].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 853575cf5263f064ba1b2cf37514f7c0, type: 3}
     - target: {fileID: 3152632124868655794, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_Name
       value: Core System

@@ -272,6 +272,9 @@ namespace EvanGameKits.Core
         {
             if (!initialized) return;
 
+            if (mainCam == null) mainCam = Camera.main;
+            if (mainCam == null) return;
+
             // Ensure window update and HandleWindowUpdate run only once per frame
             if (Time.frameCount != lastUpdateFrame)
             {
@@ -291,36 +294,21 @@ namespace EvanGameKits.Core
                 }
             }
 
-            float curX, curY, initX, initY;
+            float curX, curY;
             lock (posLock)
             {
                 curX = currentWindowPos.x;
                 curY = currentWindowPos.y;
-                initX = initialWindowPos.x;
-                initY = initialWindowPos.y;
             }
 
-            float deltaX = curX - initX;
-            float deltaY = curY - initY;
+            // Sync lens shift exactly with currentWindowPos to avoid any lag/stutter
+            float deltaX = curX - initialWindowPos.x;
+            float deltaY = curY - initialWindowPos.y;
 
-            Vector2 targetLensShift = new Vector2(
+            interpolatedLensShift = new Vector2(
                 deltaX * sensitivity,
                 -deltaY * sensitivity
             );
-
-            // Calculate dynamic smoothing based on velocity. 
-            // Higher velocity = lower smoothing value = more interpolation (to hide stutters).
-            float t = Mathf.Clamp01(currentVelocity / velocityThreshold);
-            float dynamicSmoothing = Mathf.Lerp(minSmoothing, maxSmoothing, t);
-
-            if (dynamicSmoothing > 0)
-            {
-                interpolatedLensShift = Vector2.Lerp(interpolatedLensShift, targetLensShift, Time.unscaledDeltaTime * dynamicSmoothing);
-            }
-            else
-            {
-                interpolatedLensShift = targetLensShift;
-            }
 
             mainCam.lensShift = interpolatedLensShift;
         }

@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 25002588}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 4.259, z: 10.017}
+  m_LocalPosition: {x: -5, y: 4.259, z: 17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -810,7 +810,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6084933631223108702, guid: 6407ae91a6a791c4490e78d03c5217ed, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19
+      value: -22
       objectReference: {fileID: 0}
     - target: {fileID: 6084933631223108702, guid: 6407ae91a6a791c4490e78d03c5217ed, type: 3}
       propertyPath: m_LocalPosition.y
@@ -818,7 +818,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6084933631223108702, guid: 6407ae91a6a791c4490e78d03c5217ed, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.9999884
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6084933631223108702, guid: 6407ae91a6a791c4490e78d03c5217ed, type: 3}
       propertyPath: m_LocalRotation.w
@@ -890,7 +890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.TransformStateTweener
   m_Target: {fileID: 204587659}
   startPosition: {x: 0, y: 0, z: 0}
-  endPosition: {x: -10, y: 4.0000005, z: 1.9999361}
+  endPosition: {x: -12, y: 4, z: 6}
   startRotation: {x: 0, y: 0, z: 0}
   endRotation: {x: 270, y: 270.0003, z: 0}
   startScale: {x: 0, y: 0, z: 0}
@@ -5280,7 +5280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4196870693678847189, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.9221606
+      value: -4.9221606
       objectReference: {fileID: 0}
     - target: {fileID: 4196870693678847189, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5288,7 +5288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4196870693678847189, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.776945
+      value: 19.776945
       objectReference: {fileID: 0}
     - target: {fileID: 4564535472692470917, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_LocalPosition.x
