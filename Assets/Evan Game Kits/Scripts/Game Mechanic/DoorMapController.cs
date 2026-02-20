@@ -4,6 +4,7 @@ using EvanGameKits.Entity;
 using System.Collections.Generic;
 using EvanGameKits.Entity.Module;
 using EvanGameKits.GameMechanic;
+using EvanUIKits.Audio;
 
 namespace EvanGameKits.Mechanic
 {
@@ -82,6 +83,9 @@ namespace EvanGameKits.Mechanic
                             if (currentSequence != null && currentSequence.IsActive() && currentSequence.IsPlaying()) return;
                 
                             isOpen = !isOpen;
+
+                            if (AudioManager.instance != null)
+                                AudioManager.instance.PlaySFX("Door");
                 
                             GrabMapContent();
                             Animate(isOpen, () => ReleaseMapContent());

@@ -5242,6 +5242,30 @@ PrefabInstance:
       propertyPath: sceneToLoad
       value: MainMenuScene
       objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[0].description
+      value: Align both cat to prepare the jump.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[1].description
+      value: In the middle of black cat (Nothing) jump, switch with white cat (Expected).
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[2].description
+      value: As white cat (Expected), step on the black cat and jump to the platform.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[3].description
+      value: As white cat (Expected), stand on trigger.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557021891691972855, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: steps.Array.data[4].description
+      value: Switch to black cat (Nothing), and just jump through the activated platform.
+      objectReference: {fileID: 0}
     - target: {fileID: 2903983826945984148, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -5445,7 +5469,7 @@ PrefabInstance:
     - target: {fileID: 7187963432187519460, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: videoClips.Array.data[0].clip
       value: 
-      objectReference: {fileID: 32900000, guid: ab94468b5441a06449c34471050d1e3c, type: 3}
+      objectReference: {fileID: 32900000, guid: b3401c528960f7a409e1d552857d552c, type: 3}
     - target: {fileID: 8888220596673376243, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

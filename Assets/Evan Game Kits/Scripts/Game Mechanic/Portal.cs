@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using EvanGameKits.Entity;
 using EvanGameKits.Entity.Module;
+using EvanUIKits.Audio;
 
 namespace EvanGameKits.Mechanic
 {
@@ -230,6 +231,8 @@ namespace EvanGameKits.Mechanic
                 // --- STAGE 1: Charging (Dissolve In) ---
                 // Start visual charging immediately
                 onChargeStart?.Invoke();
+                if (AudioManager.instance != null)
+                    AudioManager.instance.PlaySFX("Portal");
                 AnimateDissolve(dissolveStartValue, dissolveEndValue);
                 if (targetPortal != null) targetPortal.AnimateDissolve(dissolveStartValue, dissolveEndValue);
 
