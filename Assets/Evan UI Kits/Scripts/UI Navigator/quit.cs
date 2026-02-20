@@ -6,4 +6,9 @@ public class quit : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void OnMouseDown()
+    {
+        quitFunction();
+    }
 }

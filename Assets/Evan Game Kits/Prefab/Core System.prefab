@@ -516,8 +516,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.8606567, y: -247.52824}
-  m_SizeDelta: {x: 1011.2344, y: 164.7059}
+  m_AnchoredPosition: {x: 0, y: -281.27826}
+  m_SizeDelta: {x: 895.73, y: 115.2059}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5321116698999065463
 CanvasRenderer:
@@ -575,10 +575,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 29.9
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -2316,7 +2316,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 517.56866, y: 297.75217}
+  m_AnchoredPosition: {x: 469.19064, y: 297.75217}
   m_SizeDelta: {x: 117.647, y: 117.647}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &667438829829140629
@@ -2400,7 +2400,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6585494419685292282}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2903983826945984148}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5146985682433422251
 GameObject:
   m_ObjectHideFlags: 0
@@ -2846,13 +2858,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EvanGameKits.Mechanic.GuideSystem
   mainCanvasGroup: {fileID: 5747276075468611665}
+  contentContainer: {fileID: 6293765256314858762}
   guideImage: {fileID: 0}
   guideText: {fileID: 8271844608277800690}
   nextButton: {fileID: 5034997893658865393}
   prevButton: {fileID: 5529772032705238204}
   closeButton: {fileID: 1421926934694554105}
   pageIndicator: {fileID: 1590903661691259950}
-  steps: []
+  steps:
+  - description: Get the black cat on the platform, then switch to white.
+    image: {fileID: 0}
+  - description: After that, use the white to switch the trigger state, but freeze
+      the platform.
+    image: {fileID: 0}
+  - description: Get the white on the platform too, and move window to avoid the
+      platform but maintain the trigger on sight.
+    image: {fileID: 0}
   fadeDuration: 0.3
   moveDuration: 0.3
   easeType: 27
@@ -3709,11 +3730,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3324695322431754132, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.37583
+      value: 15.375834
       objectReference: {fileID: 0}
     - target: {fileID: 3324695322431754132, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -21.71323
+      value: -21.713238
+      objectReference: {fileID: 0}
+    - target: {fileID: 3324695322431754132, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071069
+      objectReference: {fileID: 0}
+    - target: {fileID: 3324695322431754132, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0000000023283062
+      objectReference: {fileID: 0}
+    - target: {fileID: 3324695322431754132, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 3324695322431754132, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4262288136817234635, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3767,6 +3804,22 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -16.962841
       objectReference: {fileID: 0}
+    - target: {fileID: 4345253572955775058, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071069
+      objectReference: {fileID: 0}
+    - target: {fileID: 4345253572955775058, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0000000023283062
+      objectReference: {fileID: 0}
+    - target: {fileID: 4345253572955775058, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 4345253572955775058, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 5305449413455577355, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 3063
@@ -3774,6 +3827,10 @@ PrefabInstance:
     - target: {fileID: 5910598966753548430, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: smoothTime
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5910598966753548430, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
+      propertyPath: sensitivity
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 5910598966753548430, guid: 41e6469904f271744ad9f6f30e9a79c3, type: 3}
       propertyPath: hideTitleBar

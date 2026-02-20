@@ -166,7 +166,7 @@ namespace EvanGameKits.Core
             if (mainCam != null)
             {
                 float vFov = mainCam.fieldOfView;
-                sensitivity = (3.0f * Mathf.Tan(vFov * 0.5f * Mathf.Deg2Rad)) / Screen.height;
+                sensitivity = (4.0f * Mathf.Tan(vFov * 0.5f * Mathf.Deg2Rad)) / Screen.height;
             }
 
             #if !UNITY_EDITOR
