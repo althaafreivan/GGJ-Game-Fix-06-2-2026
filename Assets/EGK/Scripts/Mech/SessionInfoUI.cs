@@ -122,15 +122,15 @@ namespace EvanGameKits.Mechanic
                 case 11:
                 case 12:
                 case 13:
-                    return n + "th";
+                    return "#" + n + "th";
             }
 
             switch (n % 10)
             {
-                case 1: return n + "st";
-                case 2: return n + "nd";
-                case 3: return n + "rd";
-                default: return n + "th";
+                case 1: return "#" + n + "st";
+                case 2: return "#" + n + "nd";
+                case 3: return "#" + n + "rd";
+                default: return "#" + n + "th";
             }
         }
     }
