@@ -56,6 +56,20 @@ namespace EvanUIKits.Dialogue
             }
         }
 
+        private void OnDestroy()
+        {
+            if (instance == this) instance = null;
+        }
+
+        private void Start()
+        {
+            if (DialogueDatabase.Instance != null && !string.IsNullOrEmpty(dialogueKey)) 
+            {
+                var entry = DialogueDatabase.Instance.GetDialogue(dialogueKey);
+                if (entry != null) StartDialogue(entry);
+            }
+        }
+
         private void Update()
         {
             if (isDialogueActive && Input.GetMouseButtonUp(0))
@@ -71,15 +85,6 @@ namespace EvanUIKits.Dialogue
                 canvasGroup.alpha = show ? 1 : 0;
                 canvasGroup.interactable = show;
                 canvasGroup.blocksRaycasts = show;
-            }
-        }
-
-        private void OnEnable()
-        {
-            if (DialogueDatabase.Instance != null && !string.IsNullOrEmpty(dialogueKey)) 
-            {
-                var entry = DialogueDatabase.Instance.GetDialogue(dialogueKey);
-                if (entry != null) StartDialogue(entry);
             }
         }
 

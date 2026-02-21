@@ -30,12 +30,28 @@ namespace EvanUIKits.Dialogue
     public class DialogueDatabase : MonoBehaviour
     {
         public static DialogueDatabase Instance;
+        public bool resetOnStart = true;
         public List<DialogueEntry> dialogues = new List<DialogueEntry>();
 
         private void Awake()
         {
             if (Instance == null) Instance = this;
             else Destroy(gameObject);
+
+            if (resetOnStart) ResetPlayedStates();
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this) Instance = null;
+        }
+
+        public void ResetPlayedStates()
+        {
+            foreach (var dialogue in dialogues)
+            {
+                dialogue.hasBeenPlayed = false;
+            }
         }
 
         public DialogueEntry GetDialogue(string key)
