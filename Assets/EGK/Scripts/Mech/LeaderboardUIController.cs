@@ -100,8 +100,12 @@ namespace EvanGameKits.Mechanic
 
         private string FormatTime(float time)
         {
-            int minutes = (int)time / 60;
+            int hours = (int)time / 3600;
+            int minutes = ((int)time % 3600) / 60;
             int seconds = (int)time % 60;
+
+            if (hours > 0)
+                return string.Format("{0:0}h {1:00}m {2:00}s", hours, minutes, seconds);
             return string.Format("{0:00}:{1:00}", minutes, seconds);
         }
     }

@@ -14529,7 +14529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
       propertyPath: OnBounce.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2199005447329572958, guid: dd1b1567403865142b77c51c91456716, type: 3}
       propertyPath: OnGlitch.m_PersistentCalls.m_Calls.Array.size
