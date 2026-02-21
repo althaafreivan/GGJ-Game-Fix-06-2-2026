@@ -8480,6 +8480,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 7.4837036
       objectReference: {fileID: 0}
+    - target: {fileID: 3498106124074011498, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: duration
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498106124074011498, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: offset.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498106124074011498, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
+      propertyPath: offset.y
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 3769379923219364363, guid: d7967fe8c5d985e49b2725dd07638a9c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -630.43695
