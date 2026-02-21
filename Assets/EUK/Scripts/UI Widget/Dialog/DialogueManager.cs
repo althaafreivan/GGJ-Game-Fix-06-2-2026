@@ -120,11 +120,14 @@ namespace EvanUIKits.Dialogue
 
         public void SetActiveTutorial(ITutorialTask tutorial)
         {
+            if (activeTutorial != null) activeTutorial.OnCompleted -= DisplayNextSentence;
             activeTutorial = tutorial;
+            if (activeTutorial != null) activeTutorial.OnCompleted += DisplayNextSentence;
         }
 
         public void ClearActiveTutorial()
         {
+            if (activeTutorial != null) activeTutorial.OnCompleted -= DisplayNextSentence;
             activeTutorial?.StopTutorial();
             activeTutorial = null;
         }

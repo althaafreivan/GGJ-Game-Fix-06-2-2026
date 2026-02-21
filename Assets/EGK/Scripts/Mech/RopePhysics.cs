@@ -29,19 +29,55 @@ namespace EvanGameKits.Mechanic
         [Tooltip("Where the rope attaches to the lantern (e.g., its handle). If empty, uses the lantern's pivot.")]
         [SerializeField] private Transform _weightAnchor;
 
+        [Header("Start Force Settings")]
+        [SerializeField] private Vector3 _startMovementForce = Vector3.zero;
+        [SerializeField] private Vector3 _startRotationForce = Vector3.zero;
+        [SerializeField] private ForceMode _forceMode = ForceMode.Impulse;
+
+        [Header("Wind Settings")]
+        [SerializeField] private bool _enableWind = true;
+        [SerializeField] private float _windStrength = 2f;
+        [SerializeField] private float _windFrequency = 0.5f;
+        [SerializeField] private Vector3 _windDirection = Vector3.right;
+
         [Header("Setup")]
         [SerializeField] private bool _autoSetupOnStart = true;
         [SerializeField] private List<Transform> _bones = new List<Transform>();
+        private List<Rigidbody> _ropeRigidbodies = new List<Rigidbody>();
 
         private void Start()
         {
             if (_autoSetupOnStart) SetupRope();
         }
 
+        private void FixedUpdate()
+        {
+            if (!_enableWind || _ropeRigidbodies.Count == 0) return;
+
+            ApplyWind();
+        }
+
+        private void ApplyWind()
+        {
+            float time = Time.time * _windFrequency;
+            // Use noise to create a shifting wind force
+            float noise = Mathf.PerlinNoise(time, 0f) * 2f - 1f; 
+            Vector3 force = _windDirection.normalized * _windStrength * noise;
+
+            foreach (var rb in _ropeRigidbodies)
+            {
+                if (rb != null && !rb.isKinematic)
+                {
+                    rb.AddForce(force, ForceMode.Acceleration);
+                }
+            }
+        }
+
         [ContextMenu("Setup Rope Physics")]
         public void SetupRope()
         {
             _bones.Clear();
+            _ropeRigidbodies.Clear();
             
             // 1. Identify Start Bone
             Transform rootBone = _startBone != null ? _startBone : (transform.childCount > 0 ? transform.GetChild(0) : null);
@@ -80,6 +116,7 @@ namespace EvanGameKits.Mechanic
                 if (joint == null) joint = bone.gameObject.AddComponent<ConfigurableJoint>();
 
                 ConfigureJoint(joint, lastRb);
+                _ropeRigidbodies.Add(rb);
                 
                 // Ignore collision with anchor
                 Collider col = bone.GetComponent<Collider>();
@@ -131,6 +168,19 @@ namespace EvanGameKits.Mechanic
                 Collider weightCol = _weightObject.GetComponent<Collider>();
                 if (weightCol != null && lastRb.GetComponent<Collider>() != null)
                     Physics.IgnoreCollision(weightCol, lastRb.GetComponent<Collider>());
+
+                _ropeRigidbodies.Add(_weightObject);
+            }
+
+            // 6. Apply Start Forces
+            Rigidbody targetRb = _weightObject != null ? _weightObject : lastRb;
+            if (targetRb != null && targetRb != anchorRb)
+            {
+                if (_startMovementForce != Vector3.zero)
+                    targetRb.AddForce(_startMovementForce, _forceMode);
+                
+                if (_startRotationForce != Vector3.zero)
+                    targetRb.AddTorque(_startRotationForce, _forceMode);
             }
         }
 

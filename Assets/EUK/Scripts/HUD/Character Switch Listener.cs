@@ -37,7 +37,7 @@ public class CharacterSwitchListener : MonoBehaviour
         else
         {
             WNB.SetAsLastSibling();
-            text.text = "Expectation";
+            text.text = "Expected";
             text.color = Color.white;
             parent.sprite = s_BNW;
         }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
 using EvanUIKits.Dialogue;
@@ -29,6 +30,10 @@ namespace EvanGameKits.Tutorial
         public bool deactivateOnComplete = false;
         public float fadeDuration = 0.5f;
 
+        [Header("Events")]
+        public UnityEvent onTaskStart;
+        public UnityEvent onTaskComplete;
+
         [Header("UI References")]
         [SerializeField] private CanvasGroup canvasGroup;
 
@@ -54,6 +59,8 @@ namespace EvanGameKits.Tutorial
             isStarted = true;
             gameObject.SetActive(true);
             
+            onTaskStart?.Invoke();
+
             transform.DOKill();
             transform.localScale = Vector3.zero;
             transform.DOScale(1f, fadeDuration).SetEase(Ease.OutBack).SetUpdate(true);
@@ -138,6 +145,8 @@ namespace EvanGameKits.Tutorial
 
             if (allFinished)
             {
+                onTaskComplete?.Invoke();
+                OnCompleted?.Invoke();
                 StopTutorial();
             }
         }

@@ -10,6 +10,8 @@ using EvanGameKits.Tutorial;
         SerializedProperty deactivateOnComplete;
         SerializedProperty fadeDuration;
         SerializedProperty canvasGroup;
+        SerializedProperty onTaskStart;
+        SerializedProperty onTaskComplete;
 
         private void OnEnable()
         {
@@ -18,6 +20,8 @@ using EvanGameKits.Tutorial;
             deactivateOnComplete = serializedObject.FindProperty("deactivateOnComplete");
             fadeDuration = serializedObject.FindProperty("fadeDuration");
             canvasGroup = serializedObject.FindProperty("canvasGroup");
+            onTaskStart = serializedObject.FindProperty("onTaskStart");
+            onTaskComplete = serializedObject.FindProperty("onTaskComplete");
         }
 
         public override void OnInspectorGUI()
@@ -28,6 +32,11 @@ using EvanGameKits.Tutorial;
             EditorGUILayout.PropertyField(deactivateOnComplete);
             EditorGUILayout.PropertyField(fadeDuration);
             EditorGUILayout.PropertyField(canvasGroup);
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Events", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(onTaskStart);
+            EditorGUILayout.PropertyField(onTaskComplete);
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Tutorial Requirements", EditorStyles.boldLabel);
