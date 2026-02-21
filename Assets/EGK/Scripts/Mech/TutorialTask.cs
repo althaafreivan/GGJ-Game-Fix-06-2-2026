@@ -37,6 +37,7 @@ namespace EvanGameKits.Tutorial
         [Header("UI References")]
         [SerializeField] private CanvasGroup canvasGroup;
 
+        public Action OnCompleted { get; set; }
         private bool isStarted = false;
 
         private void Awake()
