@@ -4061,6 +4061,8 @@ MonoBehaviour:
   text: {fileID: 2156365770183883325}
   BNW: {fileID: 3753780144560863199}
   WNB: {fileID: 1023998661002274246}
+  duration: 0.3
+  offset: {x: 50, y: 50, z: 0}
 --- !u!114 &2156365770183883325 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1163171411282597847, guid: 9fb0425b4f497344cab3cc74c57e3237, type: 3}

@@ -93,17 +93,26 @@ public class CharacterSwitchListener : MonoBehaviour
 
     private void UpdateUI(bool isMainPlayer)
     {
+        parent.DOKill();
         if (isMainPlayer)
         {
             text.text = "Nothing";
             text.color = Color.black;
             parent.sprite = s_WNB;
+            
+            // Start from white and fade to black
+            parent.color = Color.black;
+            parent.DOColor(Color.white, duration).SetEase(Ease.InOutQuad);
         }
         else
         {
             text.text = "Expected";
             text.color = Color.white;
             parent.sprite = s_BNW;
+            
+            // Start from black and fade to white
+            parent.color = Color.black;
+            parent.DOColor(Color.white, duration).SetEase(Ease.InOutQuad);
         }
     }
 }
